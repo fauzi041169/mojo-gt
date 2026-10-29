@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.1.7' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.1.8' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -513,5 +513,162 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'section' => 'mojo_contact_section',
         'type'    => 'textarea',
     ) );
+
+    // ==========================================
+    // 3. SECTION: PROGRAM KARIR UNGGULAN (SSW & TITP)
+    // ==========================================
+    $wp_customize->add_section( 'mojo_program_section', array(
+        'title'       => __( 'Pengaturan 2 Program Unggulan', 'mojo-bootstrap' ),
+        'priority'    => 27,
+        'description' => __( 'Edit judul, gaji, deskripsi, dan sektor untuk kartu Tokutei Ginou dan Magang TITP.', 'mojo-bootstrap' ),
+    ) );
+
+    // 3.1 Judul Bagian Program
+    $wp_customize->add_setting( 'mojo_program_section_title', array(
+        'default'           => 'Pilih Jalur Karir yang Sesuai untuk Anda',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_program_section_title', array(
+        'label'   => __( 'Judul Bagian Program', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    // --- PROGRAM 1: TOKUTEI GINOU ---
+    $wp_customize->add_setting( 'mojo_ssw_title', array(
+        'default'           => 'Tokutei Ginou (SSW)',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_ssw_title', array(
+        'label'   => __( 'Program 1: Judul', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_ssw_desc', array(
+        'default'           => 'Pekerja Berketerampilan Spesifik (特定技能) dengan standar hak, perlindungan kerja, dan gaji setara dengan tenaga kerja lokal Jepang.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_ssw_desc', array(
+        'label'   => __( 'Program 1: Deskripsi', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_ssw_gaji_yen', array(
+        'default'           => '¥190,000 – ¥260,000',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_ssw_gaji_yen', array(
+        'label'   => __( 'Program 1: Gaji Yen', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_ssw_gaji_idr', array(
+        'default'           => 'Rp 20.000.000 – Rp 28.000.000 / bln',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_ssw_gaji_idr', array(
+        'label'   => __( 'Program 1: Estimasi Rupiah', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_ssw_sektor', array(
+        'default'           => 'Kaigo (Perawat Lansia), Pengolahan Makanan, Pertanian Modern, Restoran & Perhotelan',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_ssw_sektor', array(
+        'label'       => __( 'Program 1: Sektor Tersedia (Pisahkan dengan koma)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_program_section',
+        'type'        => 'textarea',
+    ) );
+
+    // --- PROGRAM 2: MAGANG TITP ---
+    $wp_customize->add_setting( 'mojo_titp_title', array(
+        'default'           => 'Magang Jepang (TITP)',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_titp_title', array(
+        'label'   => __( 'Program 2: Judul', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_titp_desc', array(
+        'default'           => 'Program Pemagangan Teknis (技能実習) untuk alih teknologi industri manufaktur termaju, didukung sertifikat resmi dan dana purna magang.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_titp_desc', array(
+        'label'   => __( 'Program 2: Deskripsi', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_titp_gaji_yen', array(
+        'default'           => '¥150,000 – ¥190,000',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_titp_gaji_yen', array(
+        'label'   => __( 'Program 2: Gaji Yen', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_titp_gaji_idr', array(
+        'default'           => 'Rp 16.000.000 – Rp 20.000.000 / bln',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_titp_gaji_idr', array(
+        'label'   => __( 'Program 2: Estimasi Rupiah', 'mojo-bootstrap' ),
+        'section' => 'mojo_program_section',
+        'type'    => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_titp_sektor', array(
+        'default'           => 'Manufaktur & Mesin, Teknik Pengelasan (Welding), Konstruksi Bangunan, Tekstil & Garmen',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_titp_sektor', array(
+        'label'       => __( 'Program 2: Sektor Tersedia (Pisahkan dengan koma)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_program_section',
+        'type'        => 'textarea',
+    ) );
+
+    // ==========================================
+    // 4. SECTION: STATISTIK BERANDA (3 Angka)
+    // ==========================================
+    $wp_customize->add_section( 'mojo_stats_section', array(
+        'title'       => __( 'Pengaturan Statistik Angka', 'mojo-bootstrap' ),
+        'priority'    => 28,
+        'description' => __( 'Edit 3 angka statistik pencapaian di bawah banner Beranda.', 'mojo-bootstrap' ),
+    ) );
+
+    $wp_customize->add_setting( 'mojo_stat1_num', array( 'default' => '180+', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
+    $wp_customize->add_control( 'mojo_stat1_num', array( 'label' => __( 'Angka 1', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
+    $wp_customize->add_setting( 'mojo_stat1_label', array( 'default' => 'Mitra Perusahaan Jepang', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
+    $wp_customize->add_control( 'mojo_stat1_label', array( 'label' => __( 'Keterangan 1', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
+
+    $wp_customize->add_setting( 'mojo_stat2_num', array( 'default' => '98.4%', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
+    $wp_customize->add_control( 'mojo_stat2_num', array( 'label' => __( 'Angka 2', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
+    $wp_customize->add_setting( 'mojo_stat2_label', array( 'default' => 'Kelulusan JLPT / JFT Basic', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
+    $wp_customize->add_control( 'mojo_stat2_label', array( 'label' => __( 'Keterangan 2', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
+
+    $wp_customize->add_setting( 'mojo_stat3_num', array( 'default' => '47', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
+    $wp_customize->add_control( 'mojo_stat3_num', array( 'label' => __( 'Angka 3', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
+    $wp_customize->add_setting( 'mojo_stat3_label', array( 'default' => 'Prefektur Penempatan Kerja', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
+    $wp_customize->add_control( 'mojo_stat3_label', array( 'label' => __( 'Keterangan 3', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
 }
 add_action( 'customize_register', 'mojo_bootstrap_customize_register' );

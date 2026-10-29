@@ -20,6 +20,31 @@ $btn1_text     = get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru'
 $btn1_url      = get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' );
 $btn2_text     = get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' );
 
+// Program Settings
+$program_sec_title = get_theme_mod( 'mojo_program_section_title', 'Pilih Jalur Karir yang Sesuai untuk Anda' );
+
+// SSW
+$ssw_title    = get_theme_mod( 'mojo_ssw_title', 'Tokutei Ginou (SSW)' );
+$ssw_desc     = get_theme_mod( 'mojo_ssw_desc', 'Pekerja Berketerampilan Spesifik (特定技能) dengan standar hak, perlindungan kerja, dan gaji setara dengan tenaga kerja lokal Jepang.' );
+$ssw_gaji_yen = get_theme_mod( 'mojo_ssw_gaji_yen', '¥190,000 – ¥260,000' );
+$ssw_gaji_idr = get_theme_mod( 'mojo_ssw_gaji_idr', 'Rp 20.000.000 – Rp 28.000.000 / bln' );
+$ssw_sektor   = get_theme_mod( 'mojo_ssw_sektor', 'Kaigo (Perawat Lansia), Pengolahan Makanan, Pertanian Modern, Restoran & Perhotelan' );
+
+// TITP
+$titp_title    = get_theme_mod( 'mojo_titp_title', 'Magang Jepang (TITP)' );
+$titp_desc     = get_theme_mod( 'mojo_titp_desc', 'Program Pemagangan Teknis (技能実習) untuk alih teknologi industri manufaktur termaju, didukung sertifikat resmi dan dana purna magang.' );
+$titp_gaji_yen = get_theme_mod( 'mojo_titp_gaji_yen', '¥150,000 – ¥190,000' );
+$titp_gaji_idr = get_theme_mod( 'mojo_titp_gaji_idr', 'Rp 16.000.000 – Rp 20.000.000 / bln' );
+$titp_sektor   = get_theme_mod( 'mojo_titp_sektor', 'Manufaktur & Mesin, Teknik Pengelasan (Welding), Konstruksi Bangunan, Tekstil & Garmen' );
+
+// Stats Settings
+$stat1_num   = get_theme_mod( 'mojo_stat1_num', '180+' );
+$stat1_label = get_theme_mod( 'mojo_stat1_label', 'Mitra Perusahaan Jepang' );
+$stat2_num   = get_theme_mod( 'mojo_stat2_num', '98.4%' );
+$stat2_label = get_theme_mod( 'mojo_stat2_label', 'Kelulusan JLPT / JFT Basic' );
+$stat3_num   = get_theme_mod( 'mojo_stat3_num', '47' );
+$stat3_label = get_theme_mod( 'mojo_stat3_label', 'Prefektur Penempatan Kerja' );
+
 get_header();
 ?>
 
@@ -83,16 +108,16 @@ get_header();
                     <div class="stat-clean-label">Pekerja Diberangkatkan</div>
                 </div>
                 <div class="col-6 col-md-3 stat-clean-item">
-                    <div class="stat-clean-number">180<span class="text-danger">+</span></div>
-                    <div class="stat-clean-label">Mitra Perusahaan Jepang</div>
+                    <div class="stat-clean-number"><?php echo esc_html( $stat1_num ); ?></div>
+                    <div class="stat-clean-label"><?php echo esc_html( $stat1_label ); ?></div>
                 </div>
                 <div class="col-6 col-md-3 stat-clean-item">
-                    <div class="stat-clean-number">98.4<span class="text-danger">%</span></div>
-                    <div class="stat-clean-label">Kelulusan JLPT / JFT Basic</div>
+                    <div class="stat-clean-number"><?php echo esc_html( $stat2_num ); ?></div>
+                    <div class="stat-clean-label"><?php echo esc_html( $stat2_label ); ?></div>
                 </div>
                 <div class="col-6 col-md-3 stat-clean-item">
-                    <div class="stat-clean-number">47</div>
-                    <div class="stat-clean-label">Prefektur Penempatan Kerja</div>
+                    <div class="stat-clean-number"><?php echo esc_html( $stat3_num ); ?></div>
+                    <div class="stat-clean-label"><?php echo esc_html( $stat3_label ); ?></div>
                 </div>
             </div>
         </div>
@@ -105,14 +130,14 @@ get_header();
 <section class="py-5" id="program-kerja">
     <div class="container py-3">
         <div class="text-center col-lg-7 mx-auto mb-5">
-            <h2 class="h2 fw-bold text-dark">Pilih Jalur Karir yang Sesuai untuk Anda</h2>
+            <h2 class="h2 fw-bold text-dark"><?php echo esc_html( $program_sec_title ); ?></h2>
             <p class="text-muted">Proses resmi, transparan, dan terproteksi di bawah pengawasan Kemnaker RI dan Badan Imigrasi Jepang.</p>
         </div>
 
         <div class="row g-4 justify-content-center">
             <!-- Program 1: Tokutei Ginou (SSW) -->
             <div class="col-lg-6">
-                <div class="clean-program-card d-flex flex-column">
+                <div class="clean-program-card d-flex flex-column h-100">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="program-icon-badge bg-danger bg-opacity-10 text-danger">
                             <i class="bi bi-person-workspace"></i>
@@ -120,43 +145,37 @@ get_header();
                         <span class="badge bg-danger text-white rounded-pill px-3 py-2 fw-semibold">Paling Diminati</span>
                     </div>
 
-                    <h3 class="h3 fw-bold mb-2 text-dark">Tokutei Ginou (SSW)</h3>
-                    <p class="text-muted mb-4">Pekerja Berketerampilan Spesifik (特定技能) dengan standar hak, perlindungan kerja, dan gaji setara dengan tenaga kerja lokal Jepang.</p>
+                    <h3 class="h3 fw-bold mb-2 text-dark"><?php echo esc_html( $ssw_title ); ?></h3>
+                    <p class="text-muted mb-4"><?php echo esc_html( $ssw_desc ); ?></p>
 
                     <div class="p-3 bg-light rounded-3 mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="text-secondary small fw-medium">Standar Gaji Bulanan:</span>
-                            <span class="fw-bold text-success fs-5">¥190,000 - ¥260,000</span>
+                            <span class="fw-bold text-success fs-5"><?php echo esc_html( $ssw_gaji_yen ); ?></span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center small">
                             <span class="text-muted">Estimasi Rupiah:</span>
-                            <span class="fw-bold text-dark">Rp 20.000.000 - Rp 28.000.000 / bln</span>
+                            <span class="fw-bold text-dark"><?php echo esc_html( $ssw_gaji_idr ); ?></span>
                         </div>
                     </div>
 
                     <div class="mb-4 flex-grow-1">
                         <h6 class="fw-bold text-dark mb-3 small text-uppercase letter-spacing-1">Sektor Tersedia:</h6>
                         <div class="row g-2 small text-secondary">
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-danger fs-5"></i>
-                                <span>Kaigo (Perawat Lansia)</span>
-                            </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-danger fs-5"></i>
-                                <span>Pengolahan Makanan</span>
-                            </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-danger fs-5"></i>
-                                <span>Pertanian Modern</span>
-                            </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-danger fs-5"></i>
-                                <span>Restoran & Perhotelan</span>
-                            </div>
+                            <?php
+                            $ssw_items = array_map( 'trim', explode( ',', $ssw_sektor ) );
+                            foreach ( $ssw_items as $item ) :
+                                if ( empty( $item ) ) continue;
+                            ?>
+                                <div class="col-sm-6 d-flex align-items-center gap-2">
+                                    <i class="bi bi-check2 text-danger fs-5"></i>
+                                    <span><?php echo esc_html( $item ); ?></span>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
-                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
                         <span class="text-muted small"><i class="bi bi-clock-history me-1"></i>Kontrak s/d 5 Tahun</span>
                         <a href="#konsultasi" class="btn btn-japan btn-sm px-4">Daftar Tokutei Ginou &rarr;</a>
                     </div>
@@ -165,7 +184,7 @@ get_header();
 
             <!-- Program 2: Magang TITP -->
             <div class="col-lg-6">
-                <div class="clean-program-card d-flex flex-column">
+                <div class="clean-program-card d-flex flex-column h-100">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="program-icon-badge bg-primary bg-opacity-10 text-primary">
                             <i class="bi bi-tools"></i>
@@ -173,43 +192,37 @@ get_header();
                         <span class="badge bg-primary text-white rounded-pill px-3 py-2 fw-semibold">Pelatihan Industri</span>
                     </div>
 
-                    <h3 class="h3 fw-bold mb-2 text-dark">Magang Jepang (TITP)</h3>
-                    <p class="text-muted mb-4">Program Pemagangan Teknis (技能実習) untuk alih teknologi industri manufaktur termaju, didukung sertifikat resmi dan dana purna magang.</p>
+                    <h3 class="h3 fw-bold mb-2 text-dark"><?php echo esc_html( $titp_title ); ?></h3>
+                    <p class="text-muted mb-4"><?php echo esc_html( $titp_desc ); ?></p>
 
                     <div class="p-3 bg-light rounded-3 mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-1">
                             <span class="text-secondary small fw-medium">Standar Gaji Bulanan:</span>
-                            <span class="fw-bold text-success fs-5">¥150,000 - ¥190,000</span>
+                            <span class="fw-bold text-success fs-5"><?php echo esc_html( $titp_gaji_yen ); ?></span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center small">
                             <span class="text-muted">Estimasi Rupiah:</span>
-                            <span class="fw-bold text-dark">Rp 16.000.000 - Rp 20.000.000 / bln</span>
+                            <span class="fw-bold text-dark"><?php echo esc_html( $titp_gaji_idr ); ?></span>
                         </div>
                     </div>
 
                     <div class="mb-4 flex-grow-1">
                         <h6 class="fw-bold text-dark mb-3 small text-uppercase letter-spacing-1">Sektor Tersedia:</h6>
                         <div class="row g-2 small text-secondary">
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-primary fs-5"></i>
-                                <span>Manufaktur & Mesin</span>
-                            </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-primary fs-5"></i>
-                                <span>Teknik Pengelasan (Welding)</span>
-                            </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-primary fs-5"></i>
-                                <span>Konstruksi Bangunan</span>
-                            </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2">
-                                <i class="bi bi-check2 text-primary fs-5"></i>
-                                <span>Tekstil & Garmen</span>
-                            </div>
+                            <?php
+                            $titp_items = array_map( 'trim', explode( ',', $titp_sektor ) );
+                            foreach ( $titp_items as $item ) :
+                                if ( empty( $item ) ) continue;
+                            ?>
+                                <div class="col-sm-6 d-flex align-items-center gap-2">
+                                    <i class="bi bi-check2 text-primary fs-5"></i>
+                                    <span><?php echo esc_html( $item ); ?></span>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
-                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
                         <span class="text-muted small"><i class="bi bi-award me-1"></i>Sertifikasi JITCO & Modal Purna</span>
                         <a href="#konsultasi" class="btn btn-outline-primary btn-sm px-4">Daftar Magang TITP &rarr;</a>
                     </div>
@@ -220,7 +233,7 @@ get_header();
 </section>
 
 <!-- =========================================================================
-     4. JOB ORDERS / LOWONGAN TERBARU
+     4. JOB ORDERS / LOWONGAN TERBARU (DINAMIS DARI DATABASE WORDPRESS)
      ========================================================================= -->
 <section class="py-5 bg-white border-top border-bottom" id="job-orders">
     <div class="container py-3">
@@ -230,123 +243,124 @@ get_header();
                 <p class="text-muted mb-0 mt-2">Daftar permintaan tenaga kerja dari perusahaan mitra di Jepang dengan jadwal interview terdekat.</p>
             </div>
             <div class="mt-3 mt-md-0">
-                <a href="#konsultasi" class="btn btn-japan-outline btn-sm px-4">Daftar Semua Lowongan &rarr;</a>
-            </div>
-        </div>
-
-        <div class="row g-4">
-            <!-- Job 1 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="clean-job-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Tokyo</span>
-                        <span class="badge bg-success-subtle text-success small fw-semibold">15 Kuota</span>
-                    </div>
-
-                    <h4 class="h6 fw-bold text-dark mb-2">Perawat Lansia (Kaigo)</h4>
-                    <p class="text-muted small mb-3 flex-grow-1">Penempatan di panti perawatan lansia modern wilayah metropolitan Tokyo. Asrama subsidi 50%.</p>
-
-                    <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="job-salary-amount">¥215,000 - ¥245,000</div>
-                        <div class="job-salary-sub">&plusmn; Rp 23 Juta - Rp 26,2 Juta/bln</div>
-                    </div>
-
-                    <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center">Lamar Posisi Ini</a>
-                </div>
-            </div>
-
-            <!-- Job 2 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="clean-job-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Osaka</span>
-                        <span class="badge bg-success-subtle text-success small fw-semibold">20 Kuota</span>
-                    </div>
-
-                    <h4 class="h6 fw-bold text-dark mb-2">Pengolahan Makanan</h4>
-                    <p class="text-muted small mb-3 flex-grow-1">Pabrik bento higienis skala nasional Jepang di Osaka. Fasilitas mess dan asuransi lengkap.</p>
-
-                    <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="job-salary-amount">¥195,000 - ¥225,000</div>
-                        <div class="job-salary-sub">&plusmn; Rp 20,8 Juta - Rp 24 Juta/bln</div>
-                    </div>
-
-                    <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center">Lamar Posisi Ini</a>
-                </div>
-            </div>
-
-            <!-- Job 3 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="clean-job-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Aichi</span>
-                        <span class="badge bg-success-subtle text-success small fw-semibold">12 Kuota</span>
-                    </div>
-
-                    <h4 class="h6 fw-bold text-dark mb-2">Teknik Mesin & Las</h4>
-                    <p class="text-muted small mb-3 flex-grow-1">Industri komponen presisi otomotif di Nagoya. Pelatihan keselamatan kerja dan sertifikasi JITCO.</p>
-
-                    <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="job-salary-amount">¥170,000 - ¥195,000</div>
-                        <div class="job-salary-sub">&plusmn; Rp 18,2 Juta - Rp 20,8 Juta/bln</div>
-                    </div>
-
-                    <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center">Lamar Posisi Ini</a>
-                </div>
-            </div>
-
-            <!-- Job 4 -->
-            <div class="col-md-6 col-lg-3">
-                <div class="clean-job-card">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Hokkaido</span>
-                        <span class="badge bg-success-subtle text-success small fw-semibold">10 Kuota</span>
-                    </div>
-
-                    <h4 class="h6 fw-bold text-dark mb-2">Pertanian Greenhouse</h4>
-                    <p class="text-muted small mb-3 flex-grow-1">Budidaya sayuran modern berteknologi sensor iklim di Hokkaido. Disediakan rumah dinas asri.</p>
-
-                    <div class="p-3 bg-light rounded-3 mb-3">
-                        <div class="job-salary-amount">¥185,000 - ¥210,000</div>
-                        <div class="job-salary-sub">&plusmn; Rp 19,8 Juta - Rp 22,5 Juta/bln</div>
-                    </div>
-
-                    <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center">Lamar Posisi Ini</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dynamic Latest Articles / Job Orders from WordPress Database -->
-        <?php
-        $latest_posts = new WP_Query( array(
-            'posts_per_page' => 3,
-            'post_status'    => 'publish',
-        ) );
-        if ( $latest_posts->have_posts() ) :
-        ?>
-        <div class="mt-5 pt-4 border-top">
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-2">
-                <div>
-                    <h3 class="h5 fw-bold text-dark mb-1"><i class="bi bi-newspaper text-danger me-2"></i>Update Pengumuman Seleksi & Berita</h3>
-                    <p class="text-muted small mb-0">Informasi jadwal wawancara, regulasi visa, dan panduan kerja dari database situs.</p>
-                </div>
                 <?php
                 $news_page = get_page_by_path( 'berita' );
                 $news_url  = $news_page ? get_permalink( $news_page ) : ( get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/berita/' ) );
                 ?>
-                <a href="<?php echo esc_url( $news_url ); ?>" class="btn btn-sm btn-outline-secondary">Semua Berita &rarr;</a>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <?php
-                while ( $latest_posts->have_posts() ) : $latest_posts->the_post();
-                    get_template_part( 'template-parts/content', get_post_format() );
-                endwhile;
-                wp_reset_postdata();
-                ?>
+                <a href="<?php echo esc_url( $news_url ); ?>" class="btn btn-japan-outline btn-sm px-4">Daftar Semua Lowongan &rarr;</a>
             </div>
         </div>
-        <?php endif; ?>
+
+        <div class="row g-4">
+            <?php
+            $jobs_query = new WP_Query( array(
+                'post_type'      => 'post',
+                'posts_per_page' => 4,
+                'post_status'    => 'publish',
+            ) );
+
+            if ( $jobs_query->have_posts() ) :
+                while ( $jobs_query->have_posts() ) : $jobs_query->the_post();
+                    $categories = get_the_category();
+                    $loc_badge  = ! empty( $categories ) ? esc_html( $categories[0]->name ) : 'Jepang';
+                    $salary_val = get_post_meta( get_the_ID(), 'gaji', true );
+                    if ( empty( $salary_val ) ) {
+                        $salary_val = '¥190,000 – ¥240,000';
+                    }
+                    $kuota_val = get_post_meta( get_the_ID(), 'kuota', true );
+                    if ( empty( $kuota_val ) ) {
+                        $kuota_val = 'Aktif';
+                    }
+                    ?>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="clean-job-card h-100 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i><?php echo esc_html( $loc_badge ); ?></span>
+                                <span class="badge bg-success-subtle text-success small fw-semibold"><?php echo esc_html( $kuota_val ); ?></span>
+                            </div>
+
+                            <h4 class="h6 fw-bold text-dark mb-2"><?php the_title(); ?></h4>
+                            <p class="text-muted small mb-3 flex-grow-1"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 14, '...' ) ); ?></p>
+
+                            <div class="p-3 bg-light rounded-3 mb-3">
+                                <div class="job-salary-amount"><?php echo esc_html( $salary_val ); ?></div>
+                                <div class="job-salary-sub">&plusmn; Rp 20 Juta – Rp 26 Juta/bln</div>
+                            </div>
+
+                            <a href="<?php the_permalink(); ?>" class="btn btn-japan btn-sm w-100 text-center mt-auto">Detail & Lamar &rarr;</a>
+                        </div>
+                    </div>
+                    <?php
+                endwhile;
+                wp_reset_postdata();
+            else :
+            ?>
+                <!-- Fallback 4 Demo Jobs if no posts published yet -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="clean-job-card h-100 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Tokyo</span>
+                            <span class="badge bg-success-subtle text-success small fw-semibold">15 Kuota</span>
+                        </div>
+                        <h4 class="h6 fw-bold text-dark mb-2">Perawat Lansia (Kaigo)</h4>
+                        <p class="text-muted small mb-3 flex-grow-1">Penempatan di panti perawatan lansia modern wilayah metropolitan Tokyo. Asrama subsidi 50%.</p>
+                        <div class="p-3 bg-light rounded-3 mb-3">
+                            <div class="job-salary-amount">¥215,000 - ¥245,000</div>
+                            <div class="job-salary-sub">&plusmn; Rp 23 Juta - Rp 26,2 Juta/bln</div>
+                        </div>
+                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="clean-job-card h-100 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Osaka</span>
+                            <span class="badge bg-success-subtle text-success small fw-semibold">20 Kuota</span>
+                        </div>
+                        <h4 class="h6 fw-bold text-dark mb-2">Pengolahan Makanan</h4>
+                        <p class="text-muted small mb-3 flex-grow-1">Pabrik bento higienis skala nasional Jepang di Osaka. Fasilitas mess dan asuransi lengkap.</p>
+                        <div class="p-3 bg-light rounded-3 mb-3">
+                            <div class="job-salary-amount">¥195,000 - ¥225,000</div>
+                            <div class="job-salary-sub">&plusmn; Rp 20,8 Juta - Rp 24 Juta/bln</div>
+                        </div>
+                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="clean-job-card h-100 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Aichi</span>
+                            <span class="badge bg-success-subtle text-success small fw-semibold">12 Kuota</span>
+                        </div>
+                        <h4 class="h6 fw-bold text-dark mb-2">Teknik Mesin & Las</h4>
+                        <p class="text-muted small mb-3 flex-grow-1">Industri komponen presisi otomotif di Nagoya. Pelatihan keselamatan kerja dan sertifikasi JITCO.</p>
+                        <div class="p-3 bg-light rounded-3 mb-3">
+                            <div class="job-salary-amount">¥170,000 - ¥195,000</div>
+                            <div class="job-salary-sub">&plusmn; Rp 18,2 Juta - Rp 20,8 Juta/bln</div>
+                        </div>
+                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="clean-job-card h-100 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Hokkaido</span>
+                            <span class="badge bg-success-subtle text-success small fw-semibold">10 Kuota</span>
+                        </div>
+                        <h4 class="h6 fw-bold text-dark mb-2">Pertanian Greenhouse</h4>
+                        <p class="text-muted small mb-3 flex-grow-1">Budidaya sayuran modern berteknologi sensor iklim di Hokkaido. Disediakan rumah dinas asri.</p>
+                        <div class="p-3 bg-light rounded-3 mb-3">
+                            <div class="job-salary-amount">¥185,000 - ¥210,000</div>
+                            <div class="job-salary-sub">&plusmn; Rp 19,8 Juta - Rp 22,5 Juta/bln</div>
+                        </div>
+                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 </section>
 
