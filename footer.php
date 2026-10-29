@@ -25,7 +25,7 @@ $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-002
                     <span class="fs-5 fw-bold text-white"><?php bloginfo( 'name' ); ?></span>
                 </div>
                 <p class="text-white text-opacity-90 small mb-3">
-                    Lembaga Pengirim Resmi (Sending Organization) dan Job Matching Agency terpercaya yang menghubungkan talenta terampil Indonesia dengan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dan <strong>Magang (TITP)</strong>.
+                    Lembaga Pengirim Resmi (Sending Organization) dan Job Matching Agency terpercaya yang menghubungkan talenta terampil Indonesia dengan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong>.
                 </p>
                 <div class="p-3 rounded-3 bg-black bg-opacity-20 border border-white border-opacity-25 small text-white">
                     <div class="fw-bold mb-1"><i class="bi bi-shield-check text-warning me-1"></i> Legalitas Resmi:</div>
@@ -35,16 +35,16 @@ $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-002
                 </div>
             </div>
 
-            <!-- Col 2: Program Kerja -->
+            <!-- Col 2: Program & Tautan Cepat -->
             <div class="col-lg-2 col-md-6">
-                <h6 class="text-white fw-bold mb-3 text-uppercase small letter-spacing-1">Program Kerja</h6>
+                <h6 class="text-white fw-bold mb-3 text-uppercase small letter-spacing-1">Tautan Cepat</h6>
                 <ul class="list-unstyled small mb-0">
-                    <li class="mb-2"><a href="<?php echo esc_url( home_url( '/#program-kerja' ) ); ?>" class="footer-link">Tokutei Ginou (SSW)</a></li>
-                    <li class="mb-2"><a href="<?php echo esc_url( home_url( '/#program-kerja' ) ); ?>" class="footer-link">Magang Jepang (TITP)</a></li>
-                    <li class="mb-2"><a href="<?php echo esc_url( home_url( '/#program-kerja' ) ); ?>" class="footer-link">Diklat Bahasa Jepang</a></li>
+                    <li class="mb-2"><a href="<?php echo esc_url( home_url( '/lowongan-kerja/' ) ); ?>" class="footer-link">Lowongan Kerja (SSW)</a></li>
                     <li class="mb-2"><a href="<?php echo esc_url( home_url( '/#job-orders' ) ); ?>" class="footer-link">Job Order Terbaru</a></li>
                     <li class="mb-2"><a href="<?php echo esc_url( home_url( '/#alur-proses' ) ); ?>" class="footer-link">Alur & Syarat Proses</a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/#konsultasi' ) ); ?>" class="footer-link">Simulasi Biaya & Jadwal</a></li>
+                    <li class="mb-2"><a href="<?php echo esc_url( home_url( '/#konsultasi' ) ); ?>" class="footer-link">Konsultasi Pendaftaran</a></li>
+                    <li class="mb-2"><a href="<?php echo esc_url( home_url( '/berita/' ) ); ?>" class="footer-link">Berita & Informasi</a></li>
+                    <li><a href="<?php echo esc_url( home_url( '/tentang-kami/' ) ); ?>" class="footer-link">Tentang Kami</a></li>
                 </ul>
             </div>
 

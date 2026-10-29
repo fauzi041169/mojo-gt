@@ -46,7 +46,7 @@ $all_jobs_query = new WP_Query( $jobs_args );
             <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill mb-2 pulse-badge">Job Orders Resmi 2026</span>
             <h1 class="display-5 fw-bold text-dark mb-3">Lowongan Kerja Jepang Aktif</h1>
             <p class="text-secondary lead fs-6">
-                Daftar permintaan resmi tenaga kerja dari perusahaan mitra di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dan <strong>Magang (TITP)</strong> dengan jadwal wawancara terdekat.
+                Daftar permintaan resmi tenaga kerja dari perusahaan mitra di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dengan jadwal wawancara terdekat.
             </p>
             <div class="d-flex justify-content-center gap-3 pt-2">
                 <a href="#formulir-lamaran" class="btn btn-japan d-inline-flex align-items-center gap-2">
@@ -256,12 +256,10 @@ $all_jobs_query = new WP_Query( $jobs_args );
                                 <label class="form-label small fw-semibold text-secondary">Posisi Lowongan yang Diminati</label>
                                 <select class="form-select form-select-lg fs-6">
                                     <option>Tokutei Ginou / SSW - Perawat Lansia (Kaigo)</option>
-                                    <option>Tokutei Ginou / SSW - Pengolahan Makanan</option>
-                                    <option>Tokutei Ginou / SSW - Pertanian Modern</option>
-                                    <option>Tokutei Ginou / SSW - Restoran & Perhotelan</option>
-                                    <option>Magang TITP - Manufaktur & Perakitan Mesin</option>
-                                    <option>Magang TITP - Teknik Pengelasan (Welding)</option>
-                                    <option>Magang TITP - Konstruksi Bangunan</option>
+                                    <option>Tokutei Ginou / SSW - Pengolahan Makanan (Food Processing)</option>
+                                    <option>Tokutei Ginou / SSW - Pertanian Modern (Agriculture)</option>
+                                    <option>Tokutei Ginou / SSW - Manufaktur & Perakitan Mesin</option>
+                                    <option>Tokutei Ginou / SSW - Pelayanan Restoran & Perhotelan</option>
                                 </select>
                             </div>
                             <div class="col-md-6">

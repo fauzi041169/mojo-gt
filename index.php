@@ -54,7 +54,7 @@ get_header();
                         <h5 class="fw-bold mb-3 border-bottom pb-2 text-dark">Kategori Program</h5>
                         <ul class="list-unstyled mb-0 small">
                             <li class="py-2 border-bottom"><a href="#" class="text-decoration-none text-secondary">Tokutei Ginou / SSW</a></li>
-                            <li class="py-2 border-bottom"><a href="#" class="text-decoration-none text-secondary">Magang TITP Jepang</a></li>
+                            <li class="py-2 border-bottom"><a href="<?php echo esc_url( home_url( '/lowongan-kerja/' ) ); ?>" class="text-decoration-none text-secondary">Lowongan Kerja (SSW)</a></li>
                             <li class="py-2 border-bottom"><a href="#" class="text-decoration-none text-secondary">Pelatihan Bahasa Jepang</a></li>
                             <li class="py-2"><a href="#" class="text-decoration-none text-secondary">Jadwal Seleksi & Interview</a></li>
                         </ul>

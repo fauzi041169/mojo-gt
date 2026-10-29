@@ -15,27 +15,10 @@ $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-002
 // Hero Customizer Settings
 $hero_badge    = get_theme_mod( 'mojo_hero_badge', 'Sending Organization Resmi Berizin Kemnaker RI No: ' . $izin_text );
 $hero_title    = get_theme_mod( 'mojo_hero_title', 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>' );
-$hero_subtitle = get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dan <strong>Magang (TITP)</strong>.' );
+$hero_subtitle = get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong>.' );
 $btn1_text     = get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru' );
 $btn1_url      = get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' );
 $btn2_text     = get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' );
-
-// Program Settings
-$program_sec_title = get_theme_mod( 'mojo_program_section_title', 'Pilih Jalur Karir yang Sesuai untuk Anda' );
-
-// SSW
-$ssw_title    = get_theme_mod( 'mojo_ssw_title', 'Tokutei Ginou (SSW)' );
-$ssw_desc     = get_theme_mod( 'mojo_ssw_desc', 'Pekerja Berketerampilan Spesifik (特定技能) dengan standar hak, perlindungan kerja, dan gaji setara dengan tenaga kerja lokal Jepang.' );
-$ssw_gaji_yen = get_theme_mod( 'mojo_ssw_gaji_yen', '¥190,000 – ¥260,000' );
-$ssw_gaji_idr = get_theme_mod( 'mojo_ssw_gaji_idr', 'Rp 20.000.000 – Rp 28.000.000 / bln' );
-$ssw_sektor   = get_theme_mod( 'mojo_ssw_sektor', 'Kaigo (Perawat Lansia), Pengolahan Makanan, Pertanian Modern, Restoran & Perhotelan' );
-
-// TITP
-$titp_title    = get_theme_mod( 'mojo_titp_title', 'Magang Jepang (TITP)' );
-$titp_desc     = get_theme_mod( 'mojo_titp_desc', 'Program Pemagangan Teknis (技能実習) untuk alih teknologi industri manufaktur termaju, didukung sertifikat resmi dan dana purna magang.' );
-$titp_gaji_yen = get_theme_mod( 'mojo_titp_gaji_yen', '¥150,000 – ¥190,000' );
-$titp_gaji_idr = get_theme_mod( 'mojo_titp_gaji_idr', 'Rp 16.000.000 – Rp 20.000.000 / bln' );
-$titp_sektor   = get_theme_mod( 'mojo_titp_sektor', 'Manufaktur & Mesin, Teknik Pengelasan (Welding), Konstruksi Bangunan, Tekstil & Garmen' );
 
 // Stats Settings
 $stat1_num   = get_theme_mod( 'mojo_stat1_num', '180+' );
@@ -125,115 +108,7 @@ get_header();
 </section>
 
 <!-- =========================================================================
-     3. PROGRAM UTAMA - FOKUS 2 JALUR KARIR BESAR
-     ========================================================================= -->
-<section class="py-5" id="program-kerja">
-    <div class="container py-3">
-        <div class="text-center col-lg-7 mx-auto mb-5 reveal reveal-up">
-            <h2 class="h2 fw-bold text-dark"><?php echo esc_html( $program_sec_title ); ?></h2>
-            <p class="text-muted">Proses resmi, transparan, dan terproteksi di bawah pengawasan Kemnaker RI dan Badan Imigrasi Jepang.</p>
-        </div>
-
-        <div class="row g-4 justify-content-center">
-            <!-- Program 1: Tokutei Ginou (SSW) -->
-            <div class="col-lg-6 reveal reveal-left">
-                <div class="clean-program-card d-flex flex-column h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="program-icon-badge bg-danger bg-opacity-10 text-danger">
-                            <i class="bi bi-person-workspace"></i>
-                        </div>
-                        <span class="badge bg-danger text-white rounded-pill px-3 py-2 fw-semibold">Paling Diminati</span>
-                    </div>
-
-                    <h3 class="h3 fw-bold mb-2 text-dark"><?php echo esc_html( $ssw_title ); ?></h3>
-                    <p class="text-muted mb-4"><?php echo esc_html( $ssw_desc ); ?></p>
-
-                    <div class="p-3 bg-light rounded-3 mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="text-secondary small fw-medium">Standar Gaji Bulanan:</span>
-                            <span class="fw-bold text-success fs-5"><?php echo esc_html( $ssw_gaji_yen ); ?></span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center small">
-                            <span class="text-muted">Estimasi Rupiah:</span>
-                            <span class="fw-bold text-dark"><?php echo esc_html( $ssw_gaji_idr ); ?></span>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 flex-grow-1">
-                        <h6 class="fw-bold text-dark mb-3 small text-uppercase letter-spacing-1">Sektor Tersedia:</h6>
-                        <div class="row g-2 small text-secondary">
-                            <?php
-                            $ssw_items = array_map( 'trim', explode( ',', $ssw_sektor ) );
-                            foreach ( $ssw_items as $item ) :
-                                if ( empty( $item ) ) continue;
-                            ?>
-                                <div class="col-sm-6 d-flex align-items-center gap-2">
-                                    <i class="bi bi-check2 text-danger fs-5"></i>
-                                    <span><?php echo esc_html( $item ); ?></span>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
-                        <span class="text-muted small"><i class="bi bi-clock-history me-1"></i>Kontrak s/d 5 Tahun</span>
-                        <a href="#konsultasi" class="btn btn-japan btn-sm px-4">Daftar Tokutei Ginou &rarr;</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Program 2: Magang TITP -->
-            <div class="col-lg-6 reveal reveal-right">
-                <div class="clean-program-card d-flex flex-column h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="program-icon-badge bg-primary bg-opacity-10 text-primary">
-                            <i class="bi bi-tools"></i>
-                        </div>
-                        <span class="badge bg-primary text-white rounded-pill px-3 py-2 fw-semibold">Pelatihan Industri</span>
-                    </div>
-
-                    <h3 class="h3 fw-bold mb-2 text-dark"><?php echo esc_html( $titp_title ); ?></h3>
-                    <p class="text-muted mb-4"><?php echo esc_html( $titp_desc ); ?></p>
-
-                    <div class="p-3 bg-light rounded-3 mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="text-secondary small fw-medium">Standar Gaji Bulanan:</span>
-                            <span class="fw-bold text-success fs-5"><?php echo esc_html( $titp_gaji_yen ); ?></span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center small">
-                            <span class="text-muted">Estimasi Rupiah:</span>
-                            <span class="fw-bold text-dark"><?php echo esc_html( $titp_gaji_idr ); ?></span>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 flex-grow-1">
-                        <h6 class="fw-bold text-dark mb-3 small text-uppercase letter-spacing-1">Sektor Tersedia:</h6>
-                        <div class="row g-2 small text-secondary">
-                            <?php
-                            $titp_items = array_map( 'trim', explode( ',', $titp_sektor ) );
-                            foreach ( $titp_items as $item ) :
-                                if ( empty( $item ) ) continue;
-                            ?>
-                                <div class="col-sm-6 d-flex align-items-center gap-2">
-                                    <i class="bi bi-check2 text-primary fs-5"></i>
-                                    <span><?php echo esc_html( $item ); ?></span>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-auto">
-                        <span class="text-muted small"><i class="bi bi-award me-1"></i>Sertifikasi JITCO & Modal Purna</span>
-                        <a href="#konsultasi" class="btn btn-outline-primary btn-sm px-4">Daftar Magang TITP &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================================================================
-     4. JOB ORDERS / LOWONGAN TERBARU (DINAMIS DARI DATABASE WORDPRESS)
+     3. JOB ORDERS / LOWONGAN TERBARU (DINAMIS DARI DATABASE WORDPRESS)
      ========================================================================= -->
 <section class="py-5 bg-white border-top border-bottom" id="job-orders">
     <div class="container py-3">
@@ -620,8 +495,9 @@ get_header();
                                     <option>Tokutei Ginou / SSW (Caregiver/Kaigo)</option>
                                     <option>Tokutei Ginou / SSW (Pengolahan Makanan)</option>
                                     <option>Tokutei Ginou / SSW (Pertanian)</option>
-                                    <option>Magang TITP (Teknik Manufaktur / Mesin)</option>
-                                    <option>Kelas Intensif Bahasa Jepang (N4/JFT)</option>
+                                    <option>Tokutei Ginou / SSW (Manufaktur Pabrik)</option>
+                                    <option>Tokutei Ginou / SSW (Restoran & Perhotelan)</option>
+                                    <option>Kelas Intensif Bahasa Jepang (N4 / JFT A2)</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
