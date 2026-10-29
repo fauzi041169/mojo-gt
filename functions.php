@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.1.9' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.2.0' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -682,10 +682,10 @@ add_action( 'customize_register', 'mojo_bootstrap_customize_register' );
 function mojo_bootstrap_register_job_meta_box() {
     add_meta_box(
         'mojo_job_meta_box',
-        __( '💼 Informasi Detail Lowongan Kerja Jepang (Job Order)', 'mojo-bootstrap' ),
+        __( '💼 Detail Lowongan Jepang (Job Order)', 'mojo-bootstrap' ),
         'mojo_bootstrap_render_job_meta_box',
         'post',
-        'normal',
+        'side',
         'high'
     );
 }
@@ -698,27 +698,28 @@ function mojo_bootstrap_render_job_meta_box( $post ) {
     $yen   = get_post_meta( $post->ID, '_mojo_job_salary_yen', true );
     $idr   = get_post_meta( $post->ID, '_mojo_job_salary_idr', true );
     ?>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; padding: 12px 0;">
-        <div>
-            <label style="font-weight: 600; display: block; margin-bottom: 6px;">📍 Lokasi / Prefektur di Jepang:</label>
-            <input type="text" name="_mojo_job_location" value="<?php echo esc_attr( $loc ); ?>" placeholder="Contoh: Tokyo, Osaka, Aichi, Hokkaido" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
-            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Ditampilkan sebagai lencana kota di pojok kiri kartu lowongan.</p>
-        </div>
-        <div>
-            <label style="font-weight: 600; display: block; margin-bottom: 6px;">👥 Jumlah Kuota Lowongan:</label>
-            <input type="text" name="_mojo_job_quota" value="<?php echo esc_attr( $quota ); ?>" placeholder="Contoh: 15 Kuota, 20 Orang, Aktif" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
-            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Ditampilkan sebagai lencana status hijau di pojok kanan kartu.</p>
-        </div>
-        <div>
-            <label style="font-weight: 600; display: block; margin-bottom: 6px;">💴 Standar Gaji Bulanan (Yen):</label>
-            <input type="text" name="_mojo_job_salary_yen" value="<?php echo esc_attr( $yen ); ?>" placeholder="Contoh: ¥215,000 – ¥245,000" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
-            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Nominal gaji pokok di Jepang (Yen).</p>
-        </div>
-        <div>
-            <label style="font-weight: 600; display: block; margin-bottom: 6px;">💵 Estimasi Gaji (Rupiah):</label>
-            <input type="text" name="_mojo_job_salary_idr" value="<?php echo esc_attr( $idr ); ?>" placeholder="Contoh: ± Rp 23 Juta – Rp 26,2 Juta/bln" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
-            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Estimasi dalam Rupiah per bulan.</p>
-        </div>
+    <div style="padding: 6px 0;">
+        <p style="margin-bottom: 12px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">📍 Lokasi / Kota Jepang:</label>
+            <input type="text" name="_mojo_job_location" value="<?php echo esc_attr( $loc ); ?>" placeholder="Contoh: Tokyo, Osaka, Aichi, Hokkaido" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
+            <span style="color: #646970; font-size: 11px; display: block; margin-top: 3px;">Menggantikan lencana Uncategorized.</span>
+        </p>
+
+        <p style="margin-bottom: 12px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">👥 Kuota Lowongan:</label>
+            <input type="text" name="_mojo_job_quota" value="<?php echo esc_attr( $quota ); ?>" placeholder="Contoh: 15 Kuota, 20 Orang" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
+            <span style="color: #646970; font-size: 11px; display: block; margin-top: 3px;">Lencana status hijau di pojok kanan kartu.</span>
+        </p>
+
+        <p style="margin-bottom: 12px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">💴 Standar Gaji (Yen):</label>
+            <input type="text" name="_mojo_job_salary_yen" value="<?php echo esc_attr( $yen ); ?>" placeholder="Contoh: ¥215,000 – ¥245,000" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
+        </p>
+
+        <p style="margin-bottom: 6px;">
+            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">💵 Estimasi Gaji (Rupiah):</label>
+            <input type="text" name="_mojo_job_salary_idr" value="<?php echo esc_attr( $idr ); ?>" placeholder="Contoh: ± Rp 23 Juta – Rp 26 Juta/bln" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
+        </p>
     </div>
     <?php
 }
