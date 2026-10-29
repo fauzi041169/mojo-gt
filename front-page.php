@@ -99,31 +99,6 @@ get_header();
     </div>
 </section>
 
-<?php
-// Tampilkan konten teks/blok dari editor halaman Beranda (WP-Admin) jika ada
-if ( have_posts() ) :
-    while ( have_posts() ) : the_post();
-        $page_content = get_the_content();
-        if ( ! empty( trim( strip_tags( $page_content ) ) ) || has_blocks() ) :
-            ?>
-            <section class="py-5 bg-white border-top border-bottom" id="konten-beranda">
-                <div class="container py-2">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-10">
-                            <div class="entry-content lh-lg text-secondary fs-6">
-                                <?php the_content(); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <?php
-        endif;
-    endwhile;
-    wp_reset_postdata();
-endif;
-?>
-
 <!-- =========================================================================
      3. PROGRAM UTAMA - FOKUS 2 JALUR KARIR BESAR
      ========================================================================= -->
