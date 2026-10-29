@@ -12,6 +12,14 @@ $izin_text      = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
 $alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan' );
 $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
 
+// Hero Customizer Settings
+$hero_badge    = get_theme_mod( 'mojo_hero_badge', 'Sending Organization Resmi Berizin Kemnaker RI No: ' . $izin_text );
+$hero_title    = get_theme_mod( 'mojo_hero_title', 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>' );
+$hero_subtitle = get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dan <strong>Magang (TITP)</strong>.' );
+$btn1_text     = get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru' );
+$btn1_url      = get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' );
+$btn2_text     = get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' );
+
 get_header();
 ?>
 
@@ -24,30 +32,30 @@ get_header();
         <div class="mb-3">
             <span class="hero-pill-badge">
                 <i class="bi bi-patch-check-fill text-danger"></i>
-                <span>Sending Organization Resmi Berizin Kemnaker RI No: <?php echo esc_html( $izin_text ); ?></span>
+                <span><?php echo esc_html( $hero_badge ); ?></span>
             </span>
         </div>
 
         <!-- Main Title -->
         <h1 class="hero-main-title mb-4">
-            Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>
+            <?php echo wp_kses_post( $hero_title ); ?>
         </h1>
 
         <!-- Subtitle -->
         <p class="hero-lead-text mb-5">
-            Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dan <strong>Magang (TITP)</strong>.
+            <?php echo wp_kses_post( $hero_subtitle ); ?>
         </p>
 
         <!-- Action Buttons -->
         <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
-            <a href="#job-orders" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center gap-2">
+            <a href="<?php echo esc_url( $btn1_url ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center gap-2">
                 <i class="bi bi-briefcase-fill"></i>
-                <span>Lihat Job Order Terbaru</span>
+                <span><?php echo esc_html( $btn1_text ); ?></span>
                 <i class="bi bi-arrow-right"></i>
             </a>
             <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Admin%20Mojo%20Global%20Talent,%20saya%20tertarik%20untuk%20konsultasi%20program%20kerja%20ke%20Jepang." target="_blank" class="btn btn-japan-outline btn-lg px-4 py-3 d-flex align-items-center gap-2">
                 <i class="bi bi-whatsapp text-success fs-5"></i>
-                <span>Konsultasi WhatsApp Cepat</span>
+                <span><?php echo esc_html( $btn2_text ); ?></span>
             </a>
         </div>
 

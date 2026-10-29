@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.1.4' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.1.5' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -356,3 +356,162 @@ function mojo_bootstrap_create_default_menu_and_pages() {
     update_option( 'mojo_bootstrap_setup_completed', true );
 }
 add_action( 'after_switch_theme', 'mojo_bootstrap_create_default_menu_and_pages' );
+
+/**
+ * Register Theme Customizer settings
+ * Memberikan kontrol visual di Tampilan -> Sesuaikan untuk mengedit teks Hero Beranda, WhatsApp, Email, dan Legalitas
+ */
+function mojo_bootstrap_customize_register( $wp_customize ) {
+    // ==========================================
+    // 1. SECTION: HERO BERANDA (Teks Bagian Atas)
+    // ==========================================
+    $wp_customize->add_section( 'mojo_hero_section', array(
+        'title'       => __( 'Pengaturan Hero Beranda', 'mojo-bootstrap' ),
+        'priority'    => 25,
+        'description' => __( 'Edit judul utama, subjudul, teks badge resmi, dan tombol di bagian atas Beranda.', 'mojo-bootstrap' ),
+    ) );
+
+    // 1.1 Hero Badge Text
+    $wp_customize->add_setting( 'mojo_hero_badge', array(
+        'default'           => 'Sending Organization Resmi Berizin Kemnaker RI No: KEP.000/MEN/2024',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_badge', array(
+        'label'    => __( 'Teks Badge Atas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    // 1.2 Hero Main Title
+    $wp_customize->add_setting( 'mojo_hero_title', array(
+        'default'           => 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_title', array(
+        'label'       => __( 'Judul Utama Hero (H1)', 'mojo-bootstrap' ),
+        'description' => __( 'Bisa menggunakan <span class="text-danger">Kata</span> untuk warna merah', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+        'type'        => 'text',
+    ) );
+
+    // 1.3 Hero Subtitle
+    $wp_customize->add_setting( 'mojo_hero_subtitle', array(
+        'default'           => 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program Tokutei Ginou (SSW) dan Magang (TITP).',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_subtitle', array(
+        'label'    => __( 'Subjudul / Paragraf Deskripsi Hero', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 1.4 Tombol 1 Teks
+    $wp_customize->add_setting( 'mojo_hero_btn1_text', array(
+        'default'           => 'Lihat Job Order Terbaru',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_btn1_text', array(
+        'label'    => __( 'Teks Tombol 1 (Merah)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    // 1.5 Tombol 1 URL
+    $wp_customize->add_setting( 'mojo_hero_btn1_url', array(
+        'default'           => '#job-orders',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_btn1_url', array(
+        'label'    => __( 'Link Target Tombol 1', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    // 1.6 Tombol 2 Teks (WhatsApp)
+    $wp_customize->add_setting( 'mojo_hero_btn2_text', array(
+        'default'           => 'Konsultasi WhatsApp Cepat',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_btn2_text', array(
+        'label'    => __( 'Teks Tombol 2 (WhatsApp)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    // ==========================================
+    // 2. SECTION: KONTAK & INFORMASI PERUSAHAAN
+    // ==========================================
+    $wp_customize->add_section( 'mojo_contact_section', array(
+        'title'       => __( 'Kontak & Legalitas Perusahaan', 'mojo-bootstrap' ),
+        'priority'    => 26,
+        'description' => __( 'Edit nomor WhatsApp, email resmi, nomor izin Kemnaker, dan alamat kantor.', 'mojo-bootstrap' ),
+    ) );
+
+    // 2.1 WhatsApp
+    $wp_customize->add_setting( 'mojo_whatsapp', array(
+        'default'           => '+62 812-3456-7890',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_whatsapp', array(
+        'label'       => __( 'Nomor WhatsApp', 'mojo-bootstrap' ),
+        'description' => __( 'Contoh: +62 812-3456-7890 (otomatis terhubung ke tombol chat)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_contact_section',
+        'type'        => 'text',
+    ) );
+
+    // 2.2 Email
+    $wp_customize->add_setting( 'mojo_email', array(
+        'default'           => 'info@mojoglobaltalent.com',
+        'sanitize_callback' => 'sanitize_email',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_email', array(
+        'label'   => __( 'Email Resmi', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'email',
+    ) );
+
+    // 2.3 Izin Kemnaker
+    $wp_customize->add_setting( 'mojo_izin_kemnaker', array(
+        'default'           => 'KEP.000/MEN/2024',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_izin_kemnaker', array(
+        'label'   => __( 'Nomor SK Izin Kemnaker RI', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'text',
+    ) );
+
+    // 2.4 Alamat Jakarta
+    $wp_customize->add_setting( 'mojo_alamat_jakarta', array(
+        'default'           => 'Treasury Tower Lt. 7, District 8, SCBD, Jakarta Selatan',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_alamat_jakarta', array(
+        'label'   => __( 'Alamat Kantor Jakarta', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'textarea',
+    ) );
+
+    // 2.5 Alamat Tokyo
+    $wp_customize->add_setting( 'mojo_alamat_tokyo', array(
+        'default'           => 'Chiyoda-ku, Tokyo 101-0021, Japan',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_alamat_tokyo', array(
+        'label'   => __( 'Alamat Kantor Tokyo', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'textarea',
+    ) );
+}
+add_action( 'customize_register', 'mojo_bootstrap_customize_register' );
