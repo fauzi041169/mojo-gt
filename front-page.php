@@ -253,11 +253,25 @@ get_header();
 
         <div class="row g-4">
             <?php
-            $jobs_query = new WP_Query( array(
+            // Filter: Khusus Lowongan Kerja (Kecualikan kategori berita jika ada)
+            $berita_term_ids = get_terms( array(
+                'taxonomy'   => 'category',
+                'slug'       => array( 'berita', 'informasi', 'artikel', 'pengumuman', 'news' ),
+                'fields'     => 'ids',
+                'hide_empty' => false,
+            ) );
+
+            $jobs_args = array(
                 'post_type'      => 'post',
                 'posts_per_page' => 4,
                 'post_status'    => 'publish',
-            ) );
+            );
+
+            if ( ! empty( $berita_term_ids ) && ! is_wp_error( $berita_term_ids ) ) {
+                $jobs_args['category__not_in'] = $berita_term_ids;
+            }
+
+            $jobs_query = new WP_Query( $jobs_args );
 
             if ( $jobs_query->have_posts() ) :
                 while ( $jobs_query->have_posts() ) : $jobs_query->the_post();
@@ -421,6 +435,137 @@ get_header();
                     <p class="text-muted small mb-0">Pelepasan resmi dan penyambutan langsung oleh staf kami di Jepang.</p>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     5B. BERITA & INFORMASI TERBARU (BAGIAN KHUSUS ARTIKEL / BERITA)
+     ========================================================================= -->
+<section class="py-5 bg-white border-top border-bottom" id="berita-terbaru">
+    <div class="container py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+            <div>
+                <h2 class="h2 fw-bold text-dark mb-0">Berita & Informasi Terbaru</h2>
+                <p class="text-muted mb-0 mt-2">Seputar regulasi kerja resmi ke Jepang, tips seleksi wawancara (Menyetsu), dan dokumentasi kegiatan.</p>
+            </div>
+            <div class="mt-3 mt-md-0">
+                <?php
+                $news_page = get_page_by_path( 'berita' );
+                $news_url  = $news_page ? get_permalink( $news_page ) : ( get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/berita/' ) );
+                ?>
+                <a href="<?php echo esc_url( $news_url ); ?>" class="btn btn-outline-secondary btn-sm px-4">Semua Berita &rarr;</a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <?php
+            // Query khusus artikel berkategori Berita / Informasi
+            $berita_cats = get_terms( array(
+                'taxonomy'   => 'category',
+                'slug'       => array( 'berita', 'informasi', 'artikel', 'pengumuman', 'news' ),
+                'fields'     => 'ids',
+                'hide_empty' => false,
+            ) );
+
+            $news_args = array(
+                'post_type'      => 'post',
+                'posts_per_page' => 3,
+                'post_status'    => 'publish',
+            );
+
+            if ( ! empty( $berita_cats ) && ! is_wp_error( $berita_cats ) ) {
+                $news_args['category__in'] = $berita_cats;
+            }
+
+            $news_query = new WP_Query( $news_args );
+
+            if ( $news_query->have_posts() ) :
+                while ( $news_query->have_posts() ) : $news_query->the_post();
+                    $cats = get_the_category();
+                    $cat_label = ! empty( $cats ) ? $cats[0]->name : 'Berita';
+                    ?>
+                    <div class="col-md-4">
+                        <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm">
+                            <?php if ( has_post_thumbnail() ) : ?>
+                                <div class="news-card-thumb overflow-hidden" style="height: 190px;">
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php the_post_thumbnail( 'medium_large', array( 'class' => 'w-100 h-100 object-fit-cover hover-zoom' ) ); ?>
+                                    </a>
+                                </div>
+                            <?php else : ?>
+                                <div class="news-card-thumb-placeholder bg-light d-flex align-items-center justify-content-center border-bottom text-muted" style="height: 170px;">
+                                    <i class="bi bi-newspaper fs-1 text-danger opacity-50"></i>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="p-4 d-flex flex-column flex-grow-1">
+                                <div class="d-flex align-items-center gap-2 small text-muted mb-2">
+                                    <span class="badge bg-danger-subtle text-danger fw-semibold"><?php echo esc_html( $cat_label ); ?></span>
+                                    <span>&bull;</span>
+                                    <span><i class="bi bi-calendar3 me-1"></i><?php echo esc_html( get_the_date( 'd M Y' ) ); ?></span>
+                                </div>
+
+                                <h5 class="fw-bold mb-2 text-dark fs-6">
+                                    <a href="<?php the_permalink(); ?>" class="text-dark text-decoration-none hover-danger"><?php the_title(); ?></a>
+                                </h5>
+
+                                <p class="text-secondary small mb-3 flex-grow-1">
+                                    <?php echo esc_html( wp_trim_words( get_the_excerpt(), 14, '...' ) ); ?>
+                                </p>
+
+                                <a href="<?php the_permalink(); ?>" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">
+                                    <span>Baca Selengkapnya</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    <?php
+                endwhile;
+                wp_reset_postdata();
+            else :
+                ?>
+                <!-- Fallback 3 Berita Resmi jika belum ada artikel berita -->
+                <div class="col-md-4">
+                    <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm p-4">
+                        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
+                            <span class="badge bg-danger-subtle text-danger fw-semibold">Regulasi</span>
+                            <span>&bull;</span>
+                            <span><?php echo date( 'd M Y' ); ?></span>
+                        </div>
+                        <h5 class="fw-bold mb-2 text-dark fs-6">Panduan Lengkap Syarat Visa Tokutei Ginou (SSW) Terbaru 2026</h5>
+                        <p class="text-secondary small mb-3 flex-grow-1">Informasi ketentuan tes bahasa JFT Basic A2 dan keahlian spesifik bidang kerja di Jepang.</p>
+                        <a href="#konsultasi" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">Baca Selengkapnya &rarr;</a>
+                    </article>
+                </div>
+
+                <div class="col-md-4">
+                    <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm p-4">
+                        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
+                            <span class="badge bg-primary-subtle text-primary fw-semibold">Tips Karir</span>
+                            <span>&bull;</span>
+                            <span><?php echo date( 'd M Y' ); ?></span>
+                        </div>
+                        <h5 class="fw-bold mb-2 text-dark fs-6">5 Tips Lolos Wawancara (Menyetsu) dengan User Perusahaan Jepang</h5>
+                        <p class="text-secondary small mb-3 flex-grow-1">Tata krama, etika perkenalan diri (Jikoshoukai), dan tips menjawab pertanyaan pewawancara.</p>
+                        <a href="#konsultasi" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">Baca Selengkapnya &rarr;</a>
+                    </article>
+                </div>
+
+                <div class="col-md-4">
+                    <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm p-4">
+                        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
+                            <span class="badge bg-success-subtle text-success fw-semibold">Dokumentasi</span>
+                            <span>&bull;</span>
+                            <span><?php echo date( 'd M Y' ); ?></span>
+                        </div>
+                        <h5 class="fw-bold mb-2 text-dark fs-6">Pelepasan Keberangkatan Peserta Magang & SSW ke Tokyo & Osaka</h5>
+                        <p class="text-secondary small mb-3 flex-grow-1">Dokumentasi resmi pelepasan kandidat yang telah menyelesaikan diklat di Mojo Global Talent.</p>
+                        <a href="#konsultasi" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">Baca Selengkapnya &rarr;</a>
+                    </article>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>

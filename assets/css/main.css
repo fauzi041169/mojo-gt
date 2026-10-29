@@ -527,3 +527,27 @@ body.page {
         margin-right: 0 !important;
     }
 }
+
+/* =========================================================================
+   CLEAN NEWS CARDS FOR HOMEPAGE
+   ========================================================================= */
+.clean-news-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.clean-news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
+}
+
+.hover-zoom {
+    transition: transform 0.4s ease;
+}
+
+.clean-news-card:hover .hover-zoom {
+    transform: scale(1.05);
+}
+
+.hover-danger:hover {
+    color: var(--mj-crimson, #c9182b) !important;
+}
