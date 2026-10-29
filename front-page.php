@@ -53,31 +53,38 @@ get_header();
      ========================================================================= -->
 <section class="clean-hero text-center">
     <div class="container">
+        <!-- Trust Status Pill -->
+        <div class="mb-4 reveal reveal-scale">
+            <span class="hero-pill-badge pulse-badge">
+                <i class="bi bi-patch-check-fill text-danger"></i> Lembaga Pengirim Resmi &bull; Kemnaker RI & OTIT Jepang
+            </span>
+        </div>
+
         <!-- Main Title -->
-        <h1 class="hero-main-title mb-4">
+        <h1 class="hero-main-title mb-4 reveal reveal-up delay-100">
             <?php echo wp_kses_post( $hero_title ); ?>
         </h1>
 
         <!-- Subtitle -->
-        <p class="hero-lead-text mb-5">
+        <p class="hero-lead-text mb-5 reveal reveal-up delay-200">
             <?php echo wp_kses_post( $hero_subtitle ); ?>
         </p>
 
         <!-- Action Buttons -->
-        <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
-            <a href="<?php echo esc_url( $btn1_url ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center gap-2">
+        <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-5 reveal reveal-up delay-300">
+            <a href="<?php echo esc_url( $btn1_url ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2">
                 <i class="bi bi-briefcase-fill"></i>
                 <span><?php echo esc_html( $btn1_text ); ?></span>
                 <i class="bi bi-arrow-right"></i>
             </a>
-            <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Admin%20Mojo%20Global%20Talent,%20saya%20tertarik%20untuk%20konsultasi%20program%20kerja%20ke%20Jepang." target="_blank" class="btn btn-japan-outline btn-lg px-4 py-3 d-flex align-items-center gap-2">
+            <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Admin%20Mojo%20Global%20Talent,%20saya%20tertarik%20untuk%20konsultasi%20program%20kerja%20ke%20Jepang." target="_blank" class="btn btn-japan-outline btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2">
                 <i class="bi bi-whatsapp text-success fs-5"></i>
                 <span><?php echo esc_html( $btn2_text ); ?></span>
             </a>
         </div>
 
         <!-- Trust Badges Line -->
-        <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-secondary small pt-2">
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-secondary small pt-2 reveal reveal-fade delay-400">
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-check-circle-fill text-danger"></i>
                 <span class="fw-medium">Terakreditasi LA-LPK</span>
@@ -101,7 +108,7 @@ get_header();
      ========================================================================= -->
 <section class="py-4">
     <div class="container">
-        <div class="stats-clean-strip">
+        <div class="stats-clean-strip reveal reveal-scale">
             <div class="row text-center g-3">
                 <div class="col-6 col-md-3 stat-clean-item">
                     <div class="stat-clean-number">1,250<span class="text-danger">+</span></div>
@@ -129,14 +136,14 @@ get_header();
      ========================================================================= -->
 <section class="py-5" id="program-kerja">
     <div class="container py-3">
-        <div class="text-center col-lg-7 mx-auto mb-5">
+        <div class="text-center col-lg-7 mx-auto mb-5 reveal reveal-up">
             <h2 class="h2 fw-bold text-dark"><?php echo esc_html( $program_sec_title ); ?></h2>
             <p class="text-muted">Proses resmi, transparan, dan terproteksi di bawah pengawasan Kemnaker RI dan Badan Imigrasi Jepang.</p>
         </div>
 
         <div class="row g-4 justify-content-center">
             <!-- Program 1: Tokutei Ginou (SSW) -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 reveal reveal-left">
                 <div class="clean-program-card d-flex flex-column h-100">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="program-icon-badge bg-danger bg-opacity-10 text-danger">
@@ -183,7 +190,7 @@ get_header();
             </div>
 
             <!-- Program 2: Magang TITP -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 reveal reveal-right">
                 <div class="clean-program-card d-flex flex-column h-100">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="program-icon-badge bg-primary bg-opacity-10 text-primary">
@@ -237,7 +244,7 @@ get_header();
      ========================================================================= -->
 <section class="py-5 bg-white border-top border-bottom" id="job-orders">
     <div class="container py-3">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5 reveal reveal-up">
             <div>
                 <h2 class="h2 fw-bold text-dark mb-0">Lowongan Kerja Jepang Terbuka</h2>
                 <p class="text-muted mb-0 mt-2">Daftar permintaan tenaga kerja dari perusahaan mitra di Jepang dengan jadwal interview terdekat.</p>
@@ -393,7 +400,7 @@ get_header();
      ========================================================================= -->
 <section class="py-5" id="alur-proses">
     <div class="container py-3">
-        <div class="text-center col-lg-7 mx-auto mb-5">
+        <div class="text-center col-lg-7 mx-auto mb-5 reveal reveal-up">
             <h2 class="h2 fw-bold text-dark">5 Langkah Pasti Berangkat ke Jepang</h2>
             <p class="text-muted">Pendampingan terarah dari tahap awal hingga Anda resmi tiba dan bekerja di Jepang.</p>
         </div>
@@ -447,7 +454,7 @@ get_header();
      ========================================================================= -->
 <section class="py-5 bg-white border-top border-bottom" id="berita-terbaru">
     <div class="container py-3">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 reveal reveal-up">
             <div>
                 <h2 class="h2 fw-bold text-dark mb-0">Berita & Informasi Terbaru</h2>
                 <p class="text-muted mb-0 mt-2">Seputar regulasi kerja resmi ke Jepang, tips seleksi wawancara (Menyetsu), dan dokumentasi kegiatan.</p>
@@ -579,7 +586,7 @@ get_header();
 <section class="py-5" style="background-color: #0f172a; color: #ffffff;">
     <div class="container py-4">
         <div class="row align-items-center g-4">
-            <div class="col-lg-8">
+            <div class="col-lg-8 reveal reveal-left">
                 <h3 class="h2 fw-bold mb-3 text-white">インドネシアの優秀な人材と確かなパートナーシップ</h3>
                 <p class="text-light text-opacity-80 lead fs-6 mb-4">
                     当社は、高い就労意欲と日本文化・礼儀作法を身につけた優秀なインドネシア人人材を厳選・育成しております。特定技能（介護、外食、食品製造、農業等）および技能実習生のスムーズな受入れと定着を現地と東京拠点で強力にサポートいたします。
@@ -590,7 +597,7 @@ get_header();
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 reveal reveal-right">
                 <div class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded-4 p-4 text-start">
                     <h6 class="fw-bold text-warning mb-3"><i class="bi bi-star-fill me-2"></i>当社の強み (Our Strengths)</h6>
                     <ul class="list-unstyled small text-light text-opacity-90 mb-0">
@@ -611,7 +618,7 @@ get_header();
     <div class="container py-4">
         <div class="row g-5 align-items-center">
             <!-- Left Info -->
-            <div class="col-lg-5">
+            <div class="col-lg-5 reveal reveal-left">
                 <h2 class="display-6 fw-bold text-dark mb-3">Siap Memulai Langkah Anda ke Jepang?</h2>
                 <p class="text-secondary mb-4">Konsultasikan minat program, syarat dokumen, dan jadwal kelas seleksi dengan tim konsultan karir berpengalaman kami.</p>
 
@@ -647,7 +654,7 @@ get_header();
             </div>
 
             <!-- Right Clean Form -->
-            <div class="col-lg-7">
+            <div class="col-lg-7 reveal reveal-right">
                 <div class="card border border-light-subtle shadow-sm rounded-4 p-4 p-md-5 bg-white">
                     <h4 class="fw-bold text-dark mb-2">Formulir Pendaftaran & Konsultasi</h4>
                     <p class="text-muted small mb-4">Lengkapi data di bawah ini. Konsultan kami akan menghubungi Anda melalui WhatsApp.</p>

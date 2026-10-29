@@ -30,7 +30,7 @@ $email_text = get_theme_mod( 'mojo_email', 'info@mojoglobaltalent.com' );
 <div class="top-bar py-2 d-none d-md-block">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-2 small">
-            <span class="text-danger fw-bold"><i class="bi bi-patch-check-fill me-1"></i>RESMI</span>
+            <span class="badge bg-danger text-white rounded-pill px-2 py-1 pulse-badge"><i class="bi bi-patch-check-fill me-1"></i>RESMI</span>
             <span class="text-secondary">Izin Kemnaker RI No: <?php echo esc_html( $izin_text ); ?> &bull; Terdaftar OTIT Jepang</span>
         </div>
 
@@ -92,7 +92,10 @@ $email_text = get_theme_mod( 'mojo_email', 'info@mojoglobaltalent.com' );
 
                 <!-- CTA Button -->
                 <div class="ms-lg-3 mt-3 mt-lg-0">
-                    <a href="#konsultasi" class="btn btn-japan d-flex align-items-center gap-2">
+                    <?php
+                    $cta_url = ( is_front_page() || is_page( 'lowongan-kerja' ) ) ? '#konsultasi' : home_url( '/#konsultasi' );
+                    ?>
+                    <a href="<?php echo esc_url( $cta_url ); ?>" class="btn btn-japan d-flex align-items-center justify-content-center gap-2 w-100">
                         <i class="bi bi-send-fill"></i>
                         <span>Daftar / Konsultasi</span>
                     </a>

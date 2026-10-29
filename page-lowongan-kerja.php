@@ -42,8 +42,8 @@ $all_jobs_query = new WP_Query( $jobs_args );
 <div class="site-page-container py-5 bg-white">
     <div class="container">
         <!-- Header Banner Lowongan -->
-        <div class="text-center col-lg-8 mx-auto mb-5">
-            <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">Job Orders Resmi 2026</span>
+        <div class="text-center col-lg-8 mx-auto mb-5 reveal reveal-scale">
+            <span class="badge bg-danger text-white fw-bold px-3 py-2 rounded-pill mb-2 pulse-badge">Job Orders Resmi 2026</span>
             <h1 class="display-5 fw-bold text-dark mb-3">Lowongan Kerja Jepang Aktif</h1>
             <p class="text-secondary lead fs-6">
                 Daftar permintaan resmi tenaga kerja dari perusahaan mitra di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong> dan <strong>Magang (TITP)</strong> dengan jadwal wawancara terdekat.
@@ -209,7 +209,7 @@ $all_jobs_query = new WP_Query( $jobs_args );
     <div class="container py-4">
         <div class="row g-5 align-items-center">
             <!-- Left Info -->
-            <div class="col-lg-5">
+            <div class="col-lg-5 reveal reveal-left">
                 <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">Pendaftaran Terbuka</span>
                 <h2 class="display-6 fw-bold text-dark mb-3">Ajukan Lamaran Kerja ke Jepang</h2>
                 <p class="text-secondary mb-4">Lembaga pengirim resmi berizin Kemnaker RI. Tim konsultan karir kami siap membantu verifikasi berkas, pelatihan bahasa, dan pencocokan wawancara langsung dengan perusahaan Jepang.</p>
@@ -246,7 +246,7 @@ $all_jobs_query = new WP_Query( $jobs_args );
             </div>
 
             <!-- Right Clean Form -->
-            <div class="col-lg-7">
+            <div class="col-lg-7 reveal reveal-right">
                 <div class="card border border-light-subtle shadow-sm rounded-4 p-4 p-md-5 bg-white">
                     <h4 class="fw-bold text-dark mb-2">Formulir Pengajuan Lamaran Kerja</h4>
                     <p class="text-muted small mb-4">Lengkapi data Anda di bawah ini untuk memulai proses seleksi kerja ke Jepang.</p>
