@@ -28,14 +28,6 @@ get_header();
      ========================================================================= -->
 <section class="clean-hero text-center">
     <div class="container">
-        <!-- Official Badge -->
-        <div class="mb-3">
-            <span class="hero-pill-badge">
-                <i class="bi bi-patch-check-fill text-danger"></i>
-                <span><?php echo esc_html( $hero_badge ); ?></span>
-            </span>
-        </div>
-
         <!-- Main Title -->
         <h1 class="hero-main-title mb-4">
             <?php echo wp_kses_post( $hero_title ); ?>
@@ -138,7 +130,6 @@ endif;
 <section class="py-5" id="program-kerja">
     <div class="container py-3">
         <div class="text-center col-lg-7 mx-auto mb-5">
-            <span class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Program Penempatan Resmi</span>
             <h2 class="h2 fw-bold text-dark">Pilih Jalur Karir yang Sesuai untuk Anda</h2>
             <p class="text-muted">Proses resmi, transparan, dan terproteksi di bawah pengawasan Kemnaker RI dan Badan Imigrasi Jepang.</p>
         </div>
@@ -260,7 +251,6 @@ endif;
     <div class="container py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
             <div>
-                <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">Job Order Siap Wawancara</span>
                 <h2 class="h2 fw-bold text-dark mb-0">Lowongan Kerja Jepang Terbuka</h2>
                 <p class="text-muted mb-0 mt-2">Daftar permintaan tenaga kerja dari perusahaan mitra di Jepang dengan jadwal interview terdekat.</p>
             </div>
@@ -391,7 +381,6 @@ endif;
 <section class="py-5" id="alur-proses">
     <div class="container py-3">
         <div class="text-center col-lg-7 mx-auto mb-5">
-            <span class="badge bg-danger-subtle text-danger fw-bold text-uppercase px-3 py-2 rounded-pill mb-2">Transparan & Terstruktur</span>
             <h2 class="h2 fw-bold text-dark">5 Langkah Pasti Berangkat ke Jepang</h2>
             <p class="text-muted">Pendampingan terarah dari tahap awal hingga Anda resmi tiba dan bekerja di Jepang.</p>
         </div>
@@ -447,7 +436,6 @@ endif;
     <div class="container py-4">
         <div class="row align-items-center g-4">
             <div class="col-lg-8">
-                <span class="badge bg-danger text-white px-3 py-2 rounded-pill mb-3">FOR JAPANESE ENTERPRISES &bull; 受入機関・監理団体の皆様へ</span>
                 <h3 class="h2 fw-bold mb-3 text-white">インドネシアの優秀な人材と確かなパートナーシップ</h3>
                 <p class="text-light text-opacity-80 lead fs-6 mb-4">
                     当社は、高い就労意欲と日本文化・礼儀作法を身につけた優秀なインドネシア人人材を厳選・育成しております。特定技能（介護、外食、食品製造、農業等）および技能実習生のスムーズな受入れと定着を現地と東京拠点で強力にサポートいたします。
@@ -480,7 +468,6 @@ endif;
         <div class="row g-5 align-items-center">
             <!-- Left Info -->
             <div class="col-lg-5">
-                <span class="badge bg-danger-subtle text-danger fw-bold px-3 py-2 rounded-pill mb-2">Konsultasi Terpercaya</span>
                 <h2 class="display-6 fw-bold text-dark mb-3">Siap Memulai Langkah Anda ke Jepang?</h2>
                 <p class="text-secondary mb-4">Konsultasikan minat program, syarat dokumen, dan jadwal kelas seleksi dengan tim konsultan karir berpengalaman kami.</p>
 
