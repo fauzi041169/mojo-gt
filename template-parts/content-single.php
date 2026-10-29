@@ -28,35 +28,80 @@
         $wa_num    = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
         $wa_clean  = preg_replace( '/[^0-9]/', '', $wa_num );
 
-        if ( ! empty( $job_yen ) || ! empty( $job_loc ) ) :
+        if ( ! empty( $job_yen ) || ! empty( $job_loc ) || ! empty( $job_quota ) || ! empty( $job_idr ) ) :
         ?>
         <div class="job-spec-box bg-light p-4 rounded-4 border my-4">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 pb-3 border-bottom">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3 pb-3 border-bottom">
                 <div class="d-flex align-items-center gap-2">
-                    <?php if ( ! empty( $job_loc ) ) : ?>
-                        <span class="badge bg-danger px-3 py-2 fs-6"><i class="bi bi-geo-alt-fill me-1"></i>Penempatan: <?php echo esc_html( $job_loc ); ?></span>
-                    <?php endif; ?>
-                    <?php if ( ! empty( $job_quota ) ) : ?>
-                        <span class="badge bg-success-subtle text-success border border-success border-opacity-25 px-3 py-2 fs-6"><i class="bi bi-people-fill me-1"></i><?php echo esc_html( $job_quota ); ?></span>
-                    <?php endif; ?>
+                    <span class="badge bg-danger rounded-pill px-3 py-2 small fw-bold letter-spacing-1">
+                        <i class="bi bi-briefcase-fill me-1"></i>Spesifikasi Job Order
+                    </span>
+                    <span class="badge bg-white text-dark border rounded-pill px-3 py-2 small fw-semibold">
+                        <i class="bi bi-patch-check-fill text-success me-1"></i>Resmi Kemnaker
+                    </span>
                 </div>
-                <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Mojo%20Global%20Talent,%20saya%20tertarik%20melamar%20lowongan:%20<?php echo rawurlencode( get_the_title() ); ?>" target="_blank" class="btn btn-japan btn-sm px-4 d-flex align-items-center gap-2">
-                    <i class="bi bi-whatsapp"></i>
-                    <span>Lamar Lowongan via WhatsApp</span>
-                </a>
+                <div>
+                    <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Mojo%20Global%20Talent,%20saya%20tertarik%20melamar%20lowongan:%20<?php echo rawurlencode( get_the_title() ); ?>" target="_blank" class="btn btn-japan btn-sm px-4 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
+                        <i class="bi bi-whatsapp"></i>
+                        <span>Lamar Lowongan via WhatsApp</span>
+                    </a>
+                </div>
             </div>
 
             <div class="row g-3">
-                <?php if ( ! empty( $job_yen ) ) : ?>
-                    <div class="col-sm-6">
-                        <div class="small text-muted mb-1">Standar Gaji Pokok (Yen):</div>
-                        <div class="fw-bold text-success fs-5"><?php echo esc_html( $job_yen ); ?></div>
+                <?php if ( ! empty( $job_loc ) ) : ?>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <div class="small text-muted mb-1 d-flex align-items-center gap-1">
+                                <i class="bi bi-geo-alt-fill text-danger"></i>
+                                <span class="fw-semibold">Lokasi Penempatan:</span>
+                            </div>
+                            <div class="fw-bold text-dark" style="word-break: break-word; line-height: 1.5;">
+                                <?php echo esc_html( $job_loc ); ?>
+                            </div>
+                        </div>
                     </div>
                 <?php endif; ?>
+
+                <?php if ( ! empty( $job_quota ) ) : ?>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <div class="small text-muted mb-1 d-flex align-items-center gap-1">
+                                <i class="bi bi-people-fill text-primary"></i>
+                                <span class="fw-semibold">Kuota Kebutuhan:</span>
+                            </div>
+                            <div class="fw-bold text-dark" style="word-break: break-word; line-height: 1.5;">
+                                <?php echo esc_html( $job_quota ); ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ( ! empty( $job_yen ) ) : ?>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <div class="small text-muted mb-1 d-flex align-items-center gap-1">
+                                <i class="bi bi-currency-yen text-success"></i>
+                                <span class="fw-semibold">Standar Gaji Pokok (Yen):</span>
+                            </div>
+                            <div class="fw-bold text-success fs-5">
+                                <?php echo esc_html( $job_yen ); ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
                 <?php if ( ! empty( $job_idr ) ) : ?>
-                    <div class="col-sm-6">
-                        <div class="small text-muted mb-1">Estimasi Pendapatan Bulanan:</div>
-                        <div class="fw-bold text-dark fs-5"><?php echo esc_html( $job_idr ); ?></div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-white rounded-3 border h-100">
+                            <div class="small text-muted mb-1 d-flex align-items-center gap-1">
+                                <i class="bi bi-cash-stack text-success"></i>
+                                <span class="fw-semibold">Estimasi Pendapatan Bulanan:</span>
+                            </div>
+                            <div class="fw-bold text-dark fs-5">
+                                <?php echo esc_html( $job_idr ); ?>
+                            </div>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>

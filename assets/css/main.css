@@ -867,3 +867,34 @@ html, body {
         transform: none !important;
     }
 }
+
+/* ==========================================================================
+   Single Post & Job Spec Box Styling (Anti-Overflow & Responsive Grid)
+   ========================================================================== */
+.single-post {
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.job-spec-box {
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.job-spec-box .badge {
+    white-space: normal !important;
+    word-break: break-word;
+    text-align: left;
+    max-width: 100%;
+    line-height: 1.35;
+}
+
+.job-spec-box .card,
+.job-spec-box .border {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
