@@ -261,15 +261,22 @@ get_header();
 
             if ( $jobs_query->have_posts() ) :
                 while ( $jobs_query->have_posts() ) : $jobs_query->the_post();
-                    $categories = get_the_category();
-                    $loc_badge  = ! empty( $categories ) ? esc_html( $categories[0]->name ) : 'Jepang';
-                    $salary_val = get_post_meta( get_the_ID(), 'gaji', true );
-                    if ( empty( $salary_val ) ) {
-                        $salary_val = '¥190,000 – ¥240,000';
+                    $loc_badge = get_post_meta( get_the_ID(), '_mojo_job_location', true );
+                    if ( empty( $loc_badge ) ) {
+                        $categories = get_the_category();
+                        $loc_badge  = ( ! empty( $categories ) && $categories[0]->slug !== 'uncategorized' ) ? $categories[0]->name : 'Tokyo';
                     }
-                    $kuota_val = get_post_meta( get_the_ID(), 'kuota', true );
+                    $kuota_val = get_post_meta( get_the_ID(), '_mojo_job_quota', true );
                     if ( empty( $kuota_val ) ) {
                         $kuota_val = 'Aktif';
+                    }
+                    $salary_yen = get_post_meta( get_the_ID(), '_mojo_job_salary_yen', true );
+                    if ( empty( $salary_yen ) ) {
+                        $salary_yen = '¥190,000 – ¥240,000';
+                    }
+                    $salary_idr = get_post_meta( get_the_ID(), '_mojo_job_salary_idr', true );
+                    if ( empty( $salary_idr ) ) {
+                        $salary_idr = '± Rp 20 Juta – Rp 26 Juta/bln';
                     }
                     ?>
                     <div class="col-md-6 col-lg-3">
@@ -283,8 +290,8 @@ get_header();
                             <p class="text-muted small mb-3 flex-grow-1"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 14, '...' ) ); ?></p>
 
                             <div class="p-3 bg-light rounded-3 mb-3">
-                                <div class="job-salary-amount"><?php echo esc_html( $salary_val ); ?></div>
-                                <div class="job-salary-sub">&plusmn; Rp 20 Juta – Rp 26 Juta/bln</div>
+                                <div class="job-salary-amount"><?php echo esc_html( $salary_yen ); ?></div>
+                                <div class="job-salary-sub"><?php echo esc_html( $salary_idr ); ?></div>
                             </div>
 
                             <a href="<?php the_permalink(); ?>" class="btn btn-japan btn-sm w-100 text-center mt-auto">Detail & Lamar &rarr;</a>

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.1.8' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.1.9' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -672,3 +672,185 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
     $wp_customize->add_control( 'mojo_stat3_label', array( 'label' => __( 'Keterangan 3', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
 }
 add_action( 'customize_register', 'mojo_bootstrap_customize_register' );
+
+/**
+ * =========================================================================
+ * 5. JOB ORDER META BOX (KOTAK PENGISIAN DETAIL LOWONGAN KERJA JEPANG)
+ * =========================================================================
+ * Menambahkan kotak formulir pengisian data lowongan di halaman Post editor WordPress
+ */
+function mojo_bootstrap_register_job_meta_box() {
+    add_meta_box(
+        'mojo_job_meta_box',
+        __( '💼 Informasi Detail Lowongan Kerja Jepang (Job Order)', 'mojo-bootstrap' ),
+        'mojo_bootstrap_render_job_meta_box',
+        'post',
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'mojo_bootstrap_register_job_meta_box' );
+
+function mojo_bootstrap_render_job_meta_box( $post ) {
+    wp_nonce_field( 'mojo_job_meta_box_nonce', 'mojo_job_nonce' );
+    $loc   = get_post_meta( $post->ID, '_mojo_job_location', true );
+    $quota = get_post_meta( $post->ID, '_mojo_job_quota', true );
+    $yen   = get_post_meta( $post->ID, '_mojo_job_salary_yen', true );
+    $idr   = get_post_meta( $post->ID, '_mojo_job_salary_idr', true );
+    ?>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; padding: 12px 0;">
+        <div>
+            <label style="font-weight: 600; display: block; margin-bottom: 6px;">📍 Lokasi / Prefektur di Jepang:</label>
+            <input type="text" name="_mojo_job_location" value="<?php echo esc_attr( $loc ); ?>" placeholder="Contoh: Tokyo, Osaka, Aichi, Hokkaido" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
+            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Ditampilkan sebagai lencana kota di pojok kiri kartu lowongan.</p>
+        </div>
+        <div>
+            <label style="font-weight: 600; display: block; margin-bottom: 6px;">👥 Jumlah Kuota Lowongan:</label>
+            <input type="text" name="_mojo_job_quota" value="<?php echo esc_attr( $quota ); ?>" placeholder="Contoh: 15 Kuota, 20 Orang, Aktif" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
+            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Ditampilkan sebagai lencana status hijau di pojok kanan kartu.</p>
+        </div>
+        <div>
+            <label style="font-weight: 600; display: block; margin-bottom: 6px;">💴 Standar Gaji Bulanan (Yen):</label>
+            <input type="text" name="_mojo_job_salary_yen" value="<?php echo esc_attr( $yen ); ?>" placeholder="Contoh: ¥215,000 – ¥245,000" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
+            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Nominal gaji pokok di Jepang (Yen).</p>
+        </div>
+        <div>
+            <label style="font-weight: 600; display: block; margin-bottom: 6px;">💵 Estimasi Gaji (Rupiah):</label>
+            <input type="text" name="_mojo_job_salary_idr" value="<?php echo esc_attr( $idr ); ?>" placeholder="Contoh: ± Rp 23 Juta – Rp 26,2 Juta/bln" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccd0d4; font-size: 14px;">
+            <p style="color: #666; font-size: 12px; margin: 4px 0 0;">Estimasi dalam Rupiah per bulan.</p>
+        </div>
+    </div>
+    <?php
+}
+
+function mojo_bootstrap_save_job_meta_box( $post_id ) {
+    if ( ! isset( $_POST['mojo_job_nonce'] ) || ! wp_verify_nonce( $_POST['mojo_job_nonce'], 'mojo_job_meta_box_nonce' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    $fields = array( '_mojo_job_location', '_mojo_job_quota', '_mojo_job_salary_yen', '_mojo_job_salary_idr' );
+    foreach ( $fields as $field ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            update_post_meta( $post_id, $field, sanitize_text_field( $_POST[ $field ] ) );
+        }
+    }
+}
+add_action( 'save_post', 'mojo_bootstrap_save_job_meta_box' );
+
+/**
+ * =========================================================================
+ * 6. ONE-CLICK SAMPLE JOBS GENERATOR (UNTUK CONTOH PENGISIAN DI WP-ADMIN)
+ * =========================================================================
+ */
+function mojo_bootstrap_sample_jobs_admin_menu() {
+    add_theme_page(
+        __( 'Contoh Lowongan Jepang', 'mojo-bootstrap' ),
+        __( 'Contoh Lowongan Kerja', 'mojo-bootstrap' ),
+        'manage_options',
+        'mojo-sample-jobs',
+        'mojo_bootstrap_sample_jobs_page'
+    );
+}
+add_action( 'admin_menu', 'mojo_bootstrap_sample_jobs_admin_menu' );
+
+function mojo_bootstrap_sample_jobs_page() {
+    if ( isset( $_POST['mojo_generate_sample_jobs'] ) && check_admin_referer( 'mojo_generate_sample_jobs_nonce' ) ) {
+        mojo_bootstrap_seed_sample_jobs();
+        echo '<div class="notice notice-success is-dismissible"><p><strong>Berhasil!</strong> 4 Contoh Lowongan Kerja Jepang resmi telah dibuat dan dimasukkan ke database WordPress Anda. Silakan cek menu <strong>Pos &rarr; Semua Pos</strong> atau refresh halaman Beranda.</p></div>';
+    }
+    ?>
+    <div class="wrap" style="max-width: 850px; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 20px;">
+        <h1 style="margin-top: 0; color: #1e293b;">💼 Generator Contoh Data Lowongan Kerja Jepang</h1>
+        <p style="font-size: 15px; color: #475569; line-height: 1.6;">
+            Klik tombol di bawah ini untuk membuat <strong>4 pos lowongan kerja contoh</strong> secara otomatis ke database WordPress Anda. 
+            Semua lowongan ini sudah dilengkapi dengan <strong>kategori resmi, deskripsi pekerjaan lengkap, persyaratan dokumen, lokasi prefektur (Tokyo, Osaka, Aichi, Hokkaido), jumlah kuota, serta gaji Yen & Rupiah</strong>.
+        </p>
+        <p style="font-size: 14px; color: #64748b;">
+            Setelah data ini terpasang, Anda bisa melihat bagaimana cara mengisi lowongan kerja di menu <strong>Pos &rarr; Semua Pos</strong> dan mengeditnya kapan saja sesuai kebutuhan perusahaan.
+        </p>
+        <form method="post" style="margin-top: 25px;">
+            <?php wp_nonce_field( 'mojo_generate_sample_jobs_nonce' ); ?>
+            <button type="submit" name="mojo_generate_sample_jobs" class="button button-primary button-hero" style="background: #c9182b; border-color: #a01020; font-size: 16px; height: auto; padding: 10px 24px;">
+                🚀 Pasang 4 Contoh Lowongan Kerja Jepang Sekarang
+            </button>
+        </form>
+    </div>
+    <?php
+}
+
+function mojo_bootstrap_seed_sample_jobs() {
+    require_once ABSPATH . 'wp-admin/includes/taxonomy.php';
+
+    $cat_ssw  = wp_create_category( 'Tokutei Ginou (SSW)' );
+    $cat_titp = wp_create_category( 'Magang Jepang (TITP)' );
+
+    $sample_jobs = array(
+        array(
+            'title'    => 'Job Order: Tokutei Ginou Kaigo (Perawat Lansia) Tokyo & Kanagawa',
+            'category' => array( $cat_ssw ),
+            'location' => 'Tokyo',
+            'quota'    => '15 Kuota',
+            'yen'      => '¥215,000 – ¥245,000',
+            'idr'      => '± Rp 23 Juta – Rp 26,2 Juta/bln',
+            'content'  => "Dibuka kesempatan berkarir di Jepang melalui program Tokutei Ginou (SSW) bidang Perawat Lansia (Kaigo) untuk penempatan di fasilitas perawatan lansia modern wilayah metropolitan Tokyo & Kanagawa.\n\n### Fasilitas & Benefit:\n- Gaji pokok standar pekerja lokal Jepang\n- Subsidi perumahan/apartemen 50%\n- Asuransi kesehatan nasional & ketenagakerjaan lengkap\n- Tiket pesawat keberangkatan ditanggung perusahaan penerima\n\n### Persyaratan:\n1. Pria / Wanita usia 19 - 35 tahun\n2. Memiliki sertifikat kemampuan bahasa Jepang minimal JLPT N4 / JFT Basic A2\n3. Memiliki sertifikat keahlian Kaigo Skill Test & Kaigo Caregiver\n4. Sehat jasmani dan rohani, lolos Medical Check-Up (MCU)",
+        ),
+        array(
+            'title'    => 'Lowongan Tokutei Ginou Pengolahan Makanan (Food Processing) Osaka',
+            'category' => array( $cat_ssw ),
+            'location' => 'Osaka',
+            'quota'    => '20 Kuota',
+            'yen'      => '¥195,000 – ¥225,000',
+            'idr'      => '± Rp 20,8 Juta – Rp 24 Juta/bln',
+            'content'  => "Perusahaan industri makanan kemasan higienis berskala nasional di Osaka membuka kuota 20 tenaga kerja asal Indonesia untuk bagian preparasi, pengolahan, dan pengemasan bento.\n\n### Fasilitas & Benefit:\n- Asrama karyawan ber-AC dan dekat stasiun\n- Uang lembur sesuai UU Standar Ketenagakerjaan Jepang\n- Bimbingan staf penanggung jawab berbahasa Indonesia\n\n### Persyaratan:\n1. Usia 19 - 32 tahun\n2. Sertifikat JLPT N4 / JFT Basic A2\n3. Sertifikat Ujian Keterampilan Pengolahan Makanan (Seizou Test)\n4. Disiplin, jujur, dan bersemangat kerja tinggi",
+        ),
+        array(
+            'title'    => 'Program Magang TITP Manufaktur & Pengelasan Logam Aichi (Nagoya)',
+            'category' => array( $cat_titp ),
+            'location' => 'Aichi',
+            'quota'    => '12 Kuota',
+            'yen'      => '¥170,000 – ¥195,000',
+            'idr'      => '± Rp 18,2 Juta – Rp 20,8 Juta/bln',
+            'content'  => "Peluang magang industri manufaktur dan perakitan komponen otomotif di prefektur Aichi (wilayah industri Nagoya). Program resmi alih teknologi dengan standar keselamatan kerja internasional.\n\n### Fasilitas & Benefit:\n- Sertifikasi kompetensi resmi JITCO Jepang\n- Tabungan dana purna magang saat kembali ke Indonesia\n- Asrama dan perlengkapan kerja lengkap disediakan\n\n### Persyaratan:\n1. Pria usia 18 - 26 tahun, minimal lulusan SMK/SMA sederajat\n2. Tinggi badan min. 162 cm, tidak buta warna, tidak bertato\n3. Lulus seleksi tes fisik dan kesamaptaan di LPK Mojo Global Talent",
+        ),
+        array(
+            'title'    => 'Peluang Kerja Pertanian & Agrikultur Modern Greenhouse di Hokkaido',
+            'category' => array( $cat_ssw ),
+            'location' => 'Hokkaido',
+            'quota'    => '10 Kuota',
+            'yen'      => '¥185,000 – ¥210,000',
+            'idr'      => '± Rp 19,8 Juta – Rp 22,5 Juta/bln',
+            'content'  => "Budidaya sayuran dan buah modern dengan sistem hidroponik dan sensor iklim otomatis di Hokkaido. Udara bersih, lingkungan kerja kondusif, dan perumahan dinas disediakan.\n\n### Fasilitas & Benefit:\n- Rumah dinas berpenghangat ruangan (winter heating)\n- Bonus panen musiman\n- Kesempatan memperpanjang visa hingga 5 tahun penuh\n\n### Persyaratan:\n1. Pria / Wanita usia 19 - 35 tahun\n2. JLPT N4 / JFT Basic A2\n3. Sertifikat Skill Test Pertanian (Nogyo Tokutei Ginou)\n4. Menyukai pekerjaan agrikultur modern",
+        ),
+    );
+
+    foreach ( $sample_jobs as $job ) {
+        $existing = get_page_by_title( $job['title'], OBJECT, 'post' );
+        if ( ! $existing ) {
+            $post_id = wp_insert_post( array(
+                'post_title'    => $job['title'],
+                'post_content'  => $job['content'],
+                'post_status'   => 'publish',
+                'post_type'     => 'post',
+                'post_category' => $job['category'],
+            ) );
+            if ( $post_id && ! is_wp_error( $post_id ) ) {
+                update_post_meta( $post_id, '_mojo_job_location', $job['location'] );
+                update_post_meta( $post_id, '_mojo_job_quota', $job['quota'] );
+                update_post_meta( $post_id, '_mojo_job_salary_yen', $job['yen'] );
+                update_post_meta( $post_id, '_mojo_job_salary_idr', $job['idr'] );
+            }
+        } else {
+            // Update metadata existing post
+            update_post_meta( $existing->ID, '_mojo_job_location', $job['location'] );
+            update_post_meta( $existing->ID, '_mojo_job_quota', $job['quota'] );
+            update_post_meta( $existing->ID, '_mojo_job_salary_yen', $job['yen'] );
+            update_post_meta( $existing->ID, '_mojo_job_salary_idr', $job['idr'] );
+        }
+    }
+}
