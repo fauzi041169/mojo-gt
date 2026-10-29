@@ -53,25 +53,18 @@ get_header();
      ========================================================================= -->
 <section class="clean-hero text-center">
     <div class="container">
-        <!-- Trust Status Pill -->
-        <div class="mb-4 reveal reveal-scale">
-            <span class="hero-pill-badge pulse-badge">
-                <i class="bi bi-patch-check-fill text-danger"></i> Lembaga Pengirim Resmi &bull; Kemnaker RI & OTIT Jepang
-            </span>
-        </div>
-
         <!-- Main Title -->
-        <h1 class="hero-main-title mb-4 reveal reveal-up delay-100">
+        <h1 class="hero-main-title mb-4 reveal reveal-up">
             <?php echo wp_kses_post( $hero_title ); ?>
         </h1>
 
         <!-- Subtitle -->
-        <p class="hero-lead-text mb-5 reveal reveal-up delay-200">
+        <p class="hero-lead-text mb-5 reveal reveal-up delay-100">
             <?php echo wp_kses_post( $hero_subtitle ); ?>
         </p>
 
         <!-- Action Buttons -->
-        <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-5 reveal reveal-up delay-300">
+        <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-5 reveal reveal-up delay-200">
             <a href="<?php echo esc_url( $btn1_url ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2">
                 <i class="bi bi-briefcase-fill"></i>
                 <span><?php echo esc_html( $btn1_text ); ?></span>
@@ -84,7 +77,7 @@ get_header();
         </div>
 
         <!-- Trust Badges Line -->
-        <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-secondary small pt-2 reveal reveal-fade delay-400">
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-secondary small pt-2 reveal reveal-fade delay-300">
             <div class="d-flex align-items-center gap-2">
                 <i class="bi bi-check-circle-fill text-danger"></i>
                 <span class="fw-medium">Terakreditasi LA-LPK</span>
