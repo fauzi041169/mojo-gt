@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.2.4' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.2.5' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -855,6 +855,44 @@ function mojo_bootstrap_save_job_meta_box( $post_id ) {
 add_action( 'save_post', 'mojo_bootstrap_save_job_meta_box' );
 
 /**
+ * Mendapatkan semua ID kategori yang termasuk kelompok Lowongan Kerja
+ */
+function mojo_get_job_category_ids() {
+    $all_cats = get_categories( array( 'hide_empty' => false ) );
+    $job_ids = array();
+    $target_slugs = array( 'lowongan', 'lowongan-kerja', 'loker', 'job-order', 'jobs', 'job', 'tokutei-ginou', 'magang', 'ssw', 'titp', 'kaigo', 'pertanian', 'pengolahan-makanan', 'manufaktur' );
+
+    foreach ( $all_cats as $cat ) {
+        $name_lower = strtolower( $cat->name );
+        $slug_lower = strtolower( $cat->slug );
+
+        if ( in_array( $slug_lower, $target_slugs, true ) || strpos( $name_lower, 'lowongan' ) !== false || strpos( $name_lower, 'loker' ) !== false || strpos( $slug_lower, 'lowongan' ) !== false || strpos( $slug_lower, 'job' ) !== false ) {
+            $job_ids[] = (int) $cat->term_id;
+        }
+    }
+    return array_unique( $job_ids );
+}
+
+/**
+ * Mendapatkan semua ID kategori yang termasuk kelompok Berita & Informasi
+ */
+function mojo_get_news_category_ids() {
+    $all_cats = get_categories( array( 'hide_empty' => false ) );
+    $news_ids = array();
+    $target_slugs = array( 'berita', 'berita-terbaru', 'informasi', 'artikel', 'pengumuman', 'news', 'kegiatan', 'dokumentasi', 'testimoni', 'siswa', 'alumni' );
+
+    foreach ( $all_cats as $cat ) {
+        $name_lower = strtolower( $cat->name );
+        $slug_lower = strtolower( $cat->slug );
+
+        if ( in_array( $slug_lower, $target_slugs, true ) || strpos( $name_lower, 'berita' ) !== false || strpos( $name_lower, 'artikel' ) !== false || strpos( $name_lower, 'kegiatan' ) !== false || strpos( $name_lower, 'dokumentasi' ) !== false || strpos( $name_lower, 'informasi' ) !== false || strpos( $slug_lower, 'berita' ) !== false || strpos( $slug_lower, 'news' ) !== false ) {
+            $news_ids[] = (int) $cat->term_id;
+        }
+    }
+    return array_unique( $news_ids );
+}
+
+/**
  * Memeriksa apakah suatu postingan merupakan Lowongan Kerja atau Artikel Berita
  * Digunakan agar pos berita seperti 'Keberangkatan Siswa' tidak tercampur ke dalam daftar lowongan.
  */
@@ -864,42 +902,32 @@ function mojo_is_job_post( $post_id = 0 ) {
         return false;
     }
 
-    // 1. Cek judul: jika judul tentang berita keberangkatan/dokumentasi/cerita, pasti BUKAN lowongan
+    $post_cat_ids = wp_get_post_categories( $post->ID );
+    $job_cat_ids  = mojo_get_job_category_ids();
+    $news_cat_ids = mojo_get_news_category_ids();
+
+    // 1. Jika terdaftar di kategori Lowongan Kerja -> PASTI LOWONGAN
+    if ( ! empty( array_intersect( $post_cat_ids, $job_cat_ids ) ) ) {
+        return true;
+    }
+
+    // 2. Jika terdaftar di kategori Berita -> PASTI BERITA
+    if ( ! empty( array_intersect( $post_cat_ids, $news_cat_ids ) ) ) {
+        return false;
+    }
+
+    // 3. Cek judul: jika judul tentang keberangkatan/siswa/kegiatan/dokumentasi -> BUKAN LOWONGAN
     $title_lower = strtolower( $post->post_title );
     if ( preg_match( '/\b(keberangkatan|pelepasan|dokumentasi|kisah|testimoni|alumni|kegiatan|wisuda|panduan|tips|syarat visa)\b/i', $title_lower ) ) {
         return false;
     }
 
-    // 2. Cek kategori: jika masuk kategori berita/dokumentasi, BUKAN lowongan
-    $berita_slugs = array( 'berita', 'informasi', 'artikel', 'pengumuman', 'news', 'dokumentasi', 'kegiatan', 'testimoni', 'galeri', 'alumni' );
-    $cats = get_the_category( $post->ID );
-    if ( ! empty( $cats ) ) {
-        foreach ( $cats as $c ) {
-            if ( in_array( strtolower( $c->slug ), $berita_slugs, true ) ) {
-                return false;
-            }
-        }
-    }
-
-    // 3. Cek apakah ada meta khusus lowongan yang diisi
+    // 4. Cek apakah ada meta khusus lowongan yang diisi
     $loc   = get_post_meta( $post->ID, '_mojo_job_location', true );
     $yen   = get_post_meta( $post->ID, '_mojo_job_salary_yen', true );
     $quota = get_post_meta( $post->ID, '_mojo_job_quota', true );
     if ( ! empty( $loc ) || ! empty( $yen ) || ! empty( $quota ) ) {
         return true;
-    }
-
-    // 4. Cek kategori yang mengindikasikan lowongan kerja
-    $job_slugs = array( 'lowongan', 'lowongan-kerja', 'job-order', 'jobs', 'job', 'tokutei-ginou', 'magang', 'ssw', 'titp', 'kaigo', 'pengolahan-makanan', 'pertanian', 'manufaktur', 'konstruksi' );
-    if ( ! empty( $cats ) ) {
-        foreach ( $cats as $c ) {
-            if ( in_array( strtolower( $c->slug ), $job_slugs, true ) ) {
-                return true;
-            }
-            if ( stripos( $c->name, 'lowongan' ) !== false || stripos( $c->name, 'job' ) !== false ) {
-                return true;
-            }
-        }
     }
 
     // 5. Cek kata kunci lowongan pada judul
@@ -913,13 +941,55 @@ function mojo_is_job_post( $post_id = 0 ) {
 
 /**
  * Memastikan kategori 'Lowongan Kerja' dan 'Berita & Informasi' selalu tersedia di WP-Admin
+ * Serta secara otomatis merapikan pos 'Uncategorized' agar langsung masuk ke kategori yang tepat.
  */
 function mojo_bootstrap_ensure_default_categories() {
-    if ( ! term_exists( 'lowongan-kerja', 'category' ) && ! term_exists( 'Lowongan Kerja', 'category' ) ) {
-        wp_insert_term( 'Lowongan Kerja', 'category', array( 'slug' => 'lowongan-kerja' ) );
+    $job_cat_id = 0;
+    $news_cat_id = 0;
+
+    $job_term = get_term_by( 'slug', 'lowongan-kerja', 'category' );
+    if ( ! $job_term ) {
+        $job_term = get_term_by( 'slug', 'lowongan', 'category' );
     }
-    if ( ! term_exists( 'berita', 'category' ) && ! term_exists( 'Berita & Informasi', 'category' ) ) {
-        wp_insert_term( 'Berita & Informasi', 'category', array( 'slug' => 'berita' ) );
+    if ( ! $job_term ) {
+        $res = wp_insert_term( 'Lowongan Kerja', 'category', array( 'slug' => 'lowongan-kerja' ) );
+        if ( ! is_wp_error( $res ) ) {
+            $job_cat_id = $res['term_id'];
+        }
+    } else {
+        $job_cat_id = $job_term->term_id;
+    }
+
+    $news_term = get_term_by( 'slug', 'berita', 'category' );
+    if ( ! $news_term ) {
+        $news_term = get_term_by( 'name', 'Berita', 'category' );
+    }
+    if ( ! $news_term ) {
+        $res = wp_insert_term( 'Berita & Informasi', 'category', array( 'slug' => 'berita' ) );
+        if ( ! is_wp_error( $res ) ) {
+            $news_cat_id = $res['term_id'];
+        }
+    } else {
+        $news_cat_id = $news_term->term_id;
+    }
+
+    // Otomatis sinkronisasi pos-pos yang masih 'Uncategorized' agar otomatis terpisah rapi
+    $uncat = get_term_by( 'slug', 'uncategorized', 'category' );
+    if ( $uncat ) {
+        $uncat_posts = get_posts( array(
+            'category'       => $uncat->term_id,
+            'posts_per_page' => 50,
+            'post_status'    => 'publish',
+        ) );
+        if ( ! empty( $uncat_posts ) ) {
+            foreach ( $uncat_posts as $up ) {
+                if ( mojo_is_job_post( $up->ID ) && $job_cat_id ) {
+                    wp_set_post_categories( $up->ID, array( $job_cat_id ), false );
+                } elseif ( $news_cat_id ) {
+                    wp_set_post_categories( $up->ID, array( $news_cat_id ), false );
+                }
+            }
+        }
     }
 }
 add_action( 'init', 'mojo_bootstrap_ensure_default_categories' );

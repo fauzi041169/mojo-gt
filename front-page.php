@@ -354,69 +354,15 @@ get_header();
                 endforeach;
                 wp_reset_postdata();
             else :
-            ?>
-                <!-- Fallback 4 Demo Jobs if no posts published yet -->
-                <div class="col-md-6 col-lg-3">
-                    <div class="clean-job-card h-100 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Tokyo</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">15 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Perawat Lansia (Kaigo)</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Penempatan di panti perawatan lansia modern wilayah metropolitan Tokyo. Asrama subsidi 50%.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥215,000 - ¥245,000</div>
-                            <div class="job-salary-sub">&plusmn; Rp 23 Juta - Rp 26,2 Juta/bln</div>
-                        </div>
-                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="clean-job-card h-100 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Osaka</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">20 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Pengolahan Makanan</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Pabrik bento higienis skala nasional Jepang di Osaka. Fasilitas mess dan asuransi lengkap.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥195,000 - ¥225,000</div>
-                            <div class="job-salary-sub">&plusmn; Rp 20,8 Juta - Rp 24 Juta/bln</div>
-                        </div>
-                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="clean-job-card h-100 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Aichi</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">12 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Teknik Mesin & Las</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Industri komponen presisi otomotif di Nagoya. Pelatihan keselamatan kerja dan sertifikasi JITCO.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥170,000 - ¥195,000</div>
-                            <div class="job-salary-sub">&plusmn; Rp 18,2 Juta - Rp 20,8 Juta/bln</div>
-                        </div>
-                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="clean-job-card h-100 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Hokkaido</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">10 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Pertanian Greenhouse</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Budidaya sayuran modern berteknologi sensor iklim di Hokkaido. Disediakan rumah dinas asri.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥185,000 - ¥210,000</div>
-                            <div class="job-salary-sub">&plusmn; Rp 19,8 Juta - Rp 22,5 Juta/bln</div>
-                        </div>
-                        <a href="#konsultasi" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
+                ?>
+                <div class="col-12 text-center py-4">
+                    <div class="p-4 bg-light rounded-4 border d-inline-block text-center" style="max-width: 520px;">
+                        <i class="bi bi-briefcase fs-1 text-danger opacity-75 mb-2 d-block"></i>
+                        <h5 class="fw-bold text-dark mb-1">Belum Ada Lowongan Kerja Aktif</h5>
+                        <p class="text-muted small mb-3">Tulis dan terbitkan pos lowongan baru di WP-Admin dengan memilih <strong>Kategori: Lowongan Kerja</strong>.</p>
+                        <?php if ( current_user_can( 'edit_posts' ) ) : ?>
+                            <a href="<?php echo esc_url( admin_url( 'post-new.php' ) ); ?>" class="btn btn-japan btn-sm px-4">Tambah Lowongan Baru &rarr;</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endif; ?>
@@ -559,44 +505,15 @@ get_header();
                 wp_reset_postdata();
             else :
                 ?>
-                <!-- Fallback 3 Berita Resmi jika belum ada artikel berita -->
-                <div class="col-md-4">
-                    <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm p-4">
-                        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
-                            <span class="badge bg-danger-subtle text-danger fw-semibold">Regulasi</span>
-                            <span>&bull;</span>
-                            <span><?php echo date( 'd M Y' ); ?></span>
-                        </div>
-                        <h5 class="fw-bold mb-2 text-dark fs-6">Panduan Lengkap Syarat Visa Tokutei Ginou (SSW) Terbaru 2026</h5>
-                        <p class="text-secondary small mb-3 flex-grow-1">Informasi ketentuan tes bahasa JFT Basic A2 dan keahlian spesifik bidang kerja di Jepang.</p>
-                        <a href="#konsultasi" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">Baca Selengkapnya &rarr;</a>
-                    </article>
-                </div>
-
-                <div class="col-md-4">
-                    <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm p-4">
-                        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
-                            <span class="badge bg-primary-subtle text-primary fw-semibold">Tips Karir</span>
-                            <span>&bull;</span>
-                            <span><?php echo date( 'd M Y' ); ?></span>
-                        </div>
-                        <h5 class="fw-bold mb-2 text-dark fs-6">5 Tips Lolos Wawancara (Menyetsu) dengan User Perusahaan Jepang</h5>
-                        <p class="text-secondary small mb-3 flex-grow-1">Tata krama, etika perkenalan diri (Jikoshoukai), dan tips menjawab pertanyaan pewawancara.</p>
-                        <a href="#konsultasi" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">Baca Selengkapnya &rarr;</a>
-                    </article>
-                </div>
-
-                <div class="col-md-4">
-                    <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm p-4">
-                        <div class="d-flex align-items-center gap-2 small text-muted mb-2">
-                            <span class="badge bg-success-subtle text-success fw-semibold">Dokumentasi</span>
-                            <span>&bull;</span>
-                            <span><?php echo date( 'd M Y' ); ?></span>
-                        </div>
-                        <h5 class="fw-bold mb-2 text-dark fs-6">Pelepasan Keberangkatan Peserta Magang & SSW ke Tokyo & Osaka</h5>
-                        <p class="text-secondary small mb-3 flex-grow-1">Dokumentasi resmi pelepasan kandidat yang telah menyelesaikan diklat di Mojo Global Talent.</p>
-                        <a href="#konsultasi" class="text-danger fw-semibold small text-decoration-none mt-auto d-inline-flex align-items-center gap-1">Baca Selengkapnya &rarr;</a>
-                    </article>
+                <div class="col-12 text-center py-4">
+                    <div class="p-4 bg-light rounded-4 border d-inline-block text-center" style="max-width: 520px;">
+                        <i class="bi bi-newspaper fs-1 text-danger opacity-75 mb-2 d-block"></i>
+                        <h5 class="fw-bold text-dark mb-1">Belum Ada Artikel Berita</h5>
+                        <p class="text-muted small mb-3">Tulis dan terbitkan artikel baru di WP-Admin dengan memilih <strong>Kategori: Berita</strong> agar langsung tampil di bagian ini.</p>
+                        <?php if ( current_user_can( 'edit_posts' ) ) : ?>
+                            <a href="<?php echo esc_url( admin_url( 'post-new.php' ) ); ?>" class="btn btn-japan btn-sm px-4">Tulis Berita Baru &rarr;</a>
+                        <?php endif; ?>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>

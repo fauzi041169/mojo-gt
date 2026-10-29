@@ -152,69 +152,12 @@ $all_jobs_query = new WP_Query( $jobs_args );
 
             if ( $displayed_jobs_count === 0 ) :
                 ?>
-                ?>
-                <!-- Fallback 4 Demo Jobs jika belum ada pos lowongan -->
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="clean-job-card h-100 d-flex flex-column bg-white rounded-4 border p-4 shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Tokyo</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">15 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Perawat Lansia (Kaigo) Tokyo</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Penempatan di panti perawatan lansia modern wilayah metropolitan Tokyo. Asrama subsidi 50%.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥215,000 – ¥245,000</div>
-                            <div class="job-salary-sub">± Rp 23 Juta – Rp 26,2 Juta/bln</div>
-                        </div>
-                        <a href="#formulir-lamaran" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="clean-job-card h-100 d-flex flex-column bg-white rounded-4 border p-4 shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Osaka</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">20 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Pengolahan Makanan Osaka</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Pabrik bento higienis skala nasional Jepang di Osaka. Fasilitas mess dan asuransi lengkap.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥195,000 – ¥225,000</div>
-                            <div class="job-salary-sub">± Rp 20,8 Juta – Rp 24 Juta/bln</div>
-                        </div>
-                        <a href="#formulir-lamaran" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="clean-job-card h-100 d-flex flex-column bg-white rounded-4 border p-4 shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Aichi</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">12 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Teknik Mesin & Las Aichi</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Industri komponen presisi otomotif di Nagoya. Pelatihan keselamatan kerja dan sertifikasi JITCO.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥170,000 – ¥195,000</div>
-                            <div class="job-salary-sub">± Rp 18,2 Juta – Rp 20,8 Juta/bln</div>
-                        </div>
-                        <a href="#formulir-lamaran" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                    <div class="clean-job-card h-100 d-flex flex-column bg-white rounded-4 border p-4 shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Hokkaido</span>
-                            <span class="badge bg-success-subtle text-success small fw-semibold">10 Kuota</span>
-                        </div>
-                        <h4 class="h6 fw-bold text-dark mb-2">Pertanian Modern Hokkaido</h4>
-                        <p class="text-muted small mb-3 flex-grow-1">Budidaya sayuran modern berteknologi sensor iklim di Hokkaido. Disediakan rumah dinas asri.</p>
-                        <div class="p-3 bg-light rounded-3 mb-3">
-                            <div class="job-salary-amount">¥185,000 – ¥210,000</div>
-                            <div class="job-salary-sub">± Rp 19,8 Juta – Rp 22,5 Juta/bln</div>
-                        </div>
-                        <a href="#formulir-lamaran" class="btn btn-japan btn-sm w-100 text-center mt-auto">Lamar Posisi Ini</a>
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-light rounded-4 border d-inline-block text-center" style="max-width: 520px;">
+                        <i class="bi bi-briefcase fs-1 text-danger opacity-75 mb-2 d-block"></i>
+                        <h4 class="fw-bold text-dark mb-2">Belum Ada Lowongan Kerja Aktif</h4>
+                        <p class="text-muted small mb-4">Saat ini belum ada data lowongan kerja baru. Silakan tambahkan postingan baru di WP-Admin dengan memilih <strong>Kategori: Lowongan Kerja</strong>.</p>
+                        <a href="#formulir-lamaran" class="btn btn-japan btn-sm px-4">Konsultasi Karir Sekarang &rarr;</a>
                     </div>
                 </div>
             <?php endif; ?>
