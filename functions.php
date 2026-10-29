@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.2.1' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.2.2' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -195,9 +195,19 @@ function mojo_bootstrap_pagination() {
 
 /**
  * Fallback callback for Primary Menu
- * Displays: Beranda, Tentang Kami, Berita, Kebijakan Privasi
+ * Displays: Beranda, Lowongan Kerja, Tentang Kami, Berita, Kebijakan Privasi
  */
 function mojo_bootstrap_default_primary_menu() {
+    // Detect lowongan kerja page
+    $jobs_page = get_page_by_path( 'lowongan-kerja' );
+    if ( ! $jobs_page ) {
+        $jobs_page = get_page_by_title( 'Lowongan Kerja', OBJECT, 'page' );
+    }
+    if ( ! $jobs_page ) {
+        $jobs_page = get_page_by_title( 'LOWONGAN KERJA', OBJECT, 'page' );
+    }
+    $jobs_url = $jobs_page ? get_permalink( $jobs_page ) : home_url( '/lowongan-kerja/' );
+
     // Detect about page by path or title (case-insensitive)
     $about_page = get_page_by_path( 'tentang-kami' );
     if ( ! $about_page ) {
@@ -221,12 +231,14 @@ function mojo_bootstrap_default_primary_menu() {
     $privacy_url = function_exists( 'get_privacy_policy_url' ) && get_privacy_policy_url() ? get_privacy_policy_url() : home_url( '/kebijakan-privasi/' );
 
     $is_home    = is_front_page();
+    $is_jobs    = ( $jobs_page && is_page( $jobs_page->ID ) ) || is_page( 'lowongan-kerja' );
     $is_about   = ( $about_page && is_page( $about_page->ID ) ) || is_page( 'tentang-kami' );
     $is_news    = ( is_home() && ! is_front_page() ) || ( $news_page && is_page( $news_page->ID ) ) || is_singular( 'post' ) || is_category() || is_tag();
     $is_privacy = ( function_exists( 'is_privacy_policy' ) && is_privacy_policy() ) || is_page( 'kebijakan-privasi' );
 
     echo '<ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">';
     echo '<li class="nav-item"><a class="nav-link' . ( $is_home ? ' active" aria-current="page"' : '"' ) . ' href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Beranda', 'mojo-bootstrap' ) . '</a></li>';
+    echo '<li class="nav-item"><a class="nav-link' . ( $is_jobs ? ' active" aria-current="page"' : '"' ) . ' href="' . esc_url( $jobs_url ) . '">' . esc_html__( 'Lowongan Kerja', 'mojo-bootstrap' ) . '</a></li>';
     echo '<li class="nav-item"><a class="nav-link' . ( $is_about ? ' active" aria-current="page"' : '"' ) . ' href="' . esc_url( $about_url ) . '">' . esc_html__( 'Tentang Kami', 'mojo-bootstrap' ) . '</a></li>';
     echo '<li class="nav-item"><a class="nav-link' . ( $is_news ? ' active" aria-current="page"' : '"' ) . ' href="' . esc_url( $news_url ) . '">' . esc_html__( 'Berita', 'mojo-bootstrap' ) . '</a></li>';
     echo '<li class="nav-item"><a class="nav-link' . ( $is_privacy ? ' active" aria-current="page"' : '"' ) . ' href="' . esc_url( $privacy_url ) . '">' . esc_html__( 'Kebijakan Privasi', 'mojo-bootstrap' ) . '</a></li>';
@@ -244,6 +256,10 @@ function mojo_bootstrap_create_default_menu_and_pages() {
     }
 
     $default_pages = array(
+        'lowongan-kerja' => array(
+            'title'   => 'Lowongan Kerja',
+            'content' => '',
+        ),
         'tentang-kami' => array(
             'title'   => 'Tentang Kami',
             'content' => 'PT. Mojo Global Talent adalah Lembaga Pengirim Resmi (Sending Organization) dan Job Matching Agency berizin Kemnaker RI yang menghubungkan tenaga kerja profesional Indonesia dengan ratusan perusahaan terkemuka di Jepang.',
@@ -279,9 +295,15 @@ function mojo_bootstrap_create_default_menu_and_pages() {
                 'post_status'  => 'publish',
                 'post_type'    => 'page',
             ) );
+            if ( $slug === 'lowongan-kerja' ) {
+                update_post_meta( $page_id, '_wp_page_template', 'page-lowongan-kerja.php' );
+            }
             $page_ids[ $slug ] = $page_id;
         } else {
             $page_ids[ $slug ] = $existing_page->ID;
+            if ( $slug === 'lowongan-kerja' ) {
+                update_post_meta( $existing_page->ID, '_wp_page_template', 'page-lowongan-kerja.php' );
+            }
         }
     }
 
@@ -304,12 +326,25 @@ function mojo_bootstrap_create_default_menu_and_pages() {
 
         // 1. Beranda
         wp_update_nav_menu_item( $menu_id, 0, array(
-            'menu-item-title'  => __( 'Beranda', 'mojo-bootstrap' ),
-            'menu-item-url'    => home_url( '/' ),
-            'menu-item-status' => 'publish',
+            'menu-item-title'    => __( 'Beranda', 'mojo-bootstrap' ),
+            'menu-item-url'      => home_url( '/' ),
+            'menu-item-status'   => 'publish',
+            'menu-item-position' => 1,
         ) );
 
-        // 2. Tentang Kami
+        // 2. Lowongan Kerja
+        $jobs_url = ! empty( $page_ids['lowongan-kerja'] ) ? get_permalink( $page_ids['lowongan-kerja'] ) : home_url( '/lowongan-kerja/' );
+        wp_update_nav_menu_item( $menu_id, 0, array(
+            'menu-item-title'     => __( 'Lowongan Kerja', 'mojo-bootstrap' ),
+            'menu-item-url'       => $jobs_url,
+            'menu-item-object'    => 'page',
+            'menu-item-object-id' => ! empty( $page_ids['lowongan-kerja'] ) ? $page_ids['lowongan-kerja'] : 0,
+            'menu-item-type'      => ! empty( $page_ids['lowongan-kerja'] ) ? 'post_type' : 'custom',
+            'menu-item-status'    => 'publish',
+            'menu-item-position'  => 2,
+        ) );
+
+        // 3. Tentang Kami
         $about_url = ! empty( $page_ids['tentang-kami'] ) ? get_permalink( $page_ids['tentang-kami'] ) : home_url( '/tentang-kami/' );
         wp_update_nav_menu_item( $menu_id, 0, array(
             'menu-item-title'     => __( 'Tentang Kami', 'mojo-bootstrap' ),
@@ -318,9 +353,10 @@ function mojo_bootstrap_create_default_menu_and_pages() {
             'menu-item-object-id' => ! empty( $page_ids['tentang-kami'] ) ? $page_ids['tentang-kami'] : 0,
             'menu-item-type'      => ! empty( $page_ids['tentang-kami'] ) ? 'post_type' : 'custom',
             'menu-item-status'    => 'publish',
+            'menu-item-position'  => 3,
         ) );
 
-        // 3. Berita
+        // 4. Berita
         $news_url = ! empty( $page_ids['berita'] ) ? get_permalink( $page_ids['berita'] ) : home_url( '/berita/' );
         wp_update_nav_menu_item( $menu_id, 0, array(
             'menu-item-title'     => __( 'Berita', 'mojo-bootstrap' ),
@@ -329,9 +365,10 @@ function mojo_bootstrap_create_default_menu_and_pages() {
             'menu-item-object-id' => ! empty( $page_ids['berita'] ) ? $page_ids['berita'] : 0,
             'menu-item-type'      => ! empty( $page_ids['berita'] ) ? 'post_type' : 'custom',
             'menu-item-status'    => 'publish',
+            'menu-item-position'  => 4,
         ) );
 
-        // 4. Kebijakan Privasi
+        // 5. Kebijakan Privasi
         $privacy_url = ! empty( $page_ids['kebijakan-privasi'] ) ? get_permalink( $page_ids['kebijakan-privasi'] ) : ( function_exists( 'get_privacy_policy_url' ) && get_privacy_policy_url() ? get_privacy_policy_url() : home_url( '/kebijakan-privasi/' ) );
         wp_update_nav_menu_item( $menu_id, 0, array(
             'menu-item-title'     => __( 'Kebijakan Privasi', 'mojo-bootstrap' ),
@@ -340,6 +377,7 @@ function mojo_bootstrap_create_default_menu_and_pages() {
             'menu-item-object-id' => ! empty( $page_ids['kebijakan-privasi'] ) ? $page_ids['kebijakan-privasi'] : 0,
             'menu-item-type'      => ! empty( $page_ids['kebijakan-privasi'] ) ? 'post_type' : 'custom',
             'menu-item-status'    => 'publish',
+            'menu-item-position'  => 5,
         ) );
 
         // Assign menu locations
@@ -356,6 +394,78 @@ function mojo_bootstrap_create_default_menu_and_pages() {
     update_option( 'mojo_bootstrap_setup_completed', true );
 }
 add_action( 'after_switch_theme', 'mojo_bootstrap_create_default_menu_and_pages' );
+
+/**
+ * Memastikan halaman "Lowongan Kerja" selalu ada dan otomatis terdaftar di Menu Navigasi
+ */
+function mojo_bootstrap_ensure_lowongan_page() {
+    $slug = 'lowongan-kerja';
+    $jobs_page = get_page_by_path( $slug );
+    if ( ! $jobs_page ) {
+        $jobs_page = get_page_by_title( 'Lowongan Kerja', OBJECT, 'page' );
+    }
+    if ( ! $jobs_page ) {
+        $jobs_page = get_page_by_title( 'LOWONGAN KERJA', OBJECT, 'page' );
+    }
+
+    if ( ! $jobs_page ) {
+        $page_id = wp_insert_post( array(
+            'post_title'   => 'Lowongan Kerja',
+            'post_name'    => $slug,
+            'post_content' => '',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+        ) );
+        if ( $page_id && ! is_wp_error( $page_id ) ) {
+            update_post_meta( $page_id, '_wp_page_template', 'page-lowongan-kerja.php' );
+            $jobs_page = get_post( $page_id );
+        }
+    } else {
+        $current_tpl = get_post_meta( $jobs_page->ID, '_wp_page_template', true );
+        if ( empty( $current_tpl ) || $current_tpl === 'default' ) {
+            update_post_meta( $jobs_page->ID, '_wp_page_template', 'page-lowongan-kerja.php' );
+        }
+    }
+
+    // Tambahkan otomatis ke Menu Navigasi jika belum terdaftar
+    if ( $jobs_page ) {
+        $locations = get_theme_mod( 'nav_menu_locations' );
+        $menu_id   = ( is_array( $locations ) && ! empty( $locations['primary'] ) ) ? $locations['primary'] : 0;
+
+        if ( ! $menu_id ) {
+            $menu_obj = wp_get_nav_menu_object( 'Menu Utama' );
+            if ( $menu_obj ) {
+                $menu_id = $menu_obj->term_id;
+            }
+        }
+
+        if ( $menu_id ) {
+            $menu_items = wp_get_nav_menu_items( $menu_id );
+            $already_in_menu = false;
+            if ( ! empty( $menu_items ) ) {
+                foreach ( $menu_items as $item ) {
+                    if ( (int) $item->object_id === (int) $jobs_page->ID || strtolower( trim( $item->title ) ) === 'lowongan kerja' || strpos( $item->url, 'lowongan-kerja' ) !== false ) {
+                        $already_in_menu = true;
+                        break;
+                    }
+                }
+            }
+
+            if ( ! $already_in_menu ) {
+                wp_update_nav_menu_item( $menu_id, 0, array(
+                    'menu-item-title'     => __( 'Lowongan Kerja', 'mojo-bootstrap' ),
+                    'menu-item-url'       => get_permalink( $jobs_page->ID ),
+                    'menu-item-object'    => 'page',
+                    'menu-item-object-id' => $jobs_page->ID,
+                    'menu-item-type'      => 'post_type',
+                    'menu-item-status'    => 'publish',
+                    'menu-item-position'  => 2,
+                ) );
+            }
+        }
+    }
+}
+add_action( 'init', 'mojo_bootstrap_ensure_lowongan_page' );
 
 /**
  * Register Theme Customizer settings

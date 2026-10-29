@@ -244,10 +244,13 @@ get_header();
             </div>
             <div class="mt-3 mt-md-0">
                 <?php
-                $news_page = get_page_by_path( 'berita' );
-                $news_url  = $news_page ? get_permalink( $news_page ) : ( get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/berita/' ) );
+                $jobs_page = get_page_by_path( 'lowongan-kerja' );
+                if ( ! $jobs_page ) {
+                    $jobs_page = get_page_by_title( 'Lowongan Kerja', OBJECT, 'page' );
+                }
+                $jobs_url  = $jobs_page ? get_permalink( $jobs_page ) : home_url( '/lowongan-kerja/' );
                 ?>
-                <a href="<?php echo esc_url( $news_url ); ?>" class="btn btn-japan-outline btn-sm px-4">Daftar Semua Lowongan &rarr;</a>
+                <a href="<?php echo esc_url( $jobs_url ); ?>" class="btn btn-japan-outline btn-sm px-4">Daftar Semua Lowongan &rarr;</a>
             </div>
         </div>
 
