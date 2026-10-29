@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.2.3' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.2.4' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -810,15 +810,15 @@ function mojo_bootstrap_render_job_meta_box( $post ) {
     ?>
     <div style="padding: 6px 0;">
         <p style="margin-bottom: 12px;">
-            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">📍 Lokasi / Kota Jepang:</label>
-            <input type="text" name="_mojo_job_location" value="<?php echo esc_attr( $loc ); ?>" placeholder="Contoh: Tokyo, Osaka, Aichi, Hokkaido" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
-            <span style="color: #646970; font-size: 11px; display: block; margin-top: 3px;">Menggantikan lencana Uncategorized.</span>
+            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">📍 Lokasi / Kota Jepang (Singkat):</label>
+            <input type="text" name="_mojo_job_location" value="<?php echo esc_attr( $loc ); ?>" placeholder="Contoh: Tokyo, Osaka, Minato-ku, Hokkaido" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
+            <span style="color: #646970; font-size: 11px; display: block; margin-top: 3px;">Tuliskan nama kota atau prefektur singkat (maks. 2-3 kata).</span>
         </p>
 
         <p style="margin-bottom: 12px;">
-            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">👥 Kuota Lowongan:</label>
-            <input type="text" name="_mojo_job_quota" value="<?php echo esc_attr( $quota ); ?>" placeholder="Contoh: 15 Kuota, 20 Orang" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
-            <span style="color: #646970; font-size: 11px; display: block; margin-top: 3px;">Lencana status hijau di pojok kanan kartu.</span>
+            <label style="font-weight: 600; display: block; margin-bottom: 4px; font-size: 13px;">👥 Kuota Lowongan (Singkat):</label>
+            <input type="text" name="_mojo_job_quota" value="<?php echo esc_attr( $quota ); ?>" placeholder="Contoh: 15 Kuota, 10 Orang" style="width: 100%; padding: 6px 10px; border-radius: 4px; border: 1px solid #8c8f94; font-size: 13px; box-sizing: border-box;">
+            <span style="color: #646970; font-size: 11px; display: block; margin-top: 3px;">Tuliskan angka kuota singkat untuk lencana hijau di pojok kanan kartu.</span>
         </p>
 
         <p style="margin-bottom: 12px;">
@@ -853,6 +853,76 @@ function mojo_bootstrap_save_job_meta_box( $post_id ) {
     }
 }
 add_action( 'save_post', 'mojo_bootstrap_save_job_meta_box' );
+
+/**
+ * Memeriksa apakah suatu postingan merupakan Lowongan Kerja atau Artikel Berita
+ * Digunakan agar pos berita seperti 'Keberangkatan Siswa' tidak tercampur ke dalam daftar lowongan.
+ */
+function mojo_is_job_post( $post_id = 0 ) {
+    $post = get_post( $post_id );
+    if ( ! $post ) {
+        return false;
+    }
+
+    // 1. Cek judul: jika judul tentang berita keberangkatan/dokumentasi/cerita, pasti BUKAN lowongan
+    $title_lower = strtolower( $post->post_title );
+    if ( preg_match( '/\b(keberangkatan|pelepasan|dokumentasi|kisah|testimoni|alumni|kegiatan|wisuda|panduan|tips|syarat visa)\b/i', $title_lower ) ) {
+        return false;
+    }
+
+    // 2. Cek kategori: jika masuk kategori berita/dokumentasi, BUKAN lowongan
+    $berita_slugs = array( 'berita', 'informasi', 'artikel', 'pengumuman', 'news', 'dokumentasi', 'kegiatan', 'testimoni', 'galeri', 'alumni' );
+    $cats = get_the_category( $post->ID );
+    if ( ! empty( $cats ) ) {
+        foreach ( $cats as $c ) {
+            if ( in_array( strtolower( $c->slug ), $berita_slugs, true ) ) {
+                return false;
+            }
+        }
+    }
+
+    // 3. Cek apakah ada meta khusus lowongan yang diisi
+    $loc   = get_post_meta( $post->ID, '_mojo_job_location', true );
+    $yen   = get_post_meta( $post->ID, '_mojo_job_salary_yen', true );
+    $quota = get_post_meta( $post->ID, '_mojo_job_quota', true );
+    if ( ! empty( $loc ) || ! empty( $yen ) || ! empty( $quota ) ) {
+        return true;
+    }
+
+    // 4. Cek kategori yang mengindikasikan lowongan kerja
+    $job_slugs = array( 'lowongan', 'lowongan-kerja', 'job-order', 'jobs', 'job', 'tokutei-ginou', 'magang', 'ssw', 'titp', 'kaigo', 'pengolahan-makanan', 'pertanian', 'manufaktur', 'konstruksi' );
+    if ( ! empty( $cats ) ) {
+        foreach ( $cats as $c ) {
+            if ( in_array( strtolower( $c->slug ), $job_slugs, true ) ) {
+                return true;
+            }
+            if ( stripos( $c->name, 'lowongan' ) !== false || stripos( $c->name, 'job' ) !== false ) {
+                return true;
+            }
+        }
+    }
+
+    // 5. Cek kata kunci lowongan pada judul
+    if ( preg_match( '/\b(lowongan|job order|loker|rekrutmen|pertanian|kaigo|pengolahan makanan|manufaktur|ssw|titp)\b/i', $title_lower ) ) {
+        return true;
+    }
+
+    // Default: jika tidak ada data lowongan sama sekali, jangan masukkan ke daftar lowongan
+    return false;
+}
+
+/**
+ * Memastikan kategori 'Lowongan Kerja' dan 'Berita & Informasi' selalu tersedia di WP-Admin
+ */
+function mojo_bootstrap_ensure_default_categories() {
+    if ( ! term_exists( 'lowongan-kerja', 'category' ) && ! term_exists( 'Lowongan Kerja', 'category' ) ) {
+        wp_insert_term( 'Lowongan Kerja', 'category', array( 'slug' => 'lowongan-kerja' ) );
+    }
+    if ( ! term_exists( 'berita', 'category' ) && ! term_exists( 'Berita & Informasi', 'category' ) ) {
+        wp_insert_term( 'Berita & Informasi', 'category', array( 'slug' => 'berita' ) );
+    }
+}
+add_action( 'init', 'mojo_bootstrap_ensure_default_categories' );
 
 /**
  * =========================================================================

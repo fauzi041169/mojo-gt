@@ -326,12 +326,24 @@ main {
     transition: all 0.25s ease;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    position: relative;
 }
 
 .clean-job-card:hover {
     transform: translateY(-4px);
     border-color: #cbd5e1;
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.clean-job-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.85rem;
+    overflow: hidden;
 }
 
 .job-prefecture-pill {
@@ -341,6 +353,23 @@ main {
     font-weight: 700;
     padding: 0.3rem 0.75rem;
     border-radius: 50px;
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 1;
+}
+
+.clean-job-card .badge,
+.clean-job-card-header .badge {
+    max-width: 38%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    display: inline-block;
 }
 
 .job-salary-amount {

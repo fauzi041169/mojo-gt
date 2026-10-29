@@ -59,23 +59,46 @@ $all_jobs_query = new WP_Query( $jobs_args );
         <!-- Grid Semua Lowongan Kerja -->
         <div class="row g-4 mb-5">
             <?php
+            $displayed_jobs_count = 0;
             if ( $all_jobs_query->have_posts() ) :
                 while ( $all_jobs_query->have_posts() ) : $all_jobs_query->the_post();
-                    $loc_badge = get_post_meta( get_the_ID(), '_mojo_job_location', true );
-                    if ( empty( $loc_badge ) ) {
-                        $loc_badge = get_post_meta( get_the_ID(), 'lokasi', true );
+                    // Saring pos: hanya tampilkan jika benar-benar merupakan lowongan kerja
+                    if ( function_exists( 'mojo_is_job_post' ) && ! mojo_is_job_post( get_the_ID() ) ) {
+                        continue;
                     }
-                    if ( empty( $loc_badge ) ) {
+                    $displayed_jobs_count++;
+
+                    $raw_loc = get_post_meta( get_the_ID(), '_mojo_job_location', true );
+                    if ( empty( $raw_loc ) ) {
+                        $raw_loc = get_post_meta( get_the_ID(), 'lokasi', true );
+                    }
+                    if ( empty( $raw_loc ) ) {
                         $categories = get_the_category();
-                        $loc_badge  = ( ! empty( $categories ) && $categories[0]->slug !== 'uncategorized' ) ? $categories[0]->name : 'Tokyo';
+                        $raw_loc    = ( ! empty( $categories ) && $categories[0]->slug !== 'uncategorized' ) ? $categories[0]->name : 'Jepang';
                     }
 
-                    $kuota_val = get_post_meta( get_the_ID(), '_mojo_job_quota', true );
-                    if ( empty( $kuota_val ) ) {
-                        $kuota_val = get_post_meta( get_the_ID(), 'kuota', true );
+                    // Pemangkasan aman teks lokasi (maks. 20 karakter)
+                    $loc_badge = trim( wp_strip_all_tags( $raw_loc ) );
+                    if ( preg_match( '/^([^,\.\(\n\r]+)/', $loc_badge, $lm ) && mb_strlen( $lm[1] ) <= 20 ) {
+                        $loc_badge = trim( $lm[1] );
+                    } elseif ( mb_strlen( $loc_badge ) > 20 ) {
+                        $loc_badge = mb_substr( $loc_badge, 0, 18 ) . '...';
                     }
-                    if ( empty( $kuota_val ) ) {
+
+                    $raw_quota = get_post_meta( get_the_ID(), '_mojo_job_quota', true );
+                    if ( empty( $raw_quota ) ) {
+                        $raw_quota = get_post_meta( get_the_ID(), 'kuota', true );
+                    }
+                    if ( empty( $raw_quota ) ) {
                         $kuota_val = 'Aktif';
+                    } else {
+                        $kuota_val = trim( wp_strip_all_tags( $raw_quota ) );
+                        // Ambil kuota ringkas jika user mengetik kalimat panjang
+                        if ( preg_match( '/(\d+[\s\w]*)/i', $kuota_val, $km ) && mb_strlen( $km[0] ) <= 15 ) {
+                            $kuota_val = trim( $km[0] );
+                        } elseif ( mb_strlen( $kuota_val ) > 15 ) {
+                            $kuota_val = mb_substr( $kuota_val, 0, 13 ) . '...';
+                        }
                     }
 
                     $salary_yen = get_post_meta( get_the_ID(), '_mojo_job_salary_yen', true );
@@ -84,6 +107,11 @@ $all_jobs_query = new WP_Query( $jobs_args );
                     }
                     if ( empty( $salary_yen ) ) {
                         $salary_yen = '¥190,000 – ¥240,000';
+                    } else {
+                        $salary_yen = trim( wp_strip_all_tags( $salary_yen ) );
+                        if ( mb_strlen( $salary_yen ) > 25 ) {
+                            $salary_yen = mb_substr( $salary_yen, 0, 23 ) . '...';
+                        }
                     }
 
                     $salary_idr = get_post_meta( get_the_ID(), '_mojo_job_salary_idr', true );
@@ -92,21 +120,26 @@ $all_jobs_query = new WP_Query( $jobs_args );
                     }
                     if ( empty( $salary_idr ) ) {
                         $salary_idr = '± Rp 20 Juta – Rp 26 Juta/bln';
+                    } else {
+                        $salary_idr = trim( wp_strip_all_tags( $salary_idr ) );
+                        if ( mb_strlen( $salary_idr ) > 32 ) {
+                            $salary_idr = mb_substr( $salary_idr, 0, 30 ) . '...';
+                        }
                     }
                     ?>
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div class="clean-job-card h-100 d-flex flex-column bg-white rounded-4 border p-4 shadow-sm transition-hover">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="job-prefecture-pill"><i class="bi bi-geo-alt-fill text-danger me-1"></i><?php echo esc_html( $loc_badge ); ?></span>
-                                <span class="badge bg-success-subtle text-success small fw-semibold"><?php echo esc_html( $kuota_val ); ?></span>
+                            <div class="clean-job-card-header mb-3">
+                                <span class="job-prefecture-pill" title="<?php echo esc_attr( $raw_loc ); ?>"><i class="bi bi-geo-alt-fill text-danger me-1"></i><?php echo esc_html( $loc_badge ); ?></span>
+                                <span class="badge bg-success-subtle text-success small fw-semibold" title="<?php echo esc_attr( $raw_quota ); ?>"><?php echo esc_html( $kuota_val ); ?></span>
                             </div>
 
                             <h4 class="h6 fw-bold text-dark mb-2"><?php the_title(); ?></h4>
                             <p class="text-muted small mb-3 flex-grow-1"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 14, '...' ) ); ?></p>
 
                             <div class="p-3 bg-light rounded-3 mb-3">
-                                <div class="job-salary-amount"><?php echo esc_html( $salary_yen ); ?></div>
-                                <div class="job-salary-sub"><?php echo esc_html( $salary_idr ); ?></div>
+                                <div class="job-salary-amount text-truncate"><?php echo esc_html( $salary_yen ); ?></div>
+                                <div class="job-salary-sub text-truncate"><?php echo esc_html( $salary_idr ); ?></div>
                             </div>
 
                             <a href="<?php the_permalink(); ?>" class="btn btn-japan btn-sm w-100 text-center mt-auto">Detail & Lamar &rarr;</a>
@@ -115,7 +148,10 @@ $all_jobs_query = new WP_Query( $jobs_args );
                     <?php
                 endwhile;
                 wp_reset_postdata();
-            else :
+            endif;
+
+            if ( $displayed_jobs_count === 0 ) :
+                ?>
                 ?>
                 <!-- Fallback 4 Demo Jobs jika belum ada pos lowongan -->
                 <div class="col-md-6 col-lg-4 col-xl-3">
