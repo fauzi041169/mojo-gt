@@ -1,0 +1,459 @@
+/**
+ * Mojo Bootstrap - Japan Recruitment & Job Matching Corporate Theme
+ * Designed for Indonesian Sending Organizations (SO), LPK, and P3MI to Japan
+ * Concept: Clean, Minimalist, Ultra-Premium (Kanso & Shibui)
+ * 
+ * @package Mojo_Bootstrap
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+/* ==========================================================================
+   Root Variables & Color Scheme
+   ========================================================================== */
+:root {
+    --mj-primary: #0f172a;        /* Elegant Slate Charcoal */
+    --mj-primary-navy: #0a2540;   /* Corporate Navy */
+    --mj-japan-red: #c9182b;       /* Japanese Crimson Accent */
+    --mj-japan-red-hover: #a81222;
+    --mj-japan-red-subtle: #fef2f2;
+    --mj-gold: #d49a37;           /* Prestigious Gold */
+    --mj-surface-white: #ffffff;
+    --mj-surface-gray: #f8fafc;
+    --mj-border: #e2e8f0;
+    --mj-border-light: #f1f5f9;
+    --mj-text-main: #1e293b;
+    --mj-text-muted: #64748b;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+    color: var(--mj-text-main);
+    background-color: var(--mj-surface-gray);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* ==========================================================================
+   Minimalist Top Bar
+   ========================================================================== */
+.top-bar {
+    background-color: #ffffff;
+    font-size: 0.825rem;
+    color: var(--mj-text-muted);
+    border-bottom: 1px solid var(--mj-border);
+}
+
+.top-bar a {
+    color: var(--mj-text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.top-bar a:hover {
+    color: var(--mj-japan-red);
+}
+
+/* ==========================================================================
+   Main Navbar & Logo Constraints
+   ========================================================================== */
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--mj-border);
+    transition: all 0.3s ease;
+}
+
+/* Strict Logo Dimensions - Prevents Giant Uploaded Logos */
+.custom-logo-link,
+.navbar-brand {
+    display: inline-flex !important;
+    align-items: center;
+    max-width: 280px;
+    padding: 0 !important;
+    margin-right: 1.5rem;
+}
+
+.custom-logo,
+.custom-logo-link img,
+.navbar-brand img,
+.site-header img.custom-logo {
+    max-height: 52px !important;
+    height: auto !important;
+    width: auto !important;
+    max-width: 250px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+@media (max-width: 991px) {
+    .custom-logo,
+    .custom-logo-link img,
+    .navbar-brand img,
+    .site-header img.custom-logo {
+        max-height: 44px !important;
+        max-width: 180px !important;
+    }
+}
+
+.navbar-brand {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.navbar-toggler {
+    padding: 0.45rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid var(--mj-border) !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 2px rgba(201, 24, 43, 0.2) !important;
+}
+
+.navbar-brand .brand-title {
+    color: var(--mj-primary);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.navbar-brand .brand-subtitle {
+    font-size: 0.685rem;
+    color: var(--mj-japan-red);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    display: block;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 600;
+    font-size: 0.925rem;
+    color: #475569;
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--mj-japan-red);
+    background-color: var(--mj-japan-red-subtle);
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--mj-japan-red) !important;
+    background-color: var(--mj-japan-red-subtle);
+}
+
+/* Action Buttons */
+.btn-japan {
+    background-color: var(--mj-japan-red);
+    color: #ffffff !important;
+    font-weight: 600;
+    border: none;
+    padding: 0.65rem 1.4rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(201, 24, 43, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-japan:hover {
+    background-color: var(--mj-japan-red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 24, 43, 0.35);
+}
+
+.btn-japan-outline {
+    border: 2px solid var(--mj-border);
+    background: #ffffff;
+    color: #334155 !important;
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 0.6rem 1.4rem;
+    transition: all 0.2s ease;
+}
+
+.btn-japan-outline:hover {
+    border-color: var(--mj-japan-red);
+    color: var(--mj-japan-red) !important;
+    background-color: var(--mj-japan-red-subtle);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Hero Section - Clean & Spacious Minimalist
+   ========================================================================== */
+.clean-hero {
+    background-color: #ffffff;
+    background-image: radial-gradient(circle at 50% 0%, rgba(201, 24, 43, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+    padding: 5.5rem 0 5rem;
+    position: relative;
+    border-bottom: 1px solid var(--mj-border-light);
+}
+
+.hero-pill-badge {
+    background-color: var(--mj-japan-red-subtle);
+    border: 1px solid rgba(201, 24, 43, 0.2);
+    color: var(--mj-japan-red);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.45rem 1.25rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hero-main-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--mj-primary);
+    letter-spacing: -1.2px;
+}
+
+@media (max-width: 768px) {
+    .hero-main-title {
+        font-size: 2.3rem;
+        letter-spacing: -0.5px;
+    }
+}
+
+.hero-lead-text {
+    font-size: 1.18rem;
+    color: var(--mj-text-muted);
+    line-height: 1.7;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   Stats Strip - Minimalist & Sleek
+   ========================================================================== */
+.stats-clean-strip {
+    background: #ffffff;
+    border: 1px solid var(--mj-border);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+    padding: 2.25rem 1.5rem;
+}
+
+.stat-clean-item {
+    padding: 0.5rem 1rem;
+    border-right: 1px solid var(--mj-border-light);
+}
+
+.stat-clean-item:last-child {
+    border-right: none;
+}
+
+@media (max-width: 768px) {
+    .stat-clean-item {
+        border-right: none;
+        border-bottom: 1px solid var(--mj-border-light);
+        padding-bottom: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+    .stat-clean-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}
+
+.stat-clean-number {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--mj-primary);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+
+.stat-clean-label {
+    font-size: 0.875rem;
+    color: var(--mj-text-muted);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   Program Cards - Spacious 2-Column Focus
+   ========================================================================== */
+.clean-program-card {
+    background: #ffffff;
+    border: 1px solid var(--mj-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    height: 100%;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+}
+
+.clean-program-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--mj-japan-red);
+    box-shadow: 0 20px 40px -15px rgba(201, 24, 43, 0.12);
+}
+
+.program-icon-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ==========================================================================
+   Job Order Cards - Clean Grid
+   ========================================================================== */
+.clean-job-card {
+    background: #ffffff;
+    border: 1px solid var(--mj-border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    height: 100%;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.clean-job-card:hover {
+    transform: translateY(-4px);
+    border-color: #cbd5e1;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+}
+
+.job-prefecture-pill {
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+}
+
+.job-salary-amount {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #047857;
+    letter-spacing: -0.5px;
+}
+
+.job-salary-sub {
+    font-size: 0.8rem;
+    color: var(--mj-text-muted);
+}
+
+/* ==========================================================================
+   Process Timeline (5 Steps)
+   ========================================================================== */
+.clean-step-card {
+    background: #ffffff;
+    border: 1px solid var(--mj-border);
+    border-radius: 16px;
+    padding: 2rem 1.25rem;
+    text-align: center;
+    height: 100%;
+    transition: all 0.2s ease;
+}
+
+.clean-step-card:hover {
+    border-color: var(--mj-japan-red);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.clean-step-circle {
+    width: 48px;
+    height: 48px;
+    background-color: var(--mj-japan-red);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    box-shadow: 0 4px 12px rgba(201, 24, 43, 0.25);
+}
+
+/* ==========================================================================
+   Red Footer with Crisp White Text
+   ========================================================================== */
+.site-footer {
+    background: linear-gradient(135deg, #c9182b 0%, #a01020 100%);
+    color: #ffffff;
+    border-top: 4px solid #7f0a17;
+}
+
+.site-footer h5,
+.site-footer h6 {
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+    padding: 0.2rem 0;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    transform: translateX(4px);
+}
+
+.footer-contact-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-bottom: 0.85rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.footer-contact-item i {
+    color: #fef08a;
+    font-size: 1.15rem;
+    margin-top: 0.15rem;
+}
+
+/* Floating WhatsApp Quick Consultation */
+.floating-wa-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: #25d366;
+    color: #ffffff !important;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    z-index: 9999;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.floating-wa-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+}
