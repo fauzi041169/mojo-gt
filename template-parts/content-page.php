@@ -1,15 +1,27 @@
 <?php
 /**
  * Template part for displaying page content in page.php
+ * Seamless full-width layout without card wrapping
  *
  * @package Mojo_Bootstrap
  */
+
+$content_raw = get_the_content();
+$title_clean = trim( strtolower( get_the_title() ) );
+$has_title_in_content = false;
+if ( preg_match( '/<h[12][^>]*>(.*?)<\/h[12]>/i', $content_raw, $matches ) ) {
+    if ( trim( strtolower( strip_tags( $matches[1] ) ) ) === $title_clean ) {
+        $has_title_in_content = true;
+    }
+}
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'page-entry bg-white p-4 p-md-5 rounded-4 shadow-sm border mb-4' ); ?>>
-    <header class="entry-header mb-4 border-bottom pb-3">
-        <h1 class="entry-title fw-bold display-6 text-dark"><?php the_title(); ?></h1>
-    </header>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'page-entry' ); ?>>
+    <?php if ( ! $has_title_in_content ) : ?>
+        <header class="entry-header mb-4 pb-3 border-bottom">
+            <h1 class="entry-title fw-bold display-6 text-dark"><?php the_title(); ?></h1>
+        </header>
+    <?php endif; ?>
 
     <?php if ( has_post_thumbnail() ) : ?>
         <div class="post-thumbnail mb-4 overflow-hidden rounded-3">

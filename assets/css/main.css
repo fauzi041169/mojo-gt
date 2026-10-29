@@ -457,3 +457,73 @@ main {
     transform: scale(1.1);
     box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
 }
+
+/* =========================================================================
+   PAGE STYLING - FULL WIDTH, SEAMLESS (NO CARD, NO OVERFLOW)
+   ========================================================================= */
+body.page {
+    background-color: #ffffff;
+}
+
+.site-page-container {
+    background-color: #ffffff;
+    min-height: 65vh;
+    width: 100%;
+}
+
+.page-entry {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 2rem;
+}
+
+/* Prevent Any Content Overflow (Google Maps, Iframes, Tables, Embeds) */
+.entry-content {
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.entry-content iframe,
+.entry-content embed,
+.entry-content object,
+.entry-content video,
+.entry-content img,
+.entry-content table {
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+.entry-content iframe {
+    width: 100% !important;
+    border-radius: 12px;
+}
+
+/* Gutenberg WordPress Block Alignments & Overflow Protection */
+.entry-content .wp-block-embed,
+.entry-content .wp-block-embed__wrapper,
+.entry-content .wp-block-table,
+.entry-content .wp-block-image,
+.entry-content .wp-block-group,
+.entry-content .wp-block-columns {
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+.entry-content .wp-block-table {
+    overflow-x: auto;
+}
+
+/* Gutenberg Responsive Columns on Tablet / Mobile */
+@media (max-width: 767.98px) {
+    .entry-content .wp-block-columns {
+        flex-wrap: wrap !important;
+    }
+    .entry-content .wp-block-column {
+        flex-basis: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}

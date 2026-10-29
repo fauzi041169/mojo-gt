@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.1.0' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.1.4' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
