@@ -406,64 +406,57 @@ main {
    Extreme Hero Slider Object Entrance & Exit Animations
    ========================================================================== */
 
-/* 1. Base Pre-animation State (Inactive Slides) */
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-badge,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-title,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-desc,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-btns,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-trust,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-visual,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-float-top,
-.hero-slider-section .carousel-item:not(.active):not(.hero-slide-in) .hero-anim-float-bottom {
+/* 1. Base Pre-animation State (Inactive Slides or Out of View) */
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-badge,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-title,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-desc,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-btns,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-trust,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-visual,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-float-top,
+.hero-slider-section .carousel-item:not(.hero-slide-active) .hero-anim-float-bottom {
     opacity: 0;
     pointer-events: none;
+    animation: none !important;
 }
 
-/* 2. Extreme Entrance Animations (Active / Entering Slide) */
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-badge,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-badge {
+/* 2. Extreme Entrance Animations (Active / In-View Slide) */
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-badge {
     animation: heroAnimBadgeEnter 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s forwards;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-title,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-title {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-title {
     animation: heroAnimTitleEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.22s forwards;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-desc,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-desc {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-desc {
     animation: heroAnimDescEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-btns,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-btns {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-btns {
     animation: heroAnimBtnsEnter 0.85s cubic-bezier(0.34, 1.45, 0.64, 1) 0.52s forwards;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-trust,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-trust {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-trust {
     animation: heroAnimTrustEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.68s forwards;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-visual,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-visual {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-visual {
     animation: heroAnimVisualEnter 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-float-top,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-float-top {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-float-top {
     animation: heroAnimFloatTopEnter 0.8s cubic-bezier(0.34, 1.6, 0.64, 1) 0.75s forwards, heroFloatBobbingTop 3.5s ease-in-out 1.6s infinite alternate;
     pointer-events: auto;
 }
 
-.hero-slider-section .carousel-item.active:not(.hero-slide-out) .hero-anim-float-bottom,
-.hero-slider-section .carousel-item.hero-slide-in:not(.hero-slide-out) .hero-anim-float-bottom {
+.hero-slider-section .carousel-item.hero-slide-active:not(.hero-slide-out) .hero-anim-float-bottom {
     animation: heroAnimFloatBottomEnter 0.85s cubic-bezier(0.34, 1.6, 0.64, 1) 0.9s forwards, heroFloatBobbingBottom 4s ease-in-out 1.8s infinite alternate;
     pointer-events: auto;
 }

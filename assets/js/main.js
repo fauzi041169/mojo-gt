@@ -73,11 +73,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        const revealObserver = new IntersectionObserver((entries, observer) => {
+        // Bidirectional Scroll Reveal: re-animates elements whenever scrolled into view (up or down)
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
+                } else {
+                    // Check if element has genuinely moved out of the viewport
+                    entry.target.classList.remove('is-visible');
                 }
             });
         }, {
@@ -89,15 +92,22 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => revealObserver.observe(el));
     }
 
-    // 5. Smooth Counter Animation for Stats Numbers
+    // 5. Smooth Counter Animation for Stats Numbers (Bidirectional)
     const counterElements = document.querySelectorAll('.stat-clean-number');
     if (counterElements.length > 0 && ('IntersectionObserver' in window) && !prefersReducedMotion) {
-        const counterObserver = new IntersectionObserver((entries, observer) => {
+        const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                const el = entry.target;
+                if (!el.dataset.originalHtml) {
+                    el.dataset.originalHtml = el.innerHTML;
+                    el.dataset.originalText = el.textContent.trim();
+                }
+
                 if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const originalHTML = el.innerHTML;
-                    const text = el.textContent.trim();
+                    if (el.dataset.isAnimating === 'true') return;
+                    el.dataset.isAnimating = 'true';
+
+                    const text = el.dataset.originalText;
                     const match = text.match(/([\d,\.]+)/);
 
                     if (match) {
@@ -107,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const prefix = text.slice(0, match.index);
                         const suffix = text.slice(match.index + match[1].length);
 
-                        const duration = 1500;
+                        const duration = 1400;
                         const startTime = performance.now();
 
                         function updateCounter(now) {
@@ -127,22 +137,36 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (progress < 1) {
                                 requestAnimationFrame(updateCounter);
                             } else {
-                                el.innerHTML = originalHTML;
+                                el.innerHTML = el.dataset.originalHtml;
+                                el.dataset.isAnimating = 'false';
                             }
                         }
                         requestAnimationFrame(updateCounter);
                     }
-                    observer.unobserve(el);
+                } else {
+                    // Reset on leave so it counts again when scrolled back
+                    el.dataset.isAnimating = 'false';
+                    if (el.dataset.originalHtml) {
+                        el.innerHTML = el.dataset.originalHtml;
+                    }
                 }
             });
-        }, { threshold: 0.4 });
+        }, { threshold: 0.3 });
 
         counterElements.forEach(el => counterObserver.observe(el));
     }
 
-    // 6. Extreme Hero Slider Object Entrance & Exit Animations
+    // 6. Extreme Hero Slider Object Entrance & Exit Animations + Scroll-Back Re-trigger
     const heroCarousel = document.getElementById('heroHomeCarousel');
     if (heroCarousel) {
+        // Function to trigger active slide entrance
+        const activateSlide = (slideEl) => {
+            if (!slideEl) return;
+            slideEl.classList.remove('hero-slide-out', 'hero-slide-active');
+            void slideEl.offsetWidth; // Force reflow
+            slideEl.classList.add('hero-slide-active');
+        };
+
         // When slide transition starts (Exit old slide, prep next slide)
         heroCarousel.addEventListener('slide.bs.carousel', (e) => {
             const allItems = heroCarousel.querySelectorAll('.carousel-item');
@@ -150,13 +174,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const enteringItem = e.relatedTarget;
 
             if (leavingItem) {
-                leavingItem.classList.remove('hero-slide-active', 'hero-slide-in');
+                leavingItem.classList.remove('hero-slide-active');
                 leavingItem.classList.add('hero-slide-out');
             }
 
             if (enteringItem) {
                 enteringItem.classList.remove('hero-slide-out');
-                enteringItem.classList.add('hero-slide-in');
             }
         });
 
@@ -165,19 +188,64 @@ document.addEventListener('DOMContentLoaded', () => {
             const allItems = heroCarousel.querySelectorAll('.carousel-item');
             allItems.forEach((item) => {
                 if (item !== e.relatedTarget) {
-                    item.classList.remove('hero-slide-out', 'hero-slide-in', 'hero-slide-active');
+                    item.classList.remove('hero-slide-out', 'hero-slide-active');
                 }
             });
             if (e.relatedTarget) {
-                e.relatedTarget.classList.remove('hero-slide-out');
-                e.relatedTarget.classList.add('hero-slide-active', 'hero-slide-in');
+                activateSlide(e.relatedTarget);
             }
         });
 
         // Initial active slide setup on page load
         const initialActive = heroCarousel.querySelector('.carousel-item.active');
         if (initialActive) {
-            initialActive.classList.add('hero-slide-active', 'hero-slide-in');
+            activateSlide(initialActive);
         }
+
+        // 7. Hero Scroll-Back Re-Trigger:
+        // Whenever the user scrolls down away from the hero and then scrolls back up,
+        // re-trigger the extreme entrance animations fresh!
+        const heroSection = document.querySelector('.hero-slider-section') || heroCarousel;
+        let heroWasOutOfView = false;
+
+        if (heroSection && 'IntersectionObserver' in window) {
+            const heroScrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (heroWasOutOfView) {
+                            // User scrolled back into hero! Re-trigger animations!
+                            const curActive = heroCarousel.querySelector('.carousel-item.active');
+                            if (curActive) {
+                                activateSlide(curActive);
+                            }
+                        }
+                        heroWasOutOfView = false;
+                    } else {
+                        // User scrolled down away from hero
+                        heroWasOutOfView = true;
+                        const curActive = heroCarousel.querySelector('.carousel-item.active');
+                        if (curActive) {
+                            curActive.classList.remove('hero-slide-active');
+                        }
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15
+            });
+
+            heroScrollObserver.observe(heroSection);
+        }
+
+        // Secondary safety listener for quick scroll-to-top
+        window.addEventListener('scroll', () => {
+            if (window.scrollY < 40 && heroWasOutOfView) {
+                heroWasOutOfView = false;
+                const curActive = heroCarousel.querySelector('.carousel-item.active');
+                if (curActive && !curActive.classList.contains('hero-slide-active')) {
+                    activateSlide(curActive);
+                }
+            }
+        }, { passive: true });
     }
 });
