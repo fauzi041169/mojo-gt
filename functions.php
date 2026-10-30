@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.4.2' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.4.3' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -514,19 +514,52 @@ function mojo_get_whatsapp_url( $message = '', $custom_number = '' ) {
 }
 
 /**
- * Membersihkan dan mengekstrak URL Google Maps Embed dari URL biasa atau kode tag <iframe>
+ * Membersihkan dan mengonversi berbagai format input Google Maps
+ * (link browser biasa, kode sematan <iframe>, URL embed, koordinat, atau nama tempat)
+ * menjadi URL Google Maps Embed yang valid dan aman untuk atribut src iframe.
  *
- * @param string $input URL embed atau kode tag <iframe> dari Google Maps.
+ * @param string $input URL embed, kode tag <iframe>, atau link browser Google Maps.
  * @return string URL embed yang bersih untuk atribut src iframe.
  */
 function mojo_get_clean_map_url( $input = '' ) {
     if ( empty( $input ) ) {
         return '';
     }
-    // Jika admin paste seluruh tag iframe: <iframe ... src="https://..." ...>
+
+    $input = trim( html_entity_decode( $input ) );
+
+    // 1. Jika pengguna menempel seluruh tag <iframe> dari Google Maps
     if ( preg_match( '/src=["\']([^"\']+)["\']/i', $input, $match ) ) {
         return esc_url( $match[1] );
     }
+
+    // 2. Jika sudah merupakan URL Google Maps Embed resmi
+    if ( strpos( $input, 'google.com/maps/embed' ) !== false || strpos( $input, 'output=embed' ) !== false ) {
+        return esc_url( $input );
+    }
+
+    // 3. Jika pengguna menempel link Google Maps dari browser: /maps/place/Nama+Tempat/@lat,lng
+    if ( preg_match( '#/maps/place/([^/@?]+)#i', $input, $match_place ) ) {
+        $place = urldecode( $match_place[1] );
+        return 'https://maps.google.com/maps?q=' . rawurlencode( $place ) . '&t=m&z=16&output=embed&iwloc=near';
+    }
+
+    // 4. Jika pengguna menempel link dengan koordinat @lat,lng
+    if ( preg_match( '#@(-?\d+\.\d+),(-?\d+\.\d+)#', $input, $match_coords ) ) {
+        return 'https://maps.google.com/maps?q=' . $match_coords[1] . ',' . $match_coords[2] . '&t=m&z=16&output=embed&iwloc=near';
+    }
+
+    // 5. Jika pengguna memasukkan URL dengan parameter q= (misal: maps.google.com/?q=...)
+    if ( preg_match( '#[?&]q=([^&]+)#i', $input, $match_q ) ) {
+        $q_val = urldecode( $match_q[1] );
+        return 'https://maps.google.com/maps?q=' . rawurlencode( $q_val ) . '&t=m&z=16&output=embed&iwloc=near';
+    }
+
+    // 6. Jika pengguna mengetik nama tempat atau alamat langsung (bukan format URL http/https)
+    if ( strpos( $input, 'http://' ) === false && strpos( $input, 'https://' ) === false ) {
+        return 'https://maps.google.com/maps?q=' . rawurlencode( $input ) . '&t=m&z=16&output=embed&iwloc=near';
+    }
+
     return esc_url( $input );
 }
 
@@ -534,16 +567,13 @@ function mojo_get_clean_map_url( $input = '' ) {
  * Callback sanitize untuk input Google Maps di Customizer
  *
  * @param string $input Nilai yang diinputkan pengguna.
- * @return string URL iframe raw yang sudah dibersihkan.
+ * @return string URL iframe raw yang sudah dibersihkan atau URL embed hasil konversi.
  */
 function mojo_clean_map_embed_input( $input = '' ) {
     if ( empty( $input ) ) {
         return '';
     }
-    if ( preg_match( '/src=["\']([^"\']+)["\']/i', $input, $match ) ) {
-        return esc_url_raw( $match[1] );
-    }
-    return esc_url_raw( trim( $input ) );
+    return esc_url_raw( mojo_get_clean_map_url( $input ) );
 }
 
 /**
@@ -1596,8 +1626,8 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_about_map_embed', array(
-        'label'       => __( 'Link Peta Google Maps (Embed URL atau Tag Iframe)', 'mojo-bootstrap' ),
-        'description' => __( 'Buka Google Maps -> Bagikan (Share) -> Sematkan Peta (Embed a map). Anda dapat menyalin URL src atau seluruh kode tag &lt;iframe...&gt; ke sini.', 'mojo-bootstrap' ),
+        'label'       => __( 'Link Peta Google Maps (Otomatis Konversi)', 'mojo-bootstrap' ),
+        'description' => __( 'Bisa langsung tempelkan link Google Maps dari browser (misal https://www.google.com/maps/place/...), kode &lt;iframe...&gt;, link koordinat, atau nama tempat. Sistem otomatis mengonversi agar langsung aktif tampil di peta.', 'mojo-bootstrap' ),
         'section'     => 'mojo_about_section',
         'type'        => 'textarea',
     ) );
