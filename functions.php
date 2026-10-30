@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.3.7' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.3.8' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -1001,10 +1001,46 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
     // 3. SECTION: PENGATURAN FOOTER & HEADING
     // ==========================================
     $wp_customize->add_section( 'mojo_footer_section', array(
-        'title'       => __( 'Pengaturan Footer & Heading', 'mojo-bootstrap' ),
+        'title'       => __( 'Pengaturan Footer & Warna', 'mojo-bootstrap' ),
         'priority'    => 27,
-        'description' => __( 'Edit judul kolom (heading), deskripsi perusahaan, daftar sektor lowongan, dan hak cipta di bagian bawah website.', 'mojo-bootstrap' ),
+        'description' => __( 'Atur warna latar, warna teks, judul kolom (heading), deskripsi perusahaan, daftar sektor lowongan, dan hak cipta di bagian bawah website.', 'mojo-bootstrap' ),
     ) );
+
+    // 3.0.1 Warna Latar Footer (Gradien Awal)
+    $wp_customize->add_setting( 'mojo_footer_bg_color', array(
+        'default'           => '#c9182b',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'mojo_footer_bg_color', array(
+        'label'       => __( 'Warna Latar Footer (Gradien Utama)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_footer_section',
+        'description' => __( 'Pilih warna dasar footer (default: Merah Korporat Jepang #c9182b).', 'mojo-bootstrap' ),
+    ) ) );
+
+    // 3.0.2 Warna Latar Footer (Gradien Akhir)
+    $wp_customize->add_setting( 'mojo_footer_bg_color_end', array(
+        'default'           => '#a01020',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'mojo_footer_bg_color_end', array(
+        'label'       => __( 'Warna Latar Footer (Gradien Akhir)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_footer_section',
+        'description' => __( 'Pilih warna gradien akhir footer (default: Merah Gelap #a01020).', 'mojo-bootstrap' ),
+    ) ) );
+
+    // 3.0.3 Warna Teks Footer
+    $wp_customize->add_setting( 'mojo_footer_text_color', array(
+        'default'           => '#ffffff',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'mojo_footer_text_color', array(
+        'label'       => __( 'Warna Teks Footer', 'mojo-bootstrap' ),
+        'section'     => 'mojo_footer_section',
+        'description' => __( 'Pilih warna teks dan link pada footer (default: Putih #ffffff).', 'mojo-bootstrap' ),
+    ) ) );
 
     // 3.1 Deskripsi Perusahaan di Footer (Kolom 1)
     $wp_customize->add_setting( 'mojo_footer_desc', array(

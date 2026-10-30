@@ -922,9 +922,17 @@ main {
    Red Footer with Crisp White Text
    ========================================================================== */
 .site-footer {
+    background-color: #c9182b;
     background: linear-gradient(135deg, #c9182b 0%, #a01020 100%);
     color: #ffffff;
     border-top: 4px solid #7f0a17;
+}
+
+.site-footer .reveal,
+.site-footer .reveal-up {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
 }
 
 .site-footer h5,
