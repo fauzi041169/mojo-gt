@@ -6,7 +6,8 @@
  */
 
 $wa_number  = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
-$wa_clean   = preg_replace( '/[^0-9]/', '', $wa_number );
+$wa_clean   = function_exists( 'mojo_clean_whatsapp_number' ) ? mojo_clean_whatsapp_number( $wa_number ) : preg_replace( '/[^0-9]/', '', $wa_number );
+$wa_url     = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin konsultasi program kerja ke Jepang.' ) : ( 'https://wa.me/' . $wa_clean );
 $izin_text  = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
 $email_text = get_theme_mod( 'mojo_email', 'info@mojoglobaltalent.com' );
 ?>
@@ -35,7 +36,7 @@ $email_text = get_theme_mod( 'mojo_email', 'info@mojoglobaltalent.com' );
         </div>
 
         <div class="d-flex align-items-center gap-3 small">
-            <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>" target="_blank" class="text-secondary d-flex align-items-center gap-1">
+            <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" class="text-secondary d-flex align-items-center gap-1" title="Hubungi WhatsApp Resmi">
                 <i class="bi bi-whatsapp text-success"></i> <?php echo esc_html( $wa_number ); ?>
             </a>
             <span class="text-muted">|</span>

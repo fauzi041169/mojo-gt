@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.2.8' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.2.9' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -468,12 +468,129 @@ function mojo_bootstrap_ensure_lowongan_page() {
 add_action( 'init', 'mojo_bootstrap_ensure_lowongan_page' );
 
 /**
+ * Membersihkan dan memformat nomor WhatsApp ke standar internasional wa.me (misal: 6281234567890)
+ * Mendukung format: 0812..., +62 812..., 62812..., 0812-xxxx, spasi, tanda strip, dsb.
+ *
+ * @param string $number Nomor telepon yang diinput.
+ * @return string Nomor WhatsApp valid untuk URL wa.me.
+ */
+function mojo_clean_whatsapp_number( $number = '' ) {
+    if ( empty( $number ) ) {
+        $number = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
+    }
+    // Hapus semua karakter non-angka
+    $clean = preg_replace( '/[^0-9]/', '', (string) $number );
+
+    // Jika diawali 0 (misal format lokal: 081234567890), ganti 0 dengan 62
+    if ( strpos( $clean, '0' ) === 0 ) {
+        $clean = '62' . substr( $clean, 1 );
+    } elseif ( strpos( $clean, '8' ) === 0 && strlen( $clean ) >= 9 && strlen( $clean ) <= 13 ) {
+        // Jika user hanya mengetik 81234567890 tanpa 0 dan tanpa 62
+        $clean = '62' . $clean;
+    }
+
+    // Fallback jika kosong atau tidak valid
+    if ( empty( $clean ) ) {
+        $clean = '6281234567890';
+    }
+
+    return $clean;
+}
+
+/**
+ * Mendapatkan link WhatsApp (wa.me) lengkap dengan pesan awal
+ *
+ * @param string $message Pesan pembuka teks yang ingin dikirim.
+ * @param string $custom_number Nomor kustom jika ingin override.
+ * @return string URL WhatsApp lengkap.
+ */
+function mojo_get_whatsapp_url( $message = '', $custom_number = '' ) {
+    $clean_num = mojo_clean_whatsapp_number( $custom_number );
+    $url = 'https://wa.me/' . $clean_num;
+    if ( ! empty( $message ) ) {
+        $url .= '?text=' . rawurlencode( $message );
+    }
+    return $url;
+}
+
+/**
  * Register Theme Customizer settings
  * Memberikan kontrol visual di Tampilan -> Sesuaikan untuk mengedit teks Hero Beranda, WhatsApp, Email, dan Legalitas
  */
 function mojo_bootstrap_customize_register( $wp_customize ) {
     // ==========================================
-    // 1. SECTION: HERO BERANDA (Teks Bagian Atas)
+    // 1. SECTION: KONTAK & WHATSAPP KANTOR (Prioritas Utama)
+    // ==========================================
+    $wp_customize->add_section( 'mojo_contact_section', array(
+        'title'       => __( 'WhatsApp Kantor & Kontak Resmi', 'mojo-bootstrap' ),
+        'priority'    => 20,
+        'description' => __( 'Atur nomor WhatsApp kantor aktif, email resmi, nomor izin Kemnaker, dan alamat. Nomor WhatsApp di sini terhubung ke seluruh tombol chat & formulir konsultasi.', 'mojo-bootstrap' ),
+    ) );
+
+    // 1.1 WhatsApp Kantor Utama
+    $wp_customize->add_setting( 'mojo_whatsapp', array(
+        'default'           => '+62 812-3456-7890',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_whatsapp', array(
+        'label'       => __( 'Nomor WhatsApp Kantor (Aktif)', 'mojo-bootstrap' ),
+        'description' => __( 'Bisa diketik: 0812-3456-7890 atau +62 812-3456-7890. Sistem otomatis mengkonversi ke format internasional resmi WhatsApp.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_contact_section',
+        'type'        => 'text',
+    ) );
+
+    // 1.2 Email
+    $wp_customize->add_setting( 'mojo_email', array(
+        'default'           => 'info@mojoglobaltalent.com',
+        'sanitize_callback' => 'sanitize_email',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_email', array(
+        'label'   => __( 'Email Resmi', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'email',
+    ) );
+
+    // 1.3 Izin Kemnaker
+    $wp_customize->add_setting( 'mojo_izin_kemnaker', array(
+        'default'           => 'KEP.000/MEN/2024',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_izin_kemnaker', array(
+        'label'       => __( 'Nomor Izin Kemnaker RI', 'mojo-bootstrap' ),
+        'description' => __( 'Contoh: KEP.000/MEN/2024', 'mojo-bootstrap' ),
+        'section'     => 'mojo_contact_section',
+        'type'        => 'text',
+    ) );
+
+    // 1.4 Alamat Kantor Jakarta
+    $wp_customize->add_setting( 'mojo_alamat_jakarta', array(
+        'default'           => 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_alamat_jakarta', array(
+        'label'   => __( 'Alamat Kantor Indonesia (Jakarta)', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'text',
+    ) );
+
+    // 1.5 Alamat Kantor Tokyo
+    $wp_customize->add_setting( 'mojo_alamat_tokyo', array(
+        'default'           => 'Chiyoda-ku, Tokyo 101-0021, Japan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_alamat_tokyo', array(
+        'label'   => __( 'Alamat Kantor Representatif Jepang (Tokyo)', 'mojo-bootstrap' ),
+        'section' => 'mojo_contact_section',
+        'type'    => 'text',
+    ) );
+
+    // ==========================================
+    // 2. SECTION: HERO BERANDA (Teks Bagian Atas)
     // ==========================================
     $wp_customize->add_section( 'mojo_hero_section', array(
         'title'       => __( 'Pengaturan Hero Beranda', 'mojo-bootstrap' ),
@@ -554,74 +671,17 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'     => 'text',
     ) );
 
-    // ==========================================
-    // 2. SECTION: KONTAK & INFORMASI PERUSAHAAN
-    // ==========================================
-    $wp_customize->add_section( 'mojo_contact_section', array(
-        'title'       => __( 'Kontak & Legalitas Perusahaan', 'mojo-bootstrap' ),
-        'priority'    => 26,
-        'description' => __( 'Edit nomor WhatsApp, email resmi, nomor izin Kemnaker, dan alamat kantor.', 'mojo-bootstrap' ),
-    ) );
-
-    // 2.1 WhatsApp
-    $wp_customize->add_setting( 'mojo_whatsapp', array(
-        'default'           => '+62 812-3456-7890',
+    // 1.7 Tombol 2 Nomor WhatsApp Khusus (Opsional)
+    $wp_customize->add_setting( 'mojo_hero_btn2_wa', array(
+        'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
-    $wp_customize->add_control( 'mojo_whatsapp', array(
-        'label'       => __( 'Nomor WhatsApp', 'mojo-bootstrap' ),
-        'description' => __( 'Contoh: +62 812-3456-7890 (otomatis terhubung ke tombol chat)', 'mojo-bootstrap' ),
-        'section'     => 'mojo_contact_section',
+    $wp_customize->add_control( 'mojo_hero_btn2_wa', array(
+        'label'       => __( 'Nomor WhatsApp Tombol Hero (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Bisa diawali 08... atau +62... Jika dikosongkan, tombol ini otomatis menggunakan Nomor WhatsApp Kantor aktif yang diatur di menu "WhatsApp Kantor & Kontak Resmi".', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
         'type'        => 'text',
-    ) );
-
-    // 2.2 Email
-    $wp_customize->add_setting( 'mojo_email', array(
-        'default'           => 'info@mojoglobaltalent.com',
-        'sanitize_callback' => 'sanitize_email',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_email', array(
-        'label'   => __( 'Email Resmi', 'mojo-bootstrap' ),
-        'section' => 'mojo_contact_section',
-        'type'    => 'email',
-    ) );
-
-    // 2.3 Izin Kemnaker
-    $wp_customize->add_setting( 'mojo_izin_kemnaker', array(
-        'default'           => 'KEP.000/MEN/2024',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_izin_kemnaker', array(
-        'label'   => __( 'Nomor SK Izin Kemnaker RI', 'mojo-bootstrap' ),
-        'section' => 'mojo_contact_section',
-        'type'    => 'text',
-    ) );
-
-    // 2.4 Alamat Jakarta
-    $wp_customize->add_setting( 'mojo_alamat_jakarta', array(
-        'default'           => 'Treasury Tower Lt. 7, District 8, SCBD, Jakarta Selatan',
-        'sanitize_callback' => 'sanitize_textarea_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_alamat_jakarta', array(
-        'label'   => __( 'Alamat Kantor Jakarta', 'mojo-bootstrap' ),
-        'section' => 'mojo_contact_section',
-        'type'    => 'textarea',
-    ) );
-
-    // 2.5 Alamat Tokyo
-    $wp_customize->add_setting( 'mojo_alamat_tokyo', array(
-        'default'           => 'Chiyoda-ku, Tokyo 101-0021, Japan',
-        'sanitize_callback' => 'sanitize_textarea_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_alamat_tokyo', array(
-        'label'   => __( 'Alamat Kantor Tokyo', 'mojo-bootstrap' ),
-        'section' => 'mojo_contact_section',
-        'type'    => 'textarea',
     ) );
 
     // ==========================================

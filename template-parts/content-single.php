@@ -26,7 +26,9 @@
         $job_yen   = get_post_meta( get_the_ID(), '_mojo_job_salary_yen', true );
         $job_idr   = get_post_meta( get_the_ID(), '_mojo_job_salary_idr', true );
         $wa_num    = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
-        $wa_clean  = preg_replace( '/[^0-9]/', '', $wa_num );
+        $wa_clean  = function_exists( 'mojo_clean_whatsapp_number' ) ? mojo_clean_whatsapp_number( $wa_num ) : preg_replace( '/[^0-9]/', '', $wa_num );
+        $wa_msg    = 'Halo Admin Mojo Global Talent, saya tertarik melamar lowongan: ' . get_the_title() . ' (' . get_permalink() . ')';
+        $wa_url    = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( $wa_msg, $wa_num ) : ( 'https://wa.me/' . $wa_clean . '?text=' . rawurlencode( $wa_msg ) );
 
         if ( ! empty( $job_yen ) || ! empty( $job_loc ) || ! empty( $job_quota ) || ! empty( $job_idr ) ) :
         ?>
@@ -41,7 +43,7 @@
                     </span>
                 </div>
                 <div>
-                    <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Mojo%20Global%20Talent,%20saya%20tertarik%20melamar%20lowongan:%20<?php echo rawurlencode( get_the_title() ); ?>" target="_blank" class="btn btn-japan btn-sm px-4 py-2 d-inline-flex align-items-center gap-2 shadow-sm">
+                    <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" class="btn btn-japan btn-sm px-4 py-2 d-inline-flex align-items-center gap-2 shadow-sm" title="Lamar Lowongan via WhatsApp">
                         <i class="bi bi-whatsapp"></i>
                         <span>Lamar Lowongan via WhatsApp</span>
                     </a>

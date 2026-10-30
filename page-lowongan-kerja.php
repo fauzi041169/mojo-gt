@@ -11,7 +11,7 @@
 get_header();
 
 $wa_number      = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
-$wa_clean       = preg_replace( '/[^0-9]/', '', $wa_number );
+$wa_clean       = function_exists( 'mojo_clean_whatsapp_number' ) ? mojo_clean_whatsapp_number( $wa_number ) : preg_replace( '/[^0-9]/', '', $wa_number );
 $alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Treasury Tower Lt. 7, District 8, SCBD, Jakarta Selatan' );
 $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
 
@@ -219,7 +219,7 @@ $all_jobs_query = new WP_Query( $jobs_args );
                     </div>
                     <div>
                         <h6 class="fw-bold mb-1 text-dark">Layanan WhatsApp Resmi</h6>
-                        <p class="text-muted small mb-0"><a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>" target="_blank" class="text-decoration-none text-dark fw-semibold"><?php echo esc_html( $wa_number ); ?></a> (Respon Cepat Hari Kerja)</p>
+                        <p class="text-muted small mb-0"><a href="<?php echo esc_url( mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin konsultasi lowongan kerja Tokutei Ginou (SSW) Jepang.' ) ); ?>" target="_blank" class="text-decoration-none text-dark fw-semibold" title="Buka Chat WhatsApp"><?php echo esc_html( $wa_number ); ?></a> (Respon Cepat Hari Kerja)</p>
                     </div>
                 </div>
             </div>
@@ -230,23 +230,23 @@ $all_jobs_query = new WP_Query( $jobs_args );
                     <h4 class="fw-bold text-dark mb-2">Formulir Pengajuan Lamaran Kerja</h4>
                     <p class="text-muted small mb-4">Lengkapi data Anda di bawah ini untuk memulai proses seleksi kerja ke Jepang.</p>
 
-                    <form onsubmit="alert('Terima kasih! Lamaran Anda telah berhasil dikirimkan. Tim konsultan resmi kami akan segera menghubungi nomor WhatsApp Anda.'); return false;">
+                    <form id="mojoJobsApplyForm">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Nama Lengkap</label>
-                                <input type="text" class="form-control form-control-lg fs-6" placeholder="Sesuai KTP" required>
+                                <input type="text" id="ja_name" class="form-control form-control-lg fs-6" placeholder="Sesuai KTP" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Nomor WhatsApp Aktif</label>
-                                <input type="tel" class="form-control form-control-lg fs-6" placeholder="08xxxxxxxxxx" required>
+                                <input type="tel" id="ja_phone" class="form-control form-control-lg fs-6" placeholder="08xxxxxxxxxx" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Kota Domisili</label>
-                                <input type="text" class="form-control form-control-lg fs-6" placeholder="Contoh: Surabaya, Solo, Medan" required>
+                                <input type="text" id="ja_city" class="form-control form-control-lg fs-6" placeholder="Contoh: Surabaya, Solo, Medan" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Pendidikan Terakhir</label>
-                                <select class="form-select form-select-lg fs-6">
+                                <select id="ja_edu" class="form-select form-select-lg fs-6">
                                     <option>SMA / SMK Sederajat</option>
                                     <option>Diploma (D3)</option>
                                     <option>Sarjana (S1)</option>
@@ -254,7 +254,7 @@ $all_jobs_query = new WP_Query( $jobs_args );
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Posisi Lowongan yang Diminati</label>
-                                <select class="form-select form-select-lg fs-6">
+                                <select id="ja_pos" class="form-select form-select-lg fs-6">
                                     <option>Tokutei Ginou / SSW - Perawat Lansia (Kaigo)</option>
                                     <option>Tokutei Ginou / SSW - Pengolahan Makanan (Food Processing)</option>
                                     <option>Tokutei Ginou / SSW - Pertanian Modern (Agriculture)</option>
@@ -264,7 +264,7 @@ $all_jobs_query = new WP_Query( $jobs_args );
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Tingkat Bahasa Jepang Saat Ini</label>
-                                <select class="form-select form-select-lg fs-6">
+                                <select id="ja_nihongo" class="form-select form-select-lg fs-6">
                                     <option>Belum pernah belajar (Nol)</option>
                                     <option>Sudah hafal Hiragana / Katakana</option>
                                     <option>Memiliki Sertifikat JLPT N5</option>
@@ -274,28 +274,57 @@ $all_jobs_query = new WP_Query( $jobs_args );
                             </div>
                             <div class="col-12">
                                 <label class="form-label small fw-semibold text-secondary">Catatan / Kualifikasi Tambahan</label>
-                                <textarea class="form-control" rows="3" placeholder="Sebutkan pengalaman kerja relevan atau sertifikat keahlian yang Anda miliki..."></textarea>
+                                <textarea id="ja_note" class="form-control" rows="3" placeholder="Sebutkan pengalaman kerja relevan atau sertifikat keahlian yang Anda miliki..."></textarea>
                             </div>
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-japan btn-lg w-100 py-3 fw-bold">
-                                    <i class="bi bi-send-fill me-2"></i>Kirim Lamaran Kerja Sekarang &rarr;
+                                <button type="submit" class="btn btn-japan btn-lg w-100 py-3 fw-bold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="bi bi-whatsapp fs-5"></i>
+                                    <span>Kirim Lamaran via WhatsApp &rarr;</span>
                                 </button>
                                 <p class="text-center text-muted small mt-2 mb-0">
-                                    <i class="bi bi-shield-lock-fill me-1 text-success"></i> Data pribadi Anda terenkripsi aman dan hanya digunakan untuk proses rekrutmen resmi.
+                                    <i class="bi bi-shield-lock-fill me-1 text-success"></i> Data pribadi Anda terenkripsi aman dan langsung terhubung ke WhatsApp resmi rekrutmen.
                                 </p>
                             </div>
                         </div>
                     </form>
+
+                    <script>
+                    (function() {
+                        var form = document.getElementById('mojoJobsApplyForm');
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                var name = document.getElementById('ja_name').value.trim();
+                                var phone = document.getElementById('ja_phone').value.trim();
+                                var city = document.getElementById('ja_city').value.trim();
+                                var edu = document.getElementById('ja_edu').value;
+                                var pos = document.getElementById('ja_pos').value;
+                                var nihongo = document.getElementById('ja_nihongo').value;
+                                var note = document.getElementById('ja_note').value.trim();
+
+                                var text = 'Halo Tim Rekrutmen Mojo Global Talent, saya ingin mengajukan lamaran kerja Tokutei Ginou (SSW) Jepang:\n\n' +
+                                    '*Nama Lengkap:* ' + name + '\n' +
+                                    '*No. WhatsApp:* ' + phone + '\n' +
+                                    '*Kota Domisili:* ' + city + '\n' +
+                                    '*Pendidikan:* ' + edu + '\n' +
+                                    '*Posisi Lowongan:* ' + pos + '\n' +
+                                    '*Kemampuan Bahasa:* ' + nihongo + '\n';
+                                if (note) {
+                                    text += '*Kualifikasi/Catatan:* ' + note + '\n';
+                                }
+                                text += '\nMohon informasi seleksi wawancara dan tahapan selanjutnya. Terima kasih!';
+
+                                var targetUrl = 'https://wa.me/<?php echo esc_js( $wa_clean ); ?>?text=' + encodeURIComponent(text);
+                                window.open(targetUrl, '_blank');
+                            });
+                        }
+                    })();
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Admin%20Mojo%20Global%20Talent,%20saya%20tertarik%20untuk%20konsultasi%20lowongan%20kerja%20ke%20Jepang." target="_blank" class="floating-wa-btn" title="Hubungi Kami via WhatsApp">
-    <i class="bi bi-whatsapp"></i>
-</a>
 
 <?php
 get_footer();

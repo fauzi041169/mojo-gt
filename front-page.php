@@ -7,18 +7,20 @@
  */
 
 $wa_number      = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
-$wa_clean       = preg_replace( '/[^0-9]/', '', $wa_number );
+$wa_clean       = function_exists( 'mojo_clean_whatsapp_number' ) ? mojo_clean_whatsapp_number( $wa_number ) : preg_replace( '/[^0-9]/', '', $wa_number );
 $izin_text      = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
 $alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan' );
 $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
 
 // Hero Customizer Settings
-$hero_badge    = get_theme_mod( 'mojo_hero_badge', 'Sending Organization Resmi Berizin Kemnaker RI No: ' . $izin_text );
-$hero_title    = get_theme_mod( 'mojo_hero_title', 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>' );
-$hero_subtitle = get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong>.' );
-$btn1_text     = get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru' );
-$btn1_url      = get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' );
-$btn2_text     = get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' );
+$hero_badge     = get_theme_mod( 'mojo_hero_badge', 'Sending Organization Resmi Berizin Kemnaker RI No: ' . $izin_text );
+$hero_title     = get_theme_mod( 'mojo_hero_title', 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>' );
+$hero_subtitle  = get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong>.' );
+$btn1_text      = get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru' );
+$btn1_url       = get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' );
+$btn2_text      = get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' );
+$hero_wa_custom = get_theme_mod( 'mojo_hero_btn2_wa', '' );
+$hero_wa_url    = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya tertarik untuk konsultasi program kerja Tokutei Ginou (SSW) ke Jepang.', $hero_wa_custom ) : ( 'https://wa.me/' . $wa_clean );
 
 // Stats Settings
 $stat1_num   = get_theme_mod( 'mojo_stat1_num', '180+' );
@@ -53,7 +55,7 @@ get_header();
                 <span><?php echo esc_html( $btn1_text ); ?></span>
                 <i class="bi bi-arrow-right"></i>
             </a>
-            <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Admin%20Mojo%20Global%20Talent,%20saya%20tertarik%20untuk%20konsultasi%20program%20kerja%20ke%20Jepang." target="_blank" class="btn btn-japan-outline btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2">
+            <a href="<?php echo esc_url( $hero_wa_url ); ?>" target="_blank" class="btn btn-japan-outline btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2" title="Konsultasi via WhatsApp">
                 <i class="bi bi-whatsapp text-success fs-5"></i>
                 <span><?php echo esc_html( $btn2_text ); ?></span>
             </a>
@@ -456,7 +458,7 @@ get_header();
                     </div>
                     <div>
                         <h6 class="fw-bold mb-1 text-dark">Layanan WhatsApp Resmi</h6>
-                        <p class="text-muted small mb-0"><a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>" target="_blank" class="text-decoration-none text-dark fw-semibold"><?php echo esc_html( $wa_number ); ?></a> (Respon Cepat Hari Kerja)</p>
+                        <p class="text-muted small mb-0"><a href="<?php echo esc_url( mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin konsultasi program Tokutei Ginou (SSW) ke Jepang.' ) ); ?>" target="_blank" class="text-decoration-none text-dark fw-semibold" title="Buka Chat WhatsApp Resmi"><?php echo esc_html( $wa_number ); ?></a> (Respon Cepat Hari Kerja)</p>
                     </div>
                 </div>
             </div>
@@ -465,25 +467,25 @@ get_header();
             <div class="col-lg-7 reveal reveal-right">
                 <div class="card border border-light-subtle shadow-sm rounded-4 p-4 p-md-5 bg-white">
                     <h4 class="fw-bold text-dark mb-2">Formulir Pendaftaran & Konsultasi</h4>
-                    <p class="text-muted small mb-4">Lengkapi data di bawah ini. Konsultan kami akan menghubungi Anda melalui WhatsApp.</p>
+                    <p class="text-muted small mb-4">Lengkapi data di bawah ini. Formulir akan langsung terhubung ke WhatsApp resmi konsultan kami.</p>
 
-                    <form onsubmit="alert('Terima kasih! Data pendaftaran Anda telah berhasil terkirim. Konsultan resmi kami akan segera menghubungi Anda.'); return false;">
+                    <form id="mojoFrontConsultForm">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Nama Lengkap</label>
-                                <input type="text" class="form-control form-control-lg fs-6" placeholder="Sesuai KTP" required>
+                                <input type="text" id="fc_name" class="form-control form-control-lg fs-6" placeholder="Sesuai KTP" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Nomor WhatsApp Aktif</label>
-                                <input type="tel" class="form-control form-control-lg fs-6" placeholder="08xxxxxxxxxx" required>
+                                <input type="tel" id="fc_phone" class="form-control form-control-lg fs-6" placeholder="08xxxxxxxxxx" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Kota Domisili</label>
-                                <input type="text" class="form-control form-control-lg fs-6" placeholder="Contoh: Surabaya, Solo, Medan" required>
+                                <input type="text" id="fc_city" class="form-control form-control-lg fs-6" placeholder="Contoh: Surabaya, Solo, Medan" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Pendidikan Terakhir</label>
-                                <select class="form-select form-select-lg fs-6">
+                                <select id="fc_edu" class="form-select form-select-lg fs-6">
                                     <option>SMA / SMK Sederajat</option>
                                     <option>Diploma (D3)</option>
                                     <option>Sarjana (S1)</option>
@@ -491,7 +493,7 @@ get_header();
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Minat Program</label>
-                                <select class="form-select form-select-lg fs-6">
+                                <select id="fc_program" class="form-select form-select-lg fs-6">
                                     <option>Tokutei Ginou / SSW (Caregiver/Kaigo)</option>
                                     <option>Tokutei Ginou / SSW (Pengolahan Makanan)</option>
                                     <option>Tokutei Ginou / SSW (Pertanian)</option>
@@ -502,7 +504,7 @@ get_header();
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-secondary">Kemampuan Bahasa Jepang</label>
-                                <select class="form-select form-select-lg fs-6">
+                                <select id="fc_nihongo" class="form-select form-select-lg fs-6">
                                     <option>Belum pernah belajar (Nol)</option>
                                     <option>Sudah hafal Hiragana / Katakana</option>
                                     <option>Memiliki Sertifikat JLPT N5</option>
@@ -512,28 +514,57 @@ get_header();
                             </div>
                             <div class="col-12">
                                 <label class="form-label small fw-semibold text-secondary">Catatan / Pertanyaan Tambahan</label>
-                                <textarea class="form-control" rows="3" placeholder="Tuliskan pertanyaan Anda seputar proses, biaya resmi, atau seleksi..."></textarea>
+                                <textarea id="fc_note" class="form-control" rows="3" placeholder="Tuliskan pertanyaan Anda seputar proses, biaya resmi, atau seleksi..."></textarea>
                             </div>
                             <div class="col-12 mt-4">
-                                <button type="submit" class="btn btn-japan btn-lg w-100 py-3 fw-bold">
-                                    <i class="bi bi-send-fill me-2"></i>Kirim Pendaftaran Sekarang &rarr;
+                                <button type="submit" class="btn btn-japan btn-lg w-100 py-3 fw-bold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="bi bi-whatsapp fs-5"></i>
+                                    <span>Kirim Pendaftaran via WhatsApp &rarr;</span>
                                 </button>
                                 <p class="text-center text-muted small mt-2 mb-0">
-                                    <i class="bi bi-shield-lock-fill me-1 text-success"></i> Privasi Anda terjaga. Data hanya digunakan untuk keperluan pendaftaran resmi.
+                                    <i class="bi bi-shield-lock-fill me-1 text-success"></i> Privasi Anda terjaga. Data langsung terhubung ke konsultan resmi Mojo Global Talent.
                                 </p>
                             </div>
                         </div>
                     </form>
+
+                    <script>
+                    (function() {
+                        var form = document.getElementById('mojoFrontConsultForm');
+                        if (form) {
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                var name = document.getElementById('fc_name').value.trim();
+                                var phone = document.getElementById('fc_phone').value.trim();
+                                var city = document.getElementById('fc_city').value.trim();
+                                var edu = document.getElementById('fc_edu').value;
+                                var prog = document.getElementById('fc_program').value;
+                                var nihongo = document.getElementById('fc_nihongo').value;
+                                var note = document.getElementById('fc_note').value.trim();
+
+                                var text = 'Halo Admin Mojo Global Talent, saya ingin konsultasi & mendaftar program Tokutei Ginou (SSW) Jepang:\n\n' +
+                                    '*Nama Lengkap:* ' + name + '\n' +
+                                    '*No. WhatsApp:* ' + phone + '\n' +
+                                    '*Kota Domisili:* ' + city + '\n' +
+                                    '*Pendidikan:* ' + edu + '\n' +
+                                    '*Pilihan Program:* ' + prog + '\n' +
+                                    '*Kemampuan Bahasa:* ' + nihongo + '\n';
+                                if (note) {
+                                    text += '*Catatan:* ' + note + '\n';
+                                }
+                                text += '\nMohon informasi jadwal seleksi dan persyaratannya. Terima kasih!';
+
+                                var targetUrl = 'https://wa.me/<?php echo esc_js( $wa_clean ); ?>?text=' + encodeURIComponent(text);
+                                window.open(targetUrl, '_blank');
+                            });
+                        }
+                    })();
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>?text=Halo%20Admin%20Mojo%20Global%20Talent,%20saya%20tertarik%20untuk%20konsultasi%20program%20kerja%20ke%20Jepang." target="_blank" class="floating-wa-btn" title="Hubungi Kami via WhatsApp">
-    <i class="bi bi-whatsapp"></i>
-</a>
 
 <?php
 get_footer();

@@ -6,7 +6,8 @@
  */
 
 $wa_number      = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
-$wa_clean       = preg_replace( '/[^0-9]/', '', $wa_number );
+$wa_clean       = function_exists( 'mojo_clean_whatsapp_number' ) ? mojo_clean_whatsapp_number( $wa_number ) : preg_replace( '/[^0-9]/', '', $wa_number );
+$wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin konsultasi seputar kerja di Jepang.' ) : ( 'https://wa.me/' . $wa_clean );
 $izin_text      = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
 $alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan' );
 $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
@@ -85,7 +86,7 @@ $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-002
                     <i class="bi bi-telephone-fill"></i>
                     <div>
                         <strong class="text-white d-block">Hotline & WhatsApp:</strong>
-                        <a href="https://wa.me/<?php echo esc_attr( $wa_clean ); ?>" target="_blank" class="text-white text-decoration-none fw-semibold"><?php echo esc_html( $wa_number ); ?></a>
+                        <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" class="text-white text-decoration-none fw-semibold"><?php echo esc_html( $wa_number ); ?></a>
                     </div>
                 </div>
             </div>
@@ -106,6 +107,11 @@ $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-002
         </div>
     </div>
 </footer>
+
+<!-- Floating WhatsApp Button (Aktif di Semua Halaman) -->
+<a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" class="floating-wa-btn" title="Hubungi Kami via WhatsApp" aria-label="Konsultasi WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+</a>
 
 <?php wp_footer(); ?>
 </body>
