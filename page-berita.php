@@ -21,15 +21,42 @@ get_header();
         <!-- Main News Column -->
         <div class="col-lg-8">
             <?php
-            $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-            $news_query = new WP_Query( array(
-                'post_type'      => 'post',
-                'posts_per_page' => 6,
-                'paged'          => $paged,
-            ) );
+            $filter = isset( $_GET['tipe'] ) ? sanitize_key( $_GET['tipe'] ) : 'all';
+            $paged  = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
-            if ( $news_query->have_posts() ) :
-                ?>
+            $query_args = array(
+                'post_type'      => 'post',
+                'posts_per_page' => 8,
+                'paged'          => $paged,
+                'post_status'    => 'publish',
+            );
+
+            $job_cat_ids  = function_exists( 'mojo_get_job_category_ids' ) ? mojo_get_job_category_ids() : array();
+            $news_cat_ids = function_exists( 'mojo_get_news_category_ids' ) ? mojo_get_news_category_ids() : array();
+
+            if ( $filter === 'berita' && ! empty( $news_cat_ids ) ) {
+                $query_args['category__in'] = $news_cat_ids;
+            } elseif ( $filter === 'lowongan' && ! empty( $job_cat_ids ) ) {
+                $query_args['category__in'] = $job_cat_ids;
+            }
+
+            $news_query = new WP_Query( $query_args );
+            ?>
+
+            <!-- Filter Tabs Kategori & Jenis Informasi -->
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <a href="<?php echo esc_url( remove_query_arg( 'tipe' ) ); ?>" class="btn btn-sm <?php echo $filter === 'all' ? 'btn-japan' : 'btn-outline-secondary'; ?> rounded-pill px-3 py-1.5 fw-semibold">
+                    <i class="bi bi-grid-fill me-1"></i> Semua Informasi
+                </a>
+                <a href="<?php echo esc_url( add_query_arg( 'tipe', 'berita' ) ); ?>" class="btn btn-sm <?php echo $filter === 'berita' ? 'btn-japan' : 'btn-outline-secondary'; ?> rounded-pill px-3 py-1.5 fw-semibold">
+                    <i class="bi bi-newspaper me-1"></i> Berita & Dokumentasi
+                </a>
+                <a href="<?php echo esc_url( add_query_arg( 'tipe', 'lowongan' ) ); ?>" class="btn btn-sm <?php echo $filter === 'lowongan' ? 'btn-japan' : 'btn-outline-secondary'; ?> rounded-pill px-3 py-1.5 fw-semibold">
+                    <i class="bi bi-briefcase-fill me-1"></i> Lowongan Kerja (SSW)
+                </a>
+            </div>
+
+            <?php if ( $news_query->have_posts() ) : ?>
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <?php
                     while ( $news_query->have_posts() ) : $news_query->the_post();
