@@ -14,6 +14,25 @@ $izin_text      = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
 $alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Treasury Tower Lt. 7, District 8, Jl. Jenderal Sudirman Kav. 52-53, Jakarta 12190' );
 $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
 $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin konsultasi profil perusahaan dan kemitraan Tokutei Ginou (SSW).' ) : '#konsultasi';
+
+// Data Pengaturan Halaman Tentang Kami
+$about_badge     = get_theme_mod( 'mojo_about_hero_badge', 'Profil Perusahaan • 会社概要' );
+$about_title     = get_theme_mod( 'mojo_about_hero_title', 'Membangun Ekosistem Kerja Global yang <span class="text-danger">Aman, Legal & Terpercaya</span>' );
+$about_desc      = get_theme_mod( 'mojo_about_hero_desc', '<strong>PT. MOJO Global Talent</strong> menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program resmi <strong>Tokutei Ginou (Specified Skilled Worker / SSW)</strong> dengan standar integritas dan pendampingan menyeluruh.' );
+$about_mojo_desc = get_theme_mod( 'mojo_about_mojo_desc', 'Lahir dari filosofi <em>"Move to Job"</em> — sebuah komitmen mendalam untuk memfasilitasi mobilitas tenaga kerja lintas batas negara secara bermartabat, aman, dan memberi masa depan lebih cerah.' );
+
+$misi_text       = get_theme_mod( 'mojo_about_misi_text', 'Membangun ekosistem kerja lintas negara yang terus berkembang di seluruh dunia dengan menciptakan peluang kerja yang lebih aman, lebih mudah, dan di lokasi yang paling tepat bagi para pencari kerja internasional.' );
+$visi_text       = get_theme_mod( 'mojo_about_visi_text', 'Menjadi jembatan karier global terdepan dan tepercaya antara Indonesia dan Jepang yang memadukan keunggulan teknologi digital dengan pelayanan kemanusiaan yang berkesinambungan.' );
+$nilai_text      = get_theme_mod( 'mojo_about_nilai_text', 'Bisnis yang kami jalankan bukan semata-mata mencari keuntungan finansial, melainkan berfokus pada pemenuhan kebutuhan masyarakat — memastikan setiap pekerja terlindungi haknya dan perusahaan Jepang memperoleh talenta terbaik.' );
+
+$director_name   = get_theme_mod( 'mojo_about_director_name', 'Aditya Muriza Pratama' );
+$director_role   = get_theme_mod( 'mojo_about_director_role', 'President Director' );
+$director_photo  = get_theme_mod( 'mojo_about_director_photo', '' );
+$director_title  = get_theme_mod( 'mojo_about_director_title', 'Mendampingi Langkah Nyata Talenta Indonesia Menuju Panggung Global' );
+$director_msg    = get_theme_mod( 'mojo_about_director_msg', "Pekerja lintas negara (migran internasional) berjumlah sekitar 169 juta orang berdasarkan data statistik dunia, setara dengan 5% dari total angkatan kerja global. Peningkatan populasi lanjut usia dan penurunan angka kelahiran di negara-negara maju seperti Jepang telah menciptakan urgensi kebutuhan tenaga kerja yang sangat nyata.\n\nDi Jepang sendiri, kebutuhan tenaga kerja terampil asing terus meningkat pesat dan diproyeksikan membutuhkan hingga 4,19 juta pekerja pada tahun 2030. Namun, proses bekerja ke luar negeri sering kali menghadapi tantangan berat seperti kendala transparansi, biaya yang tidak wajar, hingga adaptasi bahasa dan budaya.\n\nMOJO Global Talent hadir sebagai solusi konkret: berdiri bersama talenta Indonesia, membina kompetensi bahasa dan teknis, serta memberikan pendampingan langsung baik sebelum berangkat maupun saat telah menetap dan berkarier di Jepang." );
+
+$est_date        = get_theme_mod( 'mojo_about_est_date', '17 Desember 2024' );
+$biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan Bahasa Intensif, dan Penempatan Resmi Tenaga Kerja ke Jepang (Khusus Program Tokutei Ginou / SSW).' );
 ?>
 
 <!-- =========================================================================
@@ -27,14 +46,14 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
                 <div class="mb-3">
                     <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2 fw-semibold small pulse-badge d-inline-flex align-items-center gap-2">
                         <i class="bi bi-shield-check"></i>
-                        <span>Profil Perusahaan &bull; 会社概要</span>
+                        <span><?php echo esc_html( $about_badge ); ?></span>
                     </span>
                 </div>
                 <h1 class="display-5 fw-bold text-dark mb-3">
-                    Membangun Ekosistem Kerja Global yang <span class="text-danger">Aman, Legal & Terpercaya</span>
+                    <?php echo wp_kses_post( $about_title ); ?>
                 </h1>
                 <p class="lead text-secondary fs-6 mb-4 lh-lg">
-                    <strong>PT. MOJO Global Talent</strong> menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program resmi <strong>Tokutei Ginou (Specified Skilled Worker / SSW)</strong> dengan standar integritas dan pendampingan menyeluruh.
+                    <?php echo wp_kses_post( $about_desc ); ?>
                 </p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                     <a href="#profil-perusahaan" class="btn btn-japan btn-lg px-4 py-3 d-inline-flex align-items-center gap-2 shadow-sm">
@@ -62,7 +81,7 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
                         <span class="badge bg-dark text-white fs-6 px-3 py-2 rounded-pill">JOB</span>
                     </div>
                     <p class="text-muted small mb-0 lh-base">
-                        Lahir dari filosofi <em>&ldquo;Move to Job&rdquo;</em> &mdash; sebuah komitmen mendalam untuk memfasilitasi mobilitas tenaga kerja lintas batas negara secara bermartabat, aman, dan memberi masa depan lebih cerah.
+                        <?php echo wp_kses_post( $about_mojo_desc ); ?>
                     </p>
                 </div>
             </div>
@@ -92,7 +111,7 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
                         <h4 class="h5 fw-bold text-dark mb-0">Misi Kami</h4>
                     </div>
                     <p class="text-secondary small lh-lg mb-0 flex-grow-1">
-                        Membangun ekosistem kerja lintas negara yang terus berkembang di seluruh dunia dengan menciptakan peluang kerja yang lebih aman, lebih mudah, dan di lokasi yang paling tepat bagi para pencari kerja internasional.
+                        <?php echo wp_kses_post( $misi_text ); ?>
                     </p>
                 </div>
             </div>
@@ -107,7 +126,7 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
                         <h4 class="h5 fw-bold text-dark mb-0">Visi Kami</h4>
                     </div>
                     <p class="text-secondary small lh-lg mb-0 flex-grow-1">
-                        Menjadi jembatan karier global terdepan dan tepercaya antara Indonesia dan Jepang yang memadukan keunggulan teknologi digital dengan pelayanan kemanusiaan yang berkesinambungan.
+                        <?php echo wp_kses_post( $visi_text ); ?>
                     </p>
                 </div>
             </div>
@@ -122,7 +141,7 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
                         <h4 class="h5 fw-bold text-dark mb-0">Komitmen Layanan</h4>
                     </div>
                     <p class="text-secondary small lh-lg mb-0 flex-grow-1">
-                        Bisnis yang kami jalankan bukan semata-mata mencari keuntungan finansial, melainkan berfokus pada pemenuhan kebutuhan masyarakat &mdash; memastikan setiap pekerja terlindungi haknya dan perusahaan Jepang memperoleh talenta terbaik.
+                        <?php echo wp_kses_post( $nilai_text ); ?>
                     </p>
                 </div>
             </div>
@@ -139,10 +158,14 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
             <div class="col-lg-4 text-center">
                 <div class="director-card p-4 rounded-4 bg-light border shadow-sm">
                     <div class="director-avatar-box mx-auto mb-3 rounded-circle overflow-hidden bg-white border shadow-sm d-flex align-items-center justify-content-center" style="width: 170px; height: 170px;">
-                        <img src="<?php echo esc_url( get_template_directory_uri() . '/screenshot.png' ); ?>" alt="Aditya Muriza Pratama" class="img-fluid w-100 h-100 object-fit-cover" onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=80';">
+                        <?php if ( ! empty( $director_photo ) ) : ?>
+                            <img src="<?php echo esc_url( $director_photo ); ?>" alt="<?php echo esc_attr( $director_name ); ?>" class="img-fluid w-100 h-100 object-fit-cover">
+                        <?php else : ?>
+                            <i class="bi bi-person-bounding-box text-secondary" style="font-size: 5rem;"></i>
+                        <?php endif; ?>
                     </div>
-                    <h5 class="fw-bold text-dark mb-1">Aditya Muriza Pratama</h5>
-                    <span class="badge bg-danger-subtle text-danger small fw-semibold">President Director</span>
+                    <h5 class="fw-bold text-dark mb-1"><?php echo esc_html( $director_name ); ?></h5>
+                    <span class="badge bg-danger-subtle text-danger small fw-semibold"><?php echo esc_html( $director_role ); ?></span>
                     <p class="text-muted small mt-2 mb-0">PT. MOJO Global Talent</p>
                 </div>
             </div>
@@ -150,18 +173,10 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
             <div class="col-lg-8">
                 <div class="ps-lg-3">
                     <span class="text-danger fw-bold text-uppercase small letter-spacing-1">Pesan Direksi &bull; 代表挨拶</span>
-                    <h2 class="h3 fw-bold text-dark mt-1 mb-3">Mendampingi Langkah Nyata Talenta Indonesia Menuju Panggung Global</h2>
+                    <h2 class="h3 fw-bold text-dark mt-1 mb-3"><?php echo esc_html( $director_title ); ?></h2>
                     
                     <div class="lh-lg text-secondary fs-6">
-                        <p>
-                            Pekerja lintas negara (migran internasional) berjumlah sekitar 169 juta orang berdasarkan data statistik dunia, setara dengan 5% dari total angkatan kerja global. Peningkatan populasi lanjut usia dan penurunan angka kelahiran di negara-negara maju seperti Jepang telah menciptakan urgensi kebutuhan tenaga kerja yang sangat nyata.
-                        </p>
-                        <p>
-                            Di Jepang sendiri, kebutuhan tenaga kerja terampil asing terus meningkat pesat dan diproyeksikan membutuhkan hingga 4,19 juta pekerja pada tahun 2030. Namun, proses bekerja ke luar negeri sering kali menghadapi tantangan berat seperti kendala transparansi, biaya yang tidak wajar, hingga adaptasi bahasa dan budaya.
-                        </p>
-                        <p class="mb-0">
-                            <strong>MOJO Global Talent</strong> hadir sebagai solusi konkret: berdiri bersama talenta Indonesia, membina kompetensi bahasa dan teknis, serta memberikan pendampingan langsung baik sebelum berangkat maupun saat telah menetap dan berkarier di Jepang.
-                        </p>
+                        <?php echo wpautop( wp_kses_post( $director_msg ) ); ?>
                     </div>
                 </div>
             </div>
@@ -207,16 +222,16 @@ $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-light text-secondary small text-uppercase">Pimpinan / Direksi</th>
-                                <td class="text-dark fw-medium">Aditya Muriza Pratama (President Director)</td>
+                                <td class="text-dark fw-medium"><?php echo esc_html( $director_name ); ?> (<?php echo esc_html( $director_role ); ?>)</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-light text-secondary small text-uppercase">Tanggal Pendirian</th>
-                                <td class="text-dark">17 Desember 2024</td>
+                                <td class="text-dark"><?php echo esc_html( $est_date ); ?></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-light text-secondary small text-uppercase">Bidang Usaha</th>
                                 <td class="text-dark">
-                                    Rekrutmen, Pelatihan Bahasa Intensif, dan Penempatan Resmi Tenaga Kerja ke Jepang (Khusus Program Tokutei Ginou / SSW).
+                                    <?php echo esc_html( $biz_field ); ?>
                                 </td>
                             </tr>
                             <tr>

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.3.9' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.4.0' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -1147,6 +1147,175 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'title'       => __( 'Pengaturan Kemitraan (Banner Gelap)', 'mojo-bootstrap' ),
         'priority'    => 29,
         'description' => __( 'Edit teks dan keunggulan pada bagian banner gelap (Kemitraan & Penempatan).', 'mojo-bootstrap' ),
+    ) );
+
+    // ==========================================
+    // 6. SECTION: PENGATURAN HALAMAN TENTANG KAMI
+    // ==========================================
+    $wp_customize->add_section( 'mojo_about_section', array(
+        'title'       => __( 'Pengaturan Halaman Tentang Kami', 'mojo-bootstrap' ),
+        'priority'    => 30,
+        'description' => __( 'Edit teks judul, filosofi arti nama MOJO, visi misi, foto direksi, serta sambutan pimpinan pada halaman Tentang Kami.', 'mojo-bootstrap' ),
+    ) );
+
+    // 6.1 Hero Header
+    $wp_customize->add_setting( 'mojo_about_hero_badge', array(
+        'default'           => 'Profil Perusahaan • 会社概要',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_hero_badge', array(
+        'label'    => __( 'Teks Badge Atas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_hero_title', array(
+        'default'           => 'Membangun Ekosistem Kerja Global yang <span class="text-danger">Aman, Legal & Terpercaya</span>',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_hero_title', array(
+        'label'       => __( 'Judul Utama H1', 'mojo-bootstrap' ),
+        'description' => __( 'Bisa gunakan <span class="text-danger">Kata</span> untuk warna merah.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_hero_desc', array(
+        'default'           => '<strong>PT. MOJO Global Talent</strong> menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program resmi <strong>Tokutei Ginou (Specified Skilled Worker / SSW)</strong> dengan standar integritas dan pendampingan menyeluruh.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_hero_desc', array(
+        'label'    => __( 'Deskripsi Singkat Pengantar', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 6.2 Filosofi Arti Nama MOJO
+    $wp_customize->add_setting( 'mojo_about_mojo_desc', array(
+        'default'           => 'Lahir dari filosofi <em>"Move to Job"</em> — sebuah komitmen mendalam untuk memfasilitasi mobilitas tenaga kerja lintas batas negara secara bermartabat, aman, dan memberi masa depan lebih cerah.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_mojo_desc', array(
+        'label'    => __( 'Penjelasan Arti Nama MOJO (Move to Job)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 6.3 Visi, Misi & Komitmen
+    $wp_customize->add_setting( 'mojo_about_misi_text', array(
+        'default'           => 'Membangun ekosistem kerja lintas negara yang terus berkembang di seluruh dunia dengan menciptakan peluang kerja yang lebih aman, lebih mudah, dan di lokasi yang paling tepat bagi para pencari kerja internasional.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_misi_text', array(
+        'label'    => __( 'Teks Misi Perusahaan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_visi_text', array(
+        'default'           => 'Menjadi jembatan karier global terdepan dan tepercaya antara Indonesia dan Jepang yang memadukan keunggulan teknologi digital dengan pelayanan kemanusiaan yang berkesinambungan.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_visi_text', array(
+        'label'    => __( 'Teks Visi Perusahaan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_nilai_text', array(
+        'default'           => 'Bisnis yang kami jalankan bukan semata-mata mencari keuntungan finansial, melainkan berfokus pada pemenuhan kebutuhan masyarakat — memastikan setiap pekerja terlindungi haknya dan perusahaan Jepang memperoleh talenta terbaik.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_nilai_text', array(
+        'label'    => __( 'Teks Komitmen Layanan / Nilai Inti', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 6.4 Sambutan Direksi
+    $wp_customize->add_setting( 'mojo_about_director_name', array(
+        'default'           => 'Aditya Muriza Pratama',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_director_name', array(
+        'label'    => __( 'Nama Pimpinan / Direktur', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_director_role', array(
+        'default'           => 'President Director',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_director_role', array(
+        'label'    => __( 'Jabatan Pimpinan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_director_photo', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_about_director_photo', array(
+        'label'       => __( 'Foto Pimpinan / Direktur', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto resmi direktur (disarankan foto rasio persegi 1:1).', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+    ) ) );
+
+    $wp_customize->add_setting( 'mojo_about_director_title', array(
+        'default'           => 'Mendampingi Langkah Nyata Talenta Indonesia Menuju Panggung Global',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_director_title', array(
+        'label'    => __( 'Judul Sambutan Direksi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_director_msg', array(
+        'default'           => "Pekerja lintas negara (migran internasional) berjumlah sekitar 169 juta orang berdasarkan data statistik dunia, setara dengan 5% dari total angkatan kerja global. Peningkatan populasi lanjut usia dan penurunan angka kelahiran di negara-negara maju seperti Jepang telah menciptakan urgensi kebutuhan tenaga kerja yang sangat nyata.\n\nDi Jepang sendiri, kebutuhan tenaga kerja terampil asing terus meningkat pesat dan diproyeksikan membutuhkan hingga 4,19 juta pekerja pada tahun 2030. Namun, proses bekerja ke luar negeri sering kali menghadapi tantangan berat seperti kendala transparansi, biaya yang tidak wajar, hingga adaptasi bahasa dan budaya.\n\nMOJO Global Talent hadir sebagai solusi konkret: berdiri bersama talenta Indonesia, membina kompetensi bahasa dan teknis, serta memberikan pendampingan langsung baik sebelum berangkat maupun saat telah menetap dan berkarier di Jepang.",
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_director_msg', array(
+        'label'    => __( 'Isi Pesan / Sambutan Direksi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 6.5 Informasi Perusahaan Tambahan
+    $wp_customize->add_setting( 'mojo_about_est_date', array(
+        'default'           => '17 Desember 2024',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_est_date', array(
+        'label'    => __( 'Tanggal Pendirian Perusahaan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_biz_field', array(
+        'default'           => 'Rekrutmen, Pelatihan Bahasa Intensif, dan Penempatan Resmi Tenaga Kerja ke Jepang (Khusus Program Tokutei Ginou / SSW).',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_biz_field', array(
+        'label'    => __( 'Bidang Usaha', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'textarea',
     ) );
 
     // 5.1 Judul B2B
