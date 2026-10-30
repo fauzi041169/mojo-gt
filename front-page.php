@@ -162,7 +162,7 @@ get_header();
                                     <!-- Left Text Content -->
                                     <div class="col-lg-7 text-center text-lg-start">
                                         <?php if ( ! empty( $slide['badge'] ) ) : ?>
-                                            <div class="mb-3 reveal reveal-up">
+                                            <div class="mb-3 hero-anim-badge">
                                                 <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-3 py-2 fw-semibold small pulse-badge d-inline-flex align-items-center gap-2">
                                                     <i class="bi bi-patch-check-fill"></i>
                                                     <span><?php echo esc_html( $slide['badge'] ); ?></span>
@@ -170,15 +170,15 @@ get_header();
                                             </div>
                                         <?php endif; ?>
 
-                                        <h1 class="hero-main-title mb-3 mb-md-4 reveal reveal-up delay-100">
+                                        <h1 class="hero-main-title mb-3 mb-md-4 hero-anim-title">
                                             <?php echo wp_kses_post( $slide['title'] ); ?>
                                         </h1>
 
-                                        <p class="hero-lead-text mb-4 reveal reveal-up delay-200">
+                                        <p class="hero-lead-text mb-4 hero-anim-desc">
                                             <?php echo wp_kses_post( $slide['desc'] ); ?>
                                         </p>
 
-                                        <div class="d-flex justify-content-center justify-content-lg-start gap-3 flex-column flex-sm-row mb-4 reveal reveal-up delay-300">
+                                        <div class="d-flex justify-content-center justify-content-lg-start gap-3 flex-column flex-sm-row mb-4 hero-anim-btns">
                                             <?php if ( ! empty( $slide['btn1_text'] ) ) : ?>
                                                 <a href="<?php echo esc_url( $slide['btn1_url'] ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2 shadow-sm">
                                                     <i class="bi bi-briefcase-fill"></i>
@@ -202,7 +202,7 @@ get_header();
                                         </div>
 
                                         <!-- Trust Micro Points -->
-                                        <div class="d-flex justify-content-center justify-content-lg-start align-items-center flex-wrap gap-3 text-secondary small pt-1 reveal reveal-fade delay-400">
+                                        <div class="d-flex justify-content-center justify-content-lg-start align-items-center flex-wrap gap-3 text-secondary small pt-1 hero-anim-trust">
                                             <span class="d-inline-flex align-items-center gap-1">
                                                 <i class="bi bi-patch-check-fill text-danger"></i> Legal Kemnaker RI
                                             </span>
@@ -219,21 +219,21 @@ get_header();
 
                                     <!-- Right Visual Image Card -->
                                     <div class="col-lg-5">
-                                        <div class="hero-visual-wrapper position-relative mx-auto reveal reveal-scale delay-200">
-                                            <div class="hero-visual-card position-relative overflow-hidden rounded-4 shadow-lg border border-3 border-white">
+                                        <div class="hero-visual-wrapper position-relative mx-auto">
+                                            <div class="hero-visual-card position-relative overflow-hidden rounded-4 shadow-lg border border-3 border-white hero-anim-visual">
                                                 <img src="<?php echo esc_url( $slide['image'] ); ?>" alt="<?php echo esc_attr( wp_strip_all_tags( $slide['title'] ) ); ?>" class="img-fluid w-100 hero-visual-img" loading="eager">
                                                 <div class="hero-visual-gradient"></div>
                                             </div>
 
                                             <?php if ( ! empty( $slide['tag_top'] ) ) : ?>
-                                                <div class="hero-floating-badge hero-floating-top shadow d-flex align-items-center gap-2">
+                                                <div class="hero-floating-badge hero-floating-top shadow d-flex align-items-center gap-2 hero-anim-float-top">
                                                     <span class="badge bg-danger rounded-pill p-1"><i class="bi bi-award-fill text-white"></i></span>
                                                     <span class="small fw-bold text-dark"><?php echo esc_html( $slide['tag_top'] ); ?></span>
                                                 </div>
                                             <?php endif; ?>
 
                                             <?php if ( ! empty( $slide['tag_bottom'] ) ) : ?>
-                                                <div class="hero-floating-card hero-floating-bottom shadow-lg p-3 bg-white rounded-3 border">
+                                                <div class="hero-floating-card hero-floating-bottom shadow-lg p-3 bg-white rounded-3 border hero-anim-float-bottom">
                                                     <div class="d-flex align-items-center gap-2 mb-1">
                                                         <div class="text-warning small d-flex gap-1">
                                                             <i class="bi bi-star-fill"></i>
@@ -261,7 +261,7 @@ get_header();
                             <div class="container position-relative py-5 text-center">
                                 <div class="col-lg-10 col-xl-9 mx-auto">
                                     <?php if ( ! empty( $slide['badge'] ) ) : ?>
-                                        <div class="mb-3 reveal reveal-up">
+                                        <div class="mb-3 hero-anim-badge">
                                             <span class="badge <?php echo $has_bg ? 'bg-danger text-white' : 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; ?> rounded-pill px-3 py-2 fw-semibold small pulse-badge d-inline-flex align-items-center gap-2">
                                                 <i class="bi bi-patch-check-fill"></i>
                                                 <span><?php echo esc_html( $slide['badge'] ); ?></span>
@@ -269,15 +269,15 @@ get_header();
                                         </div>
                                     <?php endif; ?>
 
-                                    <h1 class="hero-main-title mb-4 reveal reveal-up delay-100 <?php echo $has_bg ? 'text-white' : ''; ?>">
+                                    <h1 class="hero-main-title mb-4 hero-anim-title <?php echo $has_bg ? 'text-white' : ''; ?>">
                                         <?php echo wp_kses_post( $slide['title'] ); ?>
                                     </h1>
 
-                                    <p class="hero-lead-text mb-4 mb-md-5 reveal reveal-up delay-200 <?php echo $has_bg ? 'text-white text-opacity-90' : ''; ?>">
+                                    <p class="hero-lead-text mb-4 mb-md-5 hero-anim-desc <?php echo $has_bg ? 'text-white text-opacity-90' : ''; ?>">
                                         <?php echo wp_kses_post( $slide['desc'] ); ?>
                                     </p>
 
-                                    <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-3 reveal reveal-up delay-300">
+                                    <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-3 hero-anim-btns">
                                         <?php if ( ! empty( $slide['btn1_text'] ) ) : ?>
                                             <a href="<?php echo esc_url( $slide['btn1_url'] ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2 shadow-sm">
                                                 <i class="bi bi-briefcase-fill"></i>

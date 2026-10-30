@@ -139,4 +139,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         counterElements.forEach(el => counterObserver.observe(el));
     }
+
+    // 6. Extreme Hero Slider Object Entrance & Exit Animations
+    const heroCarousel = document.getElementById('heroHomeCarousel');
+    if (heroCarousel) {
+        // When slide transition starts (Exit old slide, prep next slide)
+        heroCarousel.addEventListener('slide.bs.carousel', (e) => {
+            const allItems = heroCarousel.querySelectorAll('.carousel-item');
+            const leavingItem = (typeof e.from === 'number' && allItems[e.from]) ? allItems[e.from] : heroCarousel.querySelector('.carousel-item.active');
+            const enteringItem = e.relatedTarget;
+
+            if (leavingItem) {
+                leavingItem.classList.remove('hero-slide-active', 'hero-slide-in');
+                leavingItem.classList.add('hero-slide-out');
+            }
+
+            if (enteringItem) {
+                enteringItem.classList.remove('hero-slide-out');
+                enteringItem.classList.add('hero-slide-in');
+            }
+        });
+
+        // When slide transition finishes (Activate new slide animations)
+        heroCarousel.addEventListener('slid.bs.carousel', (e) => {
+            const allItems = heroCarousel.querySelectorAll('.carousel-item');
+            allItems.forEach((item) => {
+                if (item !== e.relatedTarget) {
+                    item.classList.remove('hero-slide-out', 'hero-slide-in', 'hero-slide-active');
+                }
+            });
+            if (e.relatedTarget) {
+                e.relatedTarget.classList.remove('hero-slide-out');
+                e.relatedTarget.classList.add('hero-slide-active', 'hero-slide-in');
+            }
+        });
+
+        // Initial active slide setup on page load
+        const initialActive = heroCarousel.querySelector('.carousel-item.active');
+        if (initialActive) {
+            initialActive.classList.add('hero-slide-active', 'hero-slide-in');
+        }
+    }
 });
