@@ -5,6 +5,12 @@
  * @package Mojo_Bootstrap
  */
 
+// Otomatis arahkan ke template Tentang Kami yang profesional jika halaman ini adalah Tentang Kami
+if ( is_page( 'tentang-kami' ) || is_page( 'about-us' ) || is_page( 'about' ) || is_page( 'profil' ) ) {
+    get_template_part( 'page-tentang-kami' );
+    return;
+}
+
 get_header();
 ?>
 
