@@ -809,7 +809,7 @@ main {
     border-radius: 16px;
     padding: 1.75rem;
     height: 100%;
-    transition: all 0.25s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -817,9 +817,9 @@ main {
 }
 
 .clean-job-card:hover {
-    transform: translateY(-4px);
-    border-color: #cbd5e1;
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(201, 24, 43, 0.4) !important;
+    box-shadow: 0 20px 40px -10px rgba(201, 24, 43, 0.16) !important;
 }
 
 .clean-job-card-header {
@@ -880,12 +880,13 @@ main {
     padding: 2rem 1.25rem;
     text-align: center;
     height: 100%;
-    transition: all 0.2s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
 }
 
 .clean-step-card:hover {
-    border-color: var(--mj-japan-red);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    transform: translateY(-8px);
+    border-color: var(--mj-japan-red) !important;
+    box-shadow: 0 16px 30px -8px rgba(15, 23, 42, 0.14) !important;
 }
 
 .clean-step-circle {
@@ -893,6 +894,20 @@ main {
     height: 48px;
     background-color: var(--mj-japan-red);
     color: #ffffff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.15rem;
+    margin-bottom: 1.25rem;
+    transition: transform 0.35s cubic-bezier(0.34, 1.5, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.clean-step-card:hover .clean-step-circle {
+    transform: scale(1.15) rotate(6deg);
+    box-shadow: 0 8px 20px rgba(201, 24, 43, 0.35);
+}
     font-weight: 800;
     font-size: 1.2rem;
     border-radius: 50%;
@@ -1102,24 +1117,26 @@ html, body {
     overflow-x: hidden;
 }
 
-/* Base Reveal Animation Classes */
+/* Base Reveal Animation Classes - Dramatic Spring & 3D Blur Clearing */
 .reveal,
 .reveal-up {
     opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: translateY(50px) scale(0.96);
+    filter: blur(4px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1), filter 0.75s ease;
+    will-change: opacity, transform, filter;
 }
 
 .reveal.is-visible,
 .reveal-up.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
 }
 
 .reveal-fade {
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.85s ease;
     will-change: opacity;
 }
 
@@ -1129,41 +1146,59 @@ html, body {
 
 .reveal-scale {
     opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: scale(0.86);
+    filter: blur(4px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1), filter 0.75s ease;
+    will-change: opacity, transform, filter;
 }
 
 .reveal-scale.is-visible {
     opacity: 1;
     transform: scale(1);
+    filter: blur(0);
+}
+
+.reveal-pop {
+    opacity: 0;
+    transform: translateY(40px) scale(0.82);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.34, 1.55, 0.64, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-pop.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 .reveal-left {
     opacity: 0;
-    transform: translateX(-35px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: translateX(-60px) scale(0.96);
+    filter: blur(4px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1), filter 0.75s ease;
+    will-change: opacity, transform, filter;
 }
 
 .reveal-left.is-visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
+    filter: blur(0);
 }
 
 .reveal-right {
     opacity: 0;
-    transform: translateX(35px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    transform: translateX(60px) scale(0.96);
+    filter: blur(4px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1), filter 0.75s ease;
+    will-change: opacity, transform, filter;
 }
 
 .reveal-right.is-visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
+    filter: blur(0);
 }
 
-/* Stagger Delay Modifiers */
+/* Stagger Delay Modifiers with Smooth Timing */
 .delay-100 { transition-delay: 0.1s !important; }
 .delay-200 { transition-delay: 0.2s !important; }
 .delay-300 { transition-delay: 0.3s !important; }

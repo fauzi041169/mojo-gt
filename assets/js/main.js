@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         '.reveal-fade',
         '.reveal-scale',
         '.reveal-left',
-        '.reveal-right'
+        '.reveal-right',
+        '.reveal-pop'
     ];
 
     const revealElements = document.querySelectorAll(revealSelectors.join(', '));

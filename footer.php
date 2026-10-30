@@ -57,7 +57,7 @@ $privacy_url = function_exists( 'get_privacy_policy_url' ) && get_privacy_policy
     <div class="container">
         <div class="row g-4 pb-4">
             <!-- Col 1: About & Legalitas -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-4 col-md-6 reveal reveal-up delay-100">
                 <div class="d-flex align-items-center gap-2 mb-3">
                     <div class="bg-white text-danger rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 38px; height: 38px; font-size: 1.1rem;">
                         JP
@@ -76,7 +76,7 @@ $privacy_url = function_exists( 'get_privacy_policy_url' ) && get_privacy_policy
             </div>
 
             <!-- Col 2: Heading & Tautan Cepat -->
-            <div class="col-lg-2 col-md-6">
+            <div class="col-lg-2 col-md-6 reveal reveal-up delay-200">
                 <h6 class="text-white fw-bold mb-3 text-uppercase small letter-spacing-1"><?php echo esc_html( $footer_col2_heading ); ?></h6>
                 <?php
                 if ( has_nav_menu( 'footer' ) ) :
@@ -102,7 +102,7 @@ $privacy_url = function_exists( 'get_privacy_policy_url' ) && get_privacy_policy
             </div>
 
             <!-- Col 3: Heading & Sektor Lowongan Dinamis -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 reveal reveal-up delay-300">
                 <h6 class="text-white fw-bold mb-3 text-uppercase small letter-spacing-1"><?php echo esc_html( $footer_col3_heading ); ?></h6>
                 <ul class="list-unstyled small mb-0">
                     <?php
@@ -122,7 +122,7 @@ $privacy_url = function_exists( 'get_privacy_policy_url' ) && get_privacy_policy
             </div>
 
             <!-- Col 4: Heading & Alamat/Kontak -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 reveal reveal-up delay-400">
                 <h6 class="text-white fw-bold mb-3 text-uppercase small letter-spacing-1"><?php echo esc_html( $footer_col4_heading ); ?></h6>
                 
                 <div class="footer-contact-item">

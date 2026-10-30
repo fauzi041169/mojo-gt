@@ -347,19 +347,19 @@ get_header();
     <div class="container">
         <div class="stats-clean-strip reveal reveal-scale">
             <div class="row text-center g-3">
-                <div class="col-6 col-md-3 stat-clean-item">
+                <div class="col-6 col-md-3 stat-clean-item reveal reveal-pop delay-100">
                     <div class="stat-clean-number">1,250<span class="text-danger">+</span></div>
                     <div class="stat-clean-label">Pekerja Diberangkatkan</div>
                 </div>
-                <div class="col-6 col-md-3 stat-clean-item">
+                <div class="col-6 col-md-3 stat-clean-item reveal reveal-pop delay-200">
                     <div class="stat-clean-number"><?php echo esc_html( $stat1_num ); ?></div>
                     <div class="stat-clean-label"><?php echo esc_html( $stat1_label ); ?></div>
                 </div>
-                <div class="col-6 col-md-3 stat-clean-item">
+                <div class="col-6 col-md-3 stat-clean-item reveal reveal-pop delay-300">
                     <div class="stat-clean-number"><?php echo esc_html( $stat2_num ); ?></div>
                     <div class="stat-clean-label"><?php echo esc_html( $stat2_label ); ?></div>
                 </div>
-                <div class="col-6 col-md-3 stat-clean-item">
+                <div class="col-6 col-md-3 stat-clean-item reveal reveal-pop delay-400">
                     <div class="stat-clean-number"><?php echo esc_html( $stat3_num ); ?></div>
                     <div class="stat-clean-label"><?php echo esc_html( $stat3_label ); ?></div>
                 </div>
@@ -412,7 +412,10 @@ get_header();
             }
 
             if ( ! empty( $job_posts ) ) :
+                $job_idx = 0;
                 foreach ( $job_posts as $job_post ) :
+                    $job_idx++;
+                    $job_delay = $job_idx * 100;
                     setup_postdata( $GLOBALS['post'] =& $job_post );
                     $raw_loc = get_post_meta( $job_post->ID, '_mojo_job_location', true );
                     if ( empty( $raw_loc ) ) {
@@ -461,7 +464,7 @@ get_header();
                         }
                     }
                     ?>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3 reveal reveal-up delay-<?php echo esc_attr( $job_delay ); ?>">
                         <div class="clean-job-card h-100 d-flex flex-column">
                             <div class="clean-job-card-header mb-3">
                                 <span class="job-prefecture-pill" title="<?php echo esc_attr( $raw_loc ); ?>"><i class="bi bi-geo-alt-fill text-danger me-1"></i><?php echo esc_html( $loc_badge ); ?></span>
@@ -510,7 +513,7 @@ get_header();
         </div>
 
         <div class="row g-3">
-            <div class="col-md-4 col-lg">
+            <div class="col-md-4 col-lg reveal reveal-up delay-100">
                 <div class="clean-step-card">
                     <div class="clean-step-circle">1</div>
                     <h6 class="fw-bold mb-2">Pendaftaran & MCU</h6>
@@ -518,7 +521,7 @@ get_header();
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg">
+            <div class="col-md-4 col-lg reveal reveal-up delay-200">
                 <div class="clean-step-card">
                     <div class="clean-step-circle">2</div>
                     <h6 class="fw-bold mb-2">Diklat Bahasa</h6>
@@ -526,7 +529,7 @@ get_header();
                 </div>
             </div>
 
-            <div class="col-md-4 col-lg">
+            <div class="col-md-4 col-lg reveal reveal-up delay-300">
                 <div class="clean-step-card">
                     <div class="clean-step-circle">3</div>
                     <h6 class="fw-bold mb-2">Matching & Interview</h6>
@@ -534,7 +537,7 @@ get_header();
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg">
+            <div class="col-md-6 col-lg reveal reveal-up delay-400">
                 <div class="clean-step-card">
                     <div class="clean-step-circle">4</div>
                     <h6 class="fw-bold mb-2">COE & Visa</h6>
@@ -542,7 +545,7 @@ get_header();
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg">
+            <div class="col-md-6 col-lg reveal reveal-up delay-500">
                 <div class="clean-step-card">
                     <div class="clean-step-circle">5</div>
                     <h6 class="fw-bold mb-2">Terbang ke Jepang</h6>
@@ -588,12 +591,15 @@ get_header();
             }
 
             if ( ! empty( $news_posts ) ) :
+                $news_idx = 0;
                 foreach ( $news_posts as $news_post ) :
+                    $news_idx++;
+                    $news_delay = $news_idx * 150;
                     setup_postdata( $GLOBALS['post'] =& $news_post );
                     $cats = get_the_category( $news_post->ID );
                     $cat_label = ! empty( $cats ) ? $cats[0]->name : 'Berita';
                     ?>
-                    <div class="col-md-4">
+                    <div class="col-md-4 reveal reveal-up delay-<?php echo esc_attr( $news_delay ); ?>">
                         <article class="clean-news-card h-100 d-flex flex-column bg-white rounded-4 border overflow-hidden shadow-sm">
                             <?php if ( has_post_thumbnail() ) : ?>
                                 <div class="news-card-thumb overflow-hidden" style="height: 190px;">
@@ -691,7 +697,7 @@ get_header();
                 <h2 class="display-6 fw-bold text-dark mb-3">Siap Memulai Langkah Anda ke Jepang?</h2>
                 <p class="text-secondary mb-4">Konsultasikan minat program, syarat dokumen, dan jadwal kelas seleksi dengan tim konsultan karir berpengalaman kami.</p>
 
-                <div class="d-flex gap-3 align-items-start mb-3">
+                <div class="d-flex gap-3 align-items-start mb-3 reveal reveal-left delay-100">
                     <div class="bg-danger bg-opacity-10 text-danger rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                         <i class="bi bi-geo-alt-fill fs-5"></i>
                     </div>
@@ -701,7 +707,7 @@ get_header();
                     </div>
                 </div>
 
-                <div class="d-flex gap-3 align-items-start mb-3">
+                <div class="d-flex gap-3 align-items-start mb-3 reveal reveal-left delay-200">
                     <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                         <i class="bi bi-building fs-5"></i>
                     </div>
@@ -711,7 +717,7 @@ get_header();
                     </div>
                 </div>
 
-                <div class="d-flex gap-3 align-items-start">
+                <div class="d-flex gap-3 align-items-start reveal reveal-left delay-300">
                     <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
                         <i class="bi bi-whatsapp fs-5"></i>
                     </div>
@@ -723,7 +729,7 @@ get_header();
             </div>
 
             <!-- Right Clean Form -->
-            <div class="col-lg-7 reveal reveal-right">
+            <div class="col-lg-7 reveal reveal-scale delay-200">
                 <div class="card border border-light-subtle shadow-sm rounded-4 p-4 p-md-5 bg-white">
                     <h4 class="fw-bold text-dark mb-2">Formulir Pendaftaran & Konsultasi</h4>
                     <p class="text-muted small mb-4">Lengkapi data di bawah ini. Formulir akan langsung terhubung ke WhatsApp resmi konsultan kami.</p>
