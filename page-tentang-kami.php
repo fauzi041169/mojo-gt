@@ -21,6 +21,13 @@ $about_title     = get_theme_mod( 'mojo_about_hero_title', 'Membangun Ekosistem 
 $about_desc      = get_theme_mod( 'mojo_about_hero_desc', '<strong>PT. MOJO Global Talent</strong> menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program resmi <strong>Tokutei Ginou (Specified Skilled Worker / SSW)</strong> dengan standar integritas dan pendampingan menyeluruh.' );
 $about_mojo_desc = get_theme_mod( 'mojo_about_mojo_desc', 'Lahir dari filosofi <em>"Move to Job"</em> — sebuah komitmen mendalam untuk memfasilitasi mobilitas tenaga kerja lintas batas negara secara bermartabat, aman, dan memberi masa depan lebih cerah.' );
 
+$vm_badge        = get_theme_mod( 'mojo_about_vm_badge', 'Filosofi Perusahaan' );
+$vm_title        = get_theme_mod( 'mojo_about_vm_title', 'Visi, Misi & Prinsip Kerja' );
+$vm_sub          = get_theme_mod( 'mojo_about_vm_sub', 'Landasan integritas kami dalam membina dan mendampingi tenaga kerja Indonesia menuju karier profesional di Jepang.' );
+$misi_title      = get_theme_mod( 'mojo_about_misi_title', 'Misi Kami' );
+$visi_title      = get_theme_mod( 'mojo_about_visi_title', 'Visi Kami' );
+$nilai_title     = get_theme_mod( 'mojo_about_nilai_title', 'Nilai Kami' );
+
 $misi_text       = get_theme_mod( 'mojo_about_misi_text', 'Membangun ekosistem kerja lintas negara yang terus berkembang di seluruh dunia dengan menciptakan peluang kerja yang lebih aman, lebih mudah, dan di lokasi yang paling tepat bagi para pencari kerja internasional.' );
 $visi_text       = get_theme_mod( 'mojo_about_visi_text', 'Menjadi jembatan karier global terdepan dan tepercaya antara Indonesia dan Jepang yang memadukan keunggulan teknologi digital dengan pelayanan kemanusiaan yang berkesinambungan.' );
 $nilai_text      = get_theme_mod( 'mojo_about_nilai_text', 'Bisnis yang kami jalankan bukan semata-mata mencari keuntungan finansial, melainkan berfokus pada pemenuhan kebutuhan masyarakat — memastikan setiap pekerja terlindungi haknya dan perusahaan Jepang memperoleh talenta terbaik.' );
@@ -95,9 +102,9 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
 <section class="py-5 bg-light" id="visi-misi">
     <div class="container py-3">
         <div class="text-center col-lg-8 mx-auto mb-5">
-            <span class="text-danger fw-bold text-uppercase small letter-spacing-1">Filosofi Perusahaan</span>
-            <h2 class="h2 fw-bold text-dark mt-1">Visi, Misi & Prinsip Kerja</h2>
-            <p class="text-muted">Landasan integritas kami dalam membina dan mendampingi tenaga kerja Indonesia menuju karier profesional di Jepang.</p>
+            <span class="text-danger fw-bold text-uppercase small letter-spacing-1"><?php echo esc_html( $vm_badge ); ?></span>
+            <h2 class="h2 fw-bold text-dark mt-1"><?php echo esc_html( $vm_title ); ?></h2>
+            <p class="text-muted"><?php echo esc_html( $vm_sub ); ?></p>
         </div>
 
         <div class="row g-4">
@@ -108,7 +115,7 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
                         <div class="bg-danger bg-opacity-10 text-danger rounded-3 p-3 d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
                             <i class="bi bi-compass-fill fs-4"></i>
                         </div>
-                        <h4 class="h5 fw-bold text-dark mb-0">Misi Kami</h4>
+                        <h4 class="h5 fw-bold text-dark mb-0"><?php echo esc_html( $misi_title ); ?></h4>
                     </div>
                     <p class="text-secondary small lh-lg mb-0 flex-grow-1">
                         <?php echo wp_kses_post( $misi_text ); ?>
@@ -123,7 +130,7 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
                         <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3 d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
                             <i class="bi bi-eye-fill fs-4"></i>
                         </div>
-                        <h4 class="h5 fw-bold text-dark mb-0">Visi Kami</h4>
+                        <h4 class="h5 fw-bold text-dark mb-0"><?php echo esc_html( $visi_title ); ?></h4>
                     </div>
                     <p class="text-secondary small lh-lg mb-0 flex-grow-1">
                         <?php echo wp_kses_post( $visi_text ); ?>
@@ -138,7 +145,7 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
                         <div class="bg-success bg-opacity-10 text-success rounded-3 p-3 d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px;">
                             <i class="bi bi-award-fill fs-4"></i>
                         </div>
-                        <h4 class="h5 fw-bold text-dark mb-0">Komitmen Layanan</h4>
+                        <h4 class="h5 fw-bold text-dark mb-0"><?php echo esc_html( $nilai_title ); ?></h4>
                     </div>
                     <p class="text-secondary small lh-lg mb-0 flex-grow-1">
                         <?php echo wp_kses_post( $nilai_text ); ?>

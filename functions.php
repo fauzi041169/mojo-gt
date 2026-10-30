@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.4.0' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.4.1' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -1205,7 +1205,52 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'     => 'textarea',
     ) );
 
-    // 6.3 Visi, Misi & Komitmen
+    // 6.3 Visi, Misi & Nilai Inti (Section Heading & Cards)
+    $wp_customize->add_setting( 'mojo_about_vm_badge', array(
+        'default'           => 'Filosofi Perusahaan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_vm_badge', array(
+        'label'    => __( 'Badge Sub-Judul Bagian Visi-Misi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_vm_title', array(
+        'default'           => 'Visi, Misi & Prinsip Kerja',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_vm_title', array(
+        'label'    => __( 'Judul Utama Bagian Visi-Misi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_vm_sub', array(
+        'default'           => 'Landasan integritas kami dalam membina dan mendampingi tenaga kerja Indonesia menuju karier profesional di Jepang.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_vm_sub', array(
+        'label'    => __( 'Deskripsi Singkat Bagian Visi-Misi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    // 6.3.1 Kartu Misi
+    $wp_customize->add_setting( 'mojo_about_misi_title', array(
+        'default'           => 'Misi Kami',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_misi_title', array(
+        'label'    => __( 'Judul Kartu 1 (Misi)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
     $wp_customize->add_setting( 'mojo_about_misi_text', array(
         'default'           => 'Membangun ekosistem kerja lintas negara yang terus berkembang di seluruh dunia dengan menciptakan peluang kerja yang lebih aman, lebih mudah, dan di lokasi yang paling tepat bagi para pencari kerja internasional.',
         'sanitize_callback' => 'wp_kses_post',
@@ -1215,6 +1260,18 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'label'    => __( 'Teks Misi Perusahaan', 'mojo-bootstrap' ),
         'section'  => 'mojo_about_section',
         'type'     => 'textarea',
+    ) );
+
+    // 6.3.2 Kartu Visi
+    $wp_customize->add_setting( 'mojo_about_visi_title', array(
+        'default'           => 'Visi Kami',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_visi_title', array(
+        'label'    => __( 'Judul Kartu 2 (Visi)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
     ) );
 
     $wp_customize->add_setting( 'mojo_about_visi_text', array(
@@ -1228,13 +1285,25 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'     => 'textarea',
     ) );
 
+    // 6.3.3 Kartu Nilai Kami (Nilai Inti / Komitmen)
+    $wp_customize->add_setting( 'mojo_about_nilai_title', array(
+        'default'           => 'Nilai Kami',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_nilai_title', array(
+        'label'    => __( 'Judul Kartu 3 (Nilai Kami)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
     $wp_customize->add_setting( 'mojo_about_nilai_text', array(
         'default'           => 'Bisnis yang kami jalankan bukan semata-mata mencari keuntungan finansial, melainkan berfokus pada pemenuhan kebutuhan masyarakat — memastikan setiap pekerja terlindungi haknya dan perusahaan Jepang memperoleh talenta terbaik.',
         'sanitize_callback' => 'wp_kses_post',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_about_nilai_text', array(
-        'label'    => __( 'Teks Komitmen Layanan / Nilai Inti', 'mojo-bootstrap' ),
+        'label'    => __( 'Teks Nilai Kami / Komitmen Layanan', 'mojo-bootstrap' ),
         'section'  => 'mojo_about_section',
         'type'     => 'textarea',
     ) );
