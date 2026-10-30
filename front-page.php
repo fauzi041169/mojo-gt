@@ -12,15 +12,74 @@ $izin_text      = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
 $alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan' );
 $alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
 
-// Hero Customizer Settings
-$hero_badge     = get_theme_mod( 'mojo_hero_badge', 'Sending Organization Resmi Berizin Kemnaker RI No: ' . $izin_text );
-$hero_title     = get_theme_mod( 'mojo_hero_title', 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>' );
-$hero_subtitle  = get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program <strong>Tokutei Ginou (SSW)</strong>.' );
-$btn1_text      = get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru' );
-$btn1_url       = get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' );
-$btn2_text      = get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' );
-$hero_wa_custom = get_theme_mod( 'mojo_hero_btn2_wa', '' );
-$hero_wa_url    = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya tertarik untuk konsultasi program kerja Tokutei Ginou (SSW) ke Jepang.', $hero_wa_custom ) : ( 'https://wa.me/' . $wa_clean );
+// Hero Slider Settings
+$slider_enabled = get_theme_mod( 'mojo_hero_slider_enable', true );
+
+// Dynamic resolution of jobs page
+$jobs_page = get_page_by_path( 'lowongan-kerja' );
+if ( ! $jobs_page ) {
+    $jobs_page = get_page_by_title( 'Lowongan Kerja', OBJECT, 'page' );
+}
+if ( ! $jobs_page ) {
+    $jobs_page = get_page_by_title( 'LOWONGAN KERJA', OBJECT, 'page' );
+}
+$jobs_url = $jobs_page ? get_permalink( $jobs_page->ID ) : home_url( '/lowongan-kerja/' );
+
+// Dynamic resolution of about page
+$about_page = get_page_by_path( 'tentang-kami' );
+if ( ! $about_page ) {
+    $about_page = get_page_by_title( 'Tentang Kami', OBJECT, 'page' );
+}
+if ( ! $about_page ) {
+    $about_page = get_page_by_title( 'TENTANG KAMI', OBJECT, 'page' );
+}
+$about_url = $about_page ? get_permalink( $about_page->ID ) : home_url( '/tentang-kami/' );
+
+// Slide 1
+$slide1 = array(
+    'badge'     => get_theme_mod( 'mojo_hero_badge', 'Sending Organization Resmi Berizin Kemnaker RI No: ' . $izin_text ),
+    'title'     => get_theme_mod( 'mojo_hero_title', 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>' ),
+    'desc'      => get_theme_mod( 'mojo_hero_subtitle', 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program Tokutei Ginou (SSW).' ),
+    'btn1_text' => get_theme_mod( 'mojo_hero_btn1_text', 'Lihat Job Order Terbaru' ),
+    'btn1_url'  => get_theme_mod( 'mojo_hero_btn1_url', '#job-orders' ),
+    'btn2_text' => get_theme_mod( 'mojo_hero_btn2_text', 'Konsultasi WhatsApp Cepat' ),
+    'btn2_url'  => function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya tertarik untuk konsultasi program kerja Tokutei Ginou (SSW) ke Jepang.', get_theme_mod( 'mojo_hero_btn2_wa', '' ) ) : ( 'https://wa.me/' . $wa_clean ),
+    'bg'        => get_theme_mod( 'mojo_slide1_bg', '' ),
+);
+
+// Slide 2
+$slide2_btn1_url = get_theme_mod( 'mojo_slide2_btn1_url', '' );
+if ( empty( $slide2_btn1_url ) ) {
+    $slide2_btn1_url = $jobs_url;
+}
+$slide2 = array(
+    'badge'     => get_theme_mod( 'mojo_slide2_badge', 'Program Unggulan Tokutei Ginou (SSW) 2026' ),
+    'title'     => get_theme_mod( 'mojo_slide2_title', 'Gaji Standar Jepang & <span class="text-danger position-relative">Hak Perlindungan Penuh</span>' ),
+    'desc'      => get_theme_mod( 'mojo_slide2_desc', 'Dapatkan penghasilan setara tenaga kerja lokal Jepang (¥190.000 – ¥260.000 / bln) di sektor Kaigo, Pengolahan Makanan, Pertanian, Manufaktur, dan Restoran dengan kontrak kerja resmi terproteksi.' ),
+    'btn1_text' => get_theme_mod( 'mojo_slide2_btn1_text', 'Semua Lowongan Kerja Aktif' ),
+    'btn1_url'  => $slide2_btn1_url,
+    'btn2_text' => get_theme_mod( 'mojo_slide2_btn2_text', 'Tanya Info Persyaratan via WA' ),
+    'btn2_url'  => function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin bertanya seputar persyaratan dan seleksi Tokutei Ginou (SSW).', get_theme_mod( 'mojo_slide2_btn2_wa', '' ) ) : ( 'https://wa.me/' . $wa_clean ),
+    'bg'        => get_theme_mod( 'mojo_slide2_bg', '' ),
+);
+
+// Slide 3
+$slide3_btn2_url = get_theme_mod( 'mojo_slide3_btn2_url', '' );
+if ( empty( $slide3_btn2_url ) ) {
+    $slide3_btn2_url = $about_url;
+}
+$slide3 = array(
+    'badge'     => get_theme_mod( 'mojo_slide3_badge', 'Pendidikan Intensif & Pendampingan Tokyo' ),
+    'title'     => get_theme_mod( 'mojo_slide3_title', 'Dari Pelatihan Bahasa Hingga <span class="text-danger position-relative">Penempatan Aman</span>' ),
+    'desc'      => get_theme_mod( 'mojo_slide3_desc', 'Bimbingan intensif ujian JLPT / JFT Basic dan skill teknis di Indonesia, dilanjutkan pendampingan langsung oleh tim representatif resmi kami yang berpusat di Tokyo.' ),
+    'btn1_text' => get_theme_mod( 'mojo_slide3_btn1_text', 'Daftar Konsultasi Sekarang' ),
+    'btn1_url'  => get_theme_mod( 'mojo_slide3_btn1_url', '#konsultasi' ),
+    'btn2_text' => get_theme_mod( 'mojo_slide3_btn2_text', 'Profil Perusahaan (Tentang Kami)' ),
+    'btn2_url'  => $slide3_btn2_url,
+    'bg'        => get_theme_mod( 'mojo_slide3_bg', '' ),
+);
+
+$slides = $slider_enabled ? array( $slide1, $slide2, $slide3 ) : array( $slide1 );
 
 // Stats Settings
 $stat1_num   = get_theme_mod( 'mojo_stat1_num', '180+' );
@@ -41,62 +100,107 @@ $b2b_item1      = get_theme_mod( 'mojo_b2b_item1', '<strong>Seleksi Ketat & Tran
 $b2b_item2      = get_theme_mod( 'mojo_b2b_item2', '<strong>Pendidikan Bahasa Intensif:</strong> Pemantapan standar JLPT / JFT A2 dengan fokus percakapan aktif.' );
 $b2b_item3      = get_theme_mod( 'mojo_b2b_item3', '<strong>Dukungan di Jepang:</strong> Kantor representatif di Tokyo siap memfasilitasi kebutuhan dan adaptasi pekerja.' );
 
-// Dynamic resolution of about page
-$about_page = get_page_by_path( 'tentang-kami' );
-if ( ! $about_page ) {
-    $about_page = get_page_by_title( 'Tentang Kami', OBJECT, 'page' );
-}
-if ( ! $about_page ) {
-    $about_page = get_page_by_title( 'TENTANG KAMI', OBJECT, 'page' );
-}
-$about_url = $about_page ? get_permalink( $about_page->ID ) : home_url( '/tentang-kami/' );
-
 get_header();
 ?>
 
 <!-- =========================================================================
-     1. HERO SECTION - CLEAN, SPACIOUS, PREMIUM
+     1. HERO SECTION - MODERN DYNAMIC SLIDER CAROUSEL
      ========================================================================= -->
-<section class="clean-hero text-center">
-    <div class="container">
-        <!-- Main Title -->
-        <h1 class="hero-main-title mb-4 reveal reveal-up">
-            <?php echo wp_kses_post( $hero_title ); ?>
-        </h1>
+<section class="hero-slider-section position-relative overflow-hidden">
+    <div id="heroHomeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000" data-bs-pause="hover">
+        <?php if ( $slider_enabled && count( $slides ) > 1 ) : ?>
+            <div class="carousel-indicators mb-3 mb-md-4">
+                <?php foreach ( $slides as $idx => $s ) : ?>
+                    <button type="button" data-bs-target="#heroHomeCarousel" data-bs-slide-to="<?php echo esc_attr( $idx ); ?>" class="<?php echo $idx === 0 ? 'active' : ''; ?>" aria-current="<?php echo $idx === 0 ? 'true' : 'false'; ?>" aria-label="Slide <?php echo esc_attr( $idx + 1 ); ?>"></button>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-        <!-- Subtitle -->
-        <p class="hero-lead-text mb-5 reveal reveal-up delay-100">
-            <?php echo wp_kses_post( $hero_subtitle ); ?>
-        </p>
+        <div class="carousel-inner">
+            <?php foreach ( $slides as $idx => $slide ) : 
+                $has_bg = ! empty( $slide['bg'] );
+            ?>
+                <div class="carousel-item <?php echo $idx === 0 ? 'active' : ''; ?>">
+                    <div class="hero-slide-item d-flex align-items-center <?php echo $has_bg ? 'has-bg-image' : 'default-hero-bg'; ?>" <?php echo $has_bg ? 'style="background-image: url(' . esc_url( $slide['bg'] ) . ');"' : ''; ?>>
+                        <?php if ( $has_bg ) : ?>
+                            <div class="hero-slide-overlay"></div>
+                        <?php endif; ?>
+                        <div class="container position-relative py-5 text-center">
+                            <div class="col-lg-10 col-xl-9 mx-auto">
+                                <?php if ( ! empty( $slide['badge'] ) ) : ?>
+                                    <div class="mb-3 reveal reveal-up">
+                                        <span class="badge <?php echo $has_bg ? 'bg-danger text-white' : 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25'; ?> rounded-pill px-3 py-2 fw-semibold small pulse-badge d-inline-flex align-items-center gap-2">
+                                            <i class="bi bi-patch-check-fill"></i>
+                                            <span><?php echo esc_html( $slide['badge'] ); ?></span>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
 
-        <!-- Action Buttons -->
-        <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-5 reveal reveal-up delay-200">
-            <a href="<?php echo esc_url( $btn1_url ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2">
-                <i class="bi bi-briefcase-fill"></i>
-                <span><?php echo esc_html( $btn1_text ); ?></span>
-                <i class="bi bi-arrow-right"></i>
-            </a>
-            <a href="<?php echo esc_url( $hero_wa_url ); ?>" target="_blank" class="btn btn-japan-outline btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2" title="Konsultasi via WhatsApp">
-                <i class="bi bi-whatsapp text-success fs-5"></i>
-                <span><?php echo esc_html( $btn2_text ); ?></span>
-            </a>
+                                <h1 class="hero-main-title mb-4 reveal reveal-up delay-100 <?php echo $has_bg ? 'text-white' : ''; ?>">
+                                    <?php echo wp_kses_post( $slide['title'] ); ?>
+                                </h1>
+
+                                <p class="hero-lead-text mb-4 mb-md-5 reveal reveal-up delay-200 <?php echo $has_bg ? 'text-white text-opacity-90' : ''; ?>">
+                                    <?php echo wp_kses_post( $slide['desc'] ); ?>
+                                </p>
+
+                                <div class="d-flex justify-content-center gap-3 flex-column flex-sm-row mb-3 reveal reveal-up delay-300">
+                                    <?php if ( ! empty( $slide['btn1_text'] ) ) : ?>
+                                        <a href="<?php echo esc_url( $slide['btn1_url'] ); ?>" class="btn btn-japan btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2 shadow-sm">
+                                            <i class="bi bi-briefcase-fill"></i>
+                                            <span><?php echo esc_html( $slide['btn1_text'] ); ?></span>
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    <?php endif; ?>
+
+                                    <?php if ( ! empty( $slide['btn2_text'] ) ) : 
+                                        $is_wa = strpos( $slide['btn2_url'], 'wa.me' ) !== false;
+                                    ?>
+                                        <a href="<?php echo esc_url( $slide['btn2_url'] ); ?>" <?php echo $is_wa ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> class="btn <?php echo $has_bg ? 'btn-outline-light' : 'btn-japan-outline'; ?> btn-lg px-4 py-3 d-flex align-items-center justify-content-center gap-2 shadow-sm" title="<?php echo esc_attr( $slide['btn2_text'] ); ?>">
+                                            <?php if ( $is_wa ) : ?>
+                                                <i class="bi bi-whatsapp text-success fs-5"></i>
+                                            <?php else : ?>
+                                                <i class="bi bi-arrow-up-right-circle fs-5"></i>
+                                            <?php endif; ?>
+                                            <span><?php echo esc_html( $slide['btn2_text'] ); ?></span>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
 
-        <!-- Trust Badges Line -->
-        <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-secondary small pt-2 reveal reveal-fade delay-300">
-            <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-check-circle-fill text-danger"></i>
-                <span class="fw-medium">Terakreditasi LA-LPK</span>
-            </div>
-            <span class="text-muted d-none d-sm-inline">&bull;</span>
-            <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-shield-fill-check text-danger"></i>
-                <span class="fw-medium">Mitra Resmi OTIT & JITCO Jepang</span>
-            </div>
-            <span class="text-muted d-none d-sm-inline">&bull;</span>
-            <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-building-check text-danger"></i>
-                <span class="fw-medium">Jaringan 180+ Kumiai / Kaisha</span>
+        <?php if ( $slider_enabled && count( $slides ) > 1 ) : ?>
+            <button class="carousel-control-prev hero-carousel-btn" type="button" data-bs-target="#heroHomeCarousel" data-bs-slide="prev" aria-label="Slide Sebelumnya">
+                <span class="hero-control-icon"><i class="bi bi-chevron-left"></i></span>
+            </button>
+            <button class="carousel-control-next hero-carousel-btn" type="button" data-bs-target="#heroHomeCarousel" data-bs-slide="next" aria-label="Slide Berikutnya">
+                <span class="hero-control-icon"><i class="bi bi-chevron-right"></i></span>
+            </button>
+        <?php endif; ?>
+    </div>
+
+    <!-- Trust Badges Strip -->
+    <div class="hero-trust-bar py-3 border-top border-bottom bg-white">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center flex-wrap gap-4 text-secondary small">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-check-circle-fill text-danger"></i>
+                    <span class="fw-medium">Terakreditasi LA-LPK</span>
+                </div>
+                <span class="text-muted d-none d-sm-inline">&bull;</span>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-shield-fill-check text-danger"></i>
+                    <span class="fw-medium">Mitra Resmi OTIT & JITCO Jepang</span>
+                </div>
+                <span class="text-muted d-none d-sm-inline">&bull;</span>
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-building-check text-danger"></i>
+                    <span class="fw-medium">Jaringan 180+ Kumiai / Kaisha</span>
+                </div>
             </div>
         </div>
     </div>

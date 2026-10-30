@@ -189,8 +189,115 @@ main {
 }
 
 /* ==========================================================================
-   Hero Section - Clean & Spacious Minimalist
+   Hero Section - Clean & Dynamic Slider Carousel
    ========================================================================== */
+.hero-slider-section {
+    background-color: #ffffff;
+    position: relative;
+}
+
+.hero-slide-item {
+    min-height: 540px;
+    position: relative;
+    padding: 5rem 0 4.5rem;
+    transition: transform 0.6s ease;
+}
+
+.hero-slide-item.default-hero-bg {
+    background-color: #ffffff;
+    background-image: radial-gradient(circle at 50% 0%, rgba(201, 24, 43, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.hero-slide-item.has-bg-image {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+}
+
+.hero-slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.72) 0%, rgba(15, 23, 42, 0.85) 100%);
+    z-index: 1;
+}
+
+.hero-slide-item > .container {
+    z-index: 2;
+}
+
+/* Indicators */
+.hero-slider-section .carousel-indicators {
+    bottom: 12px;
+    z-index: 5;
+    margin-bottom: 0;
+}
+
+.hero-slider-section .carousel-indicators [data-bs-target] {
+    width: 32px;
+    height: 6px;
+    border-radius: 4px;
+    background-color: var(--mj-japan-red);
+    opacity: 0.28;
+    border: none;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+}
+
+.hero-slider-section .carousel-indicators .active {
+    width: 48px;
+    opacity: 1;
+    background-color: var(--mj-japan-red);
+}
+
+/* Controls (Prev/Next) */
+.hero-carousel-btn {
+    width: 48px;
+    height: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 5;
+    border-radius: 50%;
+    margin: 0 1.5rem;
+}
+
+.hero-slider-section:hover .hero-carousel-btn {
+    opacity: 0.85;
+}
+
+.hero-carousel-btn:hover {
+    opacity: 1 !important;
+}
+
+.hero-control-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--mj-japan-red);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    font-size: 1.25rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-carousel-btn:hover .hero-control-icon {
+    background-color: #ffffff;
+    transform: scale(1.08);
+}
+
+.hero-trust-bar {
+    background-color: #fbfbfc;
+    letter-spacing: -0.2px;
+}
+
 .clean-hero {
     background-color: #ffffff;
     background-image: radial-gradient(circle at 50% 0%, rgba(201, 24, 43, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
@@ -785,15 +892,22 @@ html, body {
         padding: 0 0.25rem;
     }
 
-    .clean-hero {
+    .clean-hero,
+    .hero-slide-item {
+        min-height: auto;
         padding: 3.5rem 0 3rem !important;
     }
 
-    .clean-hero .btn-lg {
+    .clean-hero .btn-lg,
+    .hero-slide-item .btn-lg {
         width: 100%;
         justify-content: center;
         padding: 0.75rem 1.25rem !important;
         font-size: 0.95rem !important;
+    }
+
+    .hero-carousel-btn {
+        display: none !important;
     }
 
     .stats-clean-strip {
@@ -838,7 +952,8 @@ html, body {
         font-size: 2.75rem !important;
     }
 
-    .clean-hero {
+    .clean-hero,
+    .hero-slide-item {
         padding: 4.5rem 0 4rem !important;
     }
 

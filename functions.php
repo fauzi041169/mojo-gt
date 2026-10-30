@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.3.1' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.3.2' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -590,99 +590,293 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
     ) );
 
     // ==========================================
-    // 2. SECTION: HERO BERANDA (Teks Bagian Atas)
+    // 2. SECTION: HERO & SLIDER BERANDA
     // ==========================================
     $wp_customize->add_section( 'mojo_hero_section', array(
-        'title'       => __( 'Pengaturan Hero Beranda', 'mojo-bootstrap' ),
+        'title'       => __( 'Pengaturan Hero & Slider Beranda', 'mojo-bootstrap' ),
         'priority'    => 25,
-        'description' => __( 'Edit judul utama, subjudul, teks badge resmi, dan tombol di bagian atas Beranda.', 'mojo-bootstrap' ),
+        'description' => __( 'Atur tampilan slider di bagian atas beranda. Anda dapat mengaktifkan multi-slide, mengedit teks, tombol, hingga mengunggah foto latar belakang untuk masing-masing slide.', 'mojo-bootstrap' ),
     ) );
 
-    // 1.1 Hero Badge Text
+    // 2.0 Aktifkan Slider
+    $wp_customize->add_setting( 'mojo_hero_slider_enable', array(
+        'default'           => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_slider_enable', array(
+        'label'    => __( 'Aktifkan Hero Slider Multi-Slide', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'checkbox',
+    ) );
+
+    // --- SLIDE 1 ---
     $wp_customize->add_setting( 'mojo_hero_badge', array(
         'default'           => 'Sending Organization Resmi Berizin Kemnaker RI No: KEP.000/MEN/2024',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_badge', array(
-        'label'    => __( 'Teks Badge Atas', 'mojo-bootstrap' ),
-        'section'  => 'mojo_hero_section',
-        'type'     => 'text',
+        'label'       => __( '[Slide 1] Teks Badge Atas', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+        'type'        => 'text',
     ) );
 
-    // 1.2 Hero Main Title
     $wp_customize->add_setting( 'mojo_hero_title', array(
         'default'           => 'Raih Karir Profesional & Masa Depan di <span class="text-danger position-relative">Jepang</span>',
         'sanitize_callback' => 'wp_kses_post',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_title', array(
-        'label'       => __( 'Judul Utama Hero (H1)', 'mojo-bootstrap' ),
-        'description' => __( 'Bisa menggunakan <span class="text-danger">Kata</span> untuk warna merah', 'mojo-bootstrap' ),
+        'label'       => __( '[Slide 1] Judul Utama (H1)', 'mojo-bootstrap' ),
+        'description' => __( 'Gunakan <span class="text-danger">Kata</span> untuk memberi warna merah', 'mojo-bootstrap' ),
         'section'     => 'mojo_hero_section',
         'type'        => 'text',
     ) );
 
-    // 1.3 Hero Subtitle
     $wp_customize->add_setting( 'mojo_hero_subtitle', array(
         'default'           => 'Lembaga pengirim resmi (*Sending Organization*) dan *Job Matching Specialist* terpercaya. Menghubungkan talenta kompeten Indonesia dengan ratusan perusahaan terkemuka di Jepang melalui program Tokutei Ginou (SSW).',
         'sanitize_callback' => 'wp_kses_post',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_subtitle', array(
-        'label'    => __( 'Subjudul / Paragraf Deskripsi Hero', 'mojo-bootstrap' ),
+        'label'    => __( '[Slide 1] Subjudul / Deskripsi', 'mojo-bootstrap' ),
         'section'  => 'mojo_hero_section',
         'type'     => 'textarea',
     ) );
 
-    // 1.4 Tombol 1 Teks
     $wp_customize->add_setting( 'mojo_hero_btn1_text', array(
         'default'           => 'Lihat Job Order Terbaru',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_btn1_text', array(
-        'label'    => __( 'Teks Tombol 1 (Merah)', 'mojo-bootstrap' ),
+        'label'    => __( '[Slide 1] Teks Tombol 1 (Merah)', 'mojo-bootstrap' ),
         'section'  => 'mojo_hero_section',
         'type'     => 'text',
     ) );
 
-    // 1.5 Tombol 1 URL
     $wp_customize->add_setting( 'mojo_hero_btn1_url', array(
         'default'           => '#job-orders',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_btn1_url', array(
-        'label'    => __( 'Link Target Tombol 1', 'mojo-bootstrap' ),
+        'label'    => __( '[Slide 1] Link Target Tombol 1', 'mojo-bootstrap' ),
         'section'  => 'mojo_hero_section',
         'type'     => 'text',
     ) );
 
-    // 1.6 Tombol 2 Teks (WhatsApp)
     $wp_customize->add_setting( 'mojo_hero_btn2_text', array(
         'default'           => 'Konsultasi WhatsApp Cepat',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_btn2_text', array(
-        'label'    => __( 'Teks Tombol 2 (WhatsApp)', 'mojo-bootstrap' ),
+        'label'    => __( '[Slide 1] Teks Tombol 2 (WhatsApp)', 'mojo-bootstrap' ),
         'section'  => 'mojo_hero_section',
         'type'     => 'text',
     ) );
 
-    // 1.7 Tombol 2 Nomor WhatsApp Khusus (Opsional)
     $wp_customize->add_setting( 'mojo_hero_btn2_wa', array(
         'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( 'mojo_hero_btn2_wa', array(
-        'label'       => __( 'Nomor WhatsApp Tombol Hero (Opsional)', 'mojo-bootstrap' ),
-        'description' => __( 'Bisa diawali 08... atau +62... Jika dikosongkan, tombol ini otomatis menggunakan Nomor WhatsApp Kantor aktif yang diatur di menu "WhatsApp Kantor & Kontak Resmi".', 'mojo-bootstrap' ),
+        'label'       => __( '[Slide 1] Nomor WhatsApp Khusus (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Kosongkan jika ingin memakai Nomor WhatsApp Kantor utama.', 'mojo-bootstrap' ),
         'section'     => 'mojo_hero_section',
         'type'        => 'text',
     ) );
+
+    $wp_customize->add_setting( 'mojo_slide1_bg', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide1_bg', array(
+        'label'       => __( '[Slide 1] Foto Latar Belakang (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin latar belakang bergambar, atau biarkan kosong untuk tampilan putih minimalis bersih.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+    ) ) );
+
+    // --- SLIDE 2 ---
+    $wp_customize->add_setting( 'mojo_slide2_badge', array(
+        'default'           => 'Program Unggulan Tokutei Ginou (SSW) 2026',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_badge', array(
+        'label'    => __( '[Slide 2] Teks Badge Atas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_title', array(
+        'default'           => 'Gaji Standar Jepang & <span class="text-danger position-relative">Hak Perlindungan Penuh</span>',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_title', array(
+        'label'    => __( '[Slide 2] Judul Utama (H1)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_desc', array(
+        'default'           => 'Dapatkan penghasilan setara tenaga kerja lokal Jepang (¥190.000 – ¥260.000 / bln) di sektor Kaigo, Pengolahan Makanan, Pertanian, Manufaktur, dan Restoran dengan kontrak kerja resmi terproteksi.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_desc', array(
+        'label'    => __( '[Slide 2] Subjudul / Deskripsi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_btn1_text', array(
+        'default'           => 'Semua Lowongan Kerja Aktif',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_btn1_text', array(
+        'label'    => __( '[Slide 2] Teks Tombol 1 (Merah)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_btn1_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_btn1_url', array(
+        'label'       => __( '[Slide 2] Link Target Tombol 1 (Kosongkan = otomatis ke halaman lowongan)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_btn2_text', array(
+        'default'           => 'Tanya Info Persyaratan via WA',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_btn2_text', array(
+        'label'    => __( '[Slide 2] Teks Tombol 2 (WhatsApp)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_btn2_wa', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_btn2_wa', array(
+        'label'       => __( '[Slide 2] Nomor WhatsApp Khusus (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Kosongkan jika ingin memakai Nomor WhatsApp Kantor utama.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_bg', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide2_bg', array(
+        'label'       => __( '[Slide 2] Foto Latar Belakang (Opsional)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+    ) ) );
+
+    // --- SLIDE 3 ---
+    $wp_customize->add_setting( 'mojo_slide3_badge', array(
+        'default'           => 'Pendidikan Intensif & Pendampingan Tokyo',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_badge', array(
+        'label'    => __( '[Slide 3] Teks Badge Atas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_title', array(
+        'default'           => 'Dari Pelatihan Bahasa Hingga <span class="text-danger position-relative">Penempatan Aman</span>',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_title', array(
+        'label'    => __( '[Slide 3] Judul Utama (H1)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_desc', array(
+        'default'           => 'Bimbingan intensif ujian JLPT / JFT Basic dan skill teknis di Indonesia, dilanjutkan pendampingan langsung oleh tim representatif resmi kami yang berpusat di Tokyo.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_desc', array(
+        'label'    => __( '[Slide 3] Subjudul / Deskripsi', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_btn1_text', array(
+        'default'           => 'Daftar Konsultasi Sekarang',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_btn1_text', array(
+        'label'    => __( '[Slide 3] Teks Tombol 1 (Merah)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_btn1_url', array(
+        'default'           => '#konsultasi',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_btn1_url', array(
+        'label'    => __( '[Slide 3] Link Target Tombol 1', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_btn2_text', array(
+        'default'           => 'Profil Perusahaan (Tentang Kami)',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_btn2_text', array(
+        'label'    => __( '[Slide 3] Teks Tombol 2 (Outline)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_btn2_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_btn2_url', array(
+        'label'       => __( '[Slide 3] Link Target Tombol 2 (Kosongkan = otomatis ke Tentang Kami)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_bg', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide3_bg', array(
+        'label'       => __( '[Slide 3] Foto Latar Belakang (Opsional)', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+    ) ) );
 
     // ==========================================
     // 3. SECTION: PENGATURAN FOOTER & HEADING
