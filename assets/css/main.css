@@ -298,6 +298,110 @@ main {
     letter-spacing: -0.2px;
 }
 
+/* ==========================================================================
+   Hero Split 2-Column Visual Card Styles
+   ========================================================================== */
+.hero-slide-split .hero-main-title {
+    font-size: 3rem;
+    line-height: 1.22;
+}
+
+@media (max-width: 991.98px) {
+    .hero-slide-split .hero-main-title {
+        font-size: 2.25rem;
+    }
+}
+
+.hero-visual-wrapper {
+    max-width: 480px;
+    padding: 12px 10px;
+}
+
+.hero-visual-card {
+    border-radius: 28px !important;
+    background: #ffffff;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.16) !important;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hero-visual-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -12px rgba(201, 24, 43, 0.18) !important;
+}
+
+.hero-visual-img {
+    height: 390px;
+    object-fit: cover;
+    display: block;
+    border-radius: 26px;
+    transition: transform 0.7s ease;
+}
+
+.hero-visual-card:hover .hero-visual-img {
+    transform: scale(1.03);
+}
+
+.hero-visual-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.35) 100%);
+    pointer-events: none;
+    border-radius: 26px;
+}
+
+.hero-floating-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 50px;
+    padding: 0.45rem 1rem;
+    z-index: 4;
+    transform: translateY(-20%);
+}
+
+.hero-floating-card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 16px;
+    z-index: 4;
+    transform: translateY(25%);
+    max-width: 280px;
+}
+
+@media (max-width: 575.98px) {
+    .hero-visual-wrapper {
+        max-width: 100%;
+        padding: 10px 0;
+    }
+
+    .hero-visual-img {
+        height: 250px;
+    }
+
+    .hero-floating-badge {
+        font-size: 0.78rem;
+        padding: 0.35rem 0.75rem;
+        right: 10px;
+        top: 10px;
+        transform: none;
+    }
+
+    .hero-floating-card {
+        left: 10px;
+        bottom: 10px;
+        transform: none;
+        padding: 0.65rem 0.85rem !important;
+        max-width: calc(100% - 20px);
+    }
+}
+
 .clean-hero {
     background-color: #ffffff;
     background-image: radial-gradient(circle at 50% 0%, rgba(201, 24, 43, 0.04) 0%, rgba(255, 255, 255, 0) 70%);

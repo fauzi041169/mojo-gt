@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.3.2' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.3.3' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -610,6 +610,24 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'     => 'checkbox',
     ) );
 
+    // 2.0.1 Model Tampilan Layout
+    $wp_customize->add_setting( 'mojo_hero_layout', array(
+        'default'           => 'split',
+        'sanitize_callback' => 'sanitize_key',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_hero_layout', array(
+        'label'       => __( 'Model Tampilan Slider', 'mojo-bootstrap' ),
+        'description' => __( 'Pilih model visual tampilan slider.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+        'type'        => 'select',
+        'choices'     => array(
+            'split'    => __( 'Model 2 Kolom (Teks & Foto Ilustrasi Samping - Direkomendasikan)', 'mojo-bootstrap' ),
+            'center'   => __( 'Model Minimalis (Teks di Tengah Saja)', 'mojo-bootstrap' ),
+            'bg_cover' => __( 'Model Latar Foto Penuh (Full-Width Cover)', 'mojo-bootstrap' ),
+        ),
+    ) );
+
     // --- SLIDE 1 ---
     $wp_customize->add_setting( 'mojo_hero_badge', array(
         'default'           => 'Sending Organization Resmi Berizin Kemnaker RI No: KEP.000/MEN/2024',
@@ -690,14 +708,47 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'        => 'text',
     ) );
 
+    $wp_customize->add_setting( 'mojo_slide1_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide1_image', array(
+        'label'       => __( '[Slide 1] Foto Samping (Model 2 Kolom)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin mengganti gambar default slide 1.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+    ) ) );
+
+    $wp_customize->add_setting( 'mojo_slide1_tag_top', array(
+        'default'           => 'Program Resmi Tokutei Ginou (SSW)',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide1_tag_top', array(
+        'label'    => __( '[Slide 1] Teks Badge Atas Foto', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide1_tag_bottom', array(
+        'default'           => '1,250+ Talenta Sukses Diberangkatkan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide1_tag_bottom', array(
+        'label'    => __( '[Slide 1] Teks Card Bawah Foto', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
     $wp_customize->add_setting( 'mojo_slide1_bg', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide1_bg', array(
-        'label'       => __( '[Slide 1] Foto Latar Belakang (Opsional)', 'mojo-bootstrap' ),
-        'description' => __( 'Unggah foto jika ingin latar belakang bergambar, atau biarkan kosong untuk tampilan putih minimalis bersih.', 'mojo-bootstrap' ),
+        'label'       => __( '[Slide 1] Foto Latar Belakang Penuh (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin latar belakang bergambar penuh (Full-Width), atau biarkan kosong untuk mode 2 kolom.', 'mojo-bootstrap' ),
         'section'     => 'mojo_hero_section',
     ) ) );
 
@@ -780,13 +831,47 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'        => 'text',
     ) );
 
+    $wp_customize->add_setting( 'mojo_slide2_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide2_image', array(
+        'label'       => __( '[Slide 2] Foto Samping (Model 2 Kolom)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin mengganti gambar default slide 2.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+    ) ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_tag_top', array(
+        'default'           => 'Gaji ¥190.000 – ¥260.000 / Bulan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_tag_top', array(
+        'label'    => __( '[Slide 2] Teks Badge Atas Foto', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide2_tag_bottom', array(
+        'default'           => 'Kontrak Resmi & Jaminan Perlindungan Penuh',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide2_tag_bottom', array(
+        'label'    => __( '[Slide 2] Teks Card Bawah Foto', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
     $wp_customize->add_setting( 'mojo_slide2_bg', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide2_bg', array(
-        'label'       => __( '[Slide 2] Foto Latar Belakang (Opsional)', 'mojo-bootstrap' ),
+        'label'       => __( '[Slide 2] Foto Latar Belakang Penuh (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin latar belakang bergambar penuh (Full-Width), atau biarkan kosong untuk mode 2 kolom.', 'mojo-bootstrap' ),
         'section'     => 'mojo_hero_section',
     ) ) );
 
@@ -868,13 +953,47 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'        => 'text',
     ) );
 
+    $wp_customize->add_setting( 'mojo_slide3_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide3_image', array(
+        'label'       => __( '[Slide 3] Foto Samping (Model 2 Kolom)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin mengganti gambar default slide 3.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_hero_section',
+    ) ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_tag_top', array(
+        'default'           => 'Kantor Perwakilan di Tokyo',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_tag_top', array(
+        'label'    => __( '[Slide 3] Teks Badge Atas Foto', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_slide3_tag_bottom', array(
+        'default'           => 'Bimbingan Bahasa JLPT / JFT Terpadu',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_slide3_tag_bottom', array(
+        'label'    => __( '[Slide 3] Teks Card Bawah Foto', 'mojo-bootstrap' ),
+        'section'  => 'mojo_hero_section',
+        'type'     => 'text',
+    ) );
+
     $wp_customize->add_setting( 'mojo_slide3_bg', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ) );
     $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mojo_slide3_bg', array(
-        'label'       => __( '[Slide 3] Foto Latar Belakang (Opsional)', 'mojo-bootstrap' ),
+        'label'       => __( '[Slide 3] Foto Latar Belakang Penuh (Opsional)', 'mojo-bootstrap' ),
+        'description' => __( 'Unggah foto jika ingin latar belakang bergambar penuh (Full-Width), atau biarkan kosong untuk mode 2 kolom.', 'mojo-bootstrap' ),
         'section'     => 'mojo_hero_section',
     ) ) );
 
