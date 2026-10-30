@@ -447,6 +447,30 @@ main {
     transform: translateX(4px);
 }
 
+.footer-nav-menu {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.footer-nav-menu li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav-menu li a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+    padding: 0.2rem 0;
+}
+
+.footer-nav-menu li a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+    transform: translateX(4px);
+}
+
 .footer-contact-item {
     display: flex;
     gap: 0.75rem;

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.2.9' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.3.0' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -685,136 +685,86 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
     ) );
 
     // ==========================================
-    // 3. SECTION: PROGRAM KARIR UNGGULAN (SSW & TITP)
+    // 3. SECTION: PENGATURAN FOOTER & HEADING
     // ==========================================
-    $wp_customize->add_section( 'mojo_program_section', array(
-        'title'       => __( 'Pengaturan 2 Program Unggulan', 'mojo-bootstrap' ),
+    $wp_customize->add_section( 'mojo_footer_section', array(
+        'title'       => __( 'Pengaturan Footer & Heading', 'mojo-bootstrap' ),
         'priority'    => 27,
-        'description' => __( 'Edit judul, gaji, deskripsi, dan sektor untuk kartu Tokutei Ginou dan Magang TITP.', 'mojo-bootstrap' ),
+        'description' => __( 'Edit judul kolom (heading), deskripsi perusahaan, daftar sektor lowongan, dan hak cipta di bagian bawah website.', 'mojo-bootstrap' ),
     ) );
 
-    // 3.1 Judul Bagian Program
-    $wp_customize->add_setting( 'mojo_program_section_title', array(
-        'default'           => 'Pilih Jalur Karir yang Sesuai untuk Anda',
+    // 3.1 Deskripsi Perusahaan di Footer (Kolom 1)
+    $wp_customize->add_setting( 'mojo_footer_desc', array(
+        'default'           => 'Lembaga Pengirim Resmi (Sending Organization) dan Job Matching Agency terpercaya yang menghubungkan talenta terampil Indonesia dengan perusahaan terkemuka di Jepang melalui program Tokutei Ginou (SSW).',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_footer_desc', array(
+        'label'    => __( 'Deskripsi Perusahaan (Kolom 1)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_footer_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 3.2 Heading Kolom 2
+    $wp_customize->add_setting( 'mojo_footer_col2_heading', array(
+        'default'           => 'Tautan Cepat',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
-    $wp_customize->add_control( 'mojo_program_section_title', array(
-        'label'   => __( 'Judul Bagian Program', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
+    $wp_customize->add_control( 'mojo_footer_col2_heading', array(
+        'label'    => __( 'Heading Kolom 2 (Tautan Halaman)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_footer_section',
+        'type'     => 'text',
     ) );
 
-    // --- PROGRAM 1: TOKUTEI GINOU ---
-    $wp_customize->add_setting( 'mojo_ssw_title', array(
-        'default'           => 'Tokutei Ginou (SSW)',
+    // 3.3 Heading Kolom 3
+    $wp_customize->add_setting( 'mojo_footer_col3_heading', array(
+        'default'           => 'Sektor Lowongan SSW',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
-    $wp_customize->add_control( 'mojo_ssw_title', array(
-        'label'   => __( 'Program 1: Judul', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
+    $wp_customize->add_control( 'mojo_footer_col3_heading', array(
+        'label'    => __( 'Heading Kolom 3 (Sektor Pekerjaan)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_footer_section',
+        'type'     => 'text',
     ) );
 
-    $wp_customize->add_setting( 'mojo_ssw_desc', array(
-        'default'           => 'Pekerja Berketerampilan Spesifik (特定技能) dengan standar hak, perlindungan kerja, dan gaji setara dengan tenaga kerja lokal Jepang.',
+    // 3.4 Daftar Sektor Lowongan Kolom 3
+    $default_sectors = "Kaigo (Perawat Lansia Tokyo)\nPengolahan Makanan (Osaka)\nPertanian Modern (Hokkaido)\nManufaktur & Mesin (Nagoya)\nRestoran & Food Service\nKonstruksi Bangunan";
+    $wp_customize->add_setting( 'mojo_footer_col3_items', array(
+        'default'           => $default_sectors,
         'sanitize_callback' => 'sanitize_textarea_field',
         'transport'         => 'refresh',
     ) );
-    $wp_customize->add_control( 'mojo_ssw_desc', array(
-        'label'   => __( 'Program 1: Deskripsi', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'textarea',
-    ) );
-
-    $wp_customize->add_setting( 'mojo_ssw_gaji_yen', array(
-        'default'           => '¥190,000 – ¥260,000',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_ssw_gaji_yen', array(
-        'label'   => __( 'Program 1: Gaji Yen', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'mojo_ssw_gaji_idr', array(
-        'default'           => 'Rp 20.000.000 – Rp 28.000.000 / bln',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_ssw_gaji_idr', array(
-        'label'   => __( 'Program 1: Estimasi Rupiah', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'mojo_ssw_sektor', array(
-        'default'           => 'Kaigo (Perawat Lansia), Pengolahan Makanan, Pertanian Modern, Restoran & Perhotelan',
-        'sanitize_callback' => 'sanitize_textarea_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_ssw_sektor', array(
-        'label'       => __( 'Program 1: Sektor Tersedia (Pisahkan dengan koma)', 'mojo-bootstrap' ),
-        'section'     => 'mojo_program_section',
+    $wp_customize->add_control( 'mojo_footer_col3_items', array(
+        'label'       => __( 'Daftar Sektor Lowongan (1 baris per sektor)', 'mojo-bootstrap' ),
+        'description' => __( 'Tuliskan nama sektor lowongan (satu per baris). Setiap item otomatis terhubung ke pencarian lowongan kerja aktif.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_footer_section',
         'type'        => 'textarea',
     ) );
 
-    // --- PROGRAM 2: MAGANG TITP ---
-    $wp_customize->add_setting( 'mojo_titp_title', array(
-        'default'           => 'Magang Jepang (TITP)',
+    // 3.5 Heading Kolom 4
+    $wp_customize->add_setting( 'mojo_footer_col4_heading', array(
+        'default'           => 'Kontak & Kantor',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
-    $wp_customize->add_control( 'mojo_titp_title', array(
-        'label'   => __( 'Program 2: Judul', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
+    $wp_customize->add_control( 'mojo_footer_col4_heading', array(
+        'label'    => __( 'Heading Kolom 4 (Kontak & Kantor)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_footer_section',
+        'type'     => 'text',
     ) );
 
-    $wp_customize->add_setting( 'mojo_titp_desc', array(
-        'default'           => 'Program Pemagangan Teknis (技能実習) untuk alih teknologi industri manufaktur termaju, didukung sertifikat resmi dan dana purna magang.',
-        'sanitize_callback' => 'sanitize_textarea_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_titp_desc', array(
-        'label'   => __( 'Program 2: Deskripsi', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'textarea',
-    ) );
-
-    $wp_customize->add_setting( 'mojo_titp_gaji_yen', array(
-        'default'           => '¥150,000 – ¥190,000',
+    // 3.6 Teks Copyright Footer
+    $wp_customize->add_setting( 'mojo_footer_copyright', array(
+        'default'           => 'Hak Cipta Dilindungi Undang-Undang.',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ) );
-    $wp_customize->add_control( 'mojo_titp_gaji_yen', array(
-        'label'   => __( 'Program 2: Gaji Yen', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'mojo_titp_gaji_idr', array(
-        'default'           => 'Rp 16.000.000 – Rp 20.000.000 / bln',
-        'sanitize_callback' => 'sanitize_text_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_titp_gaji_idr', array(
-        'label'   => __( 'Program 2: Estimasi Rupiah', 'mojo-bootstrap' ),
-        'section' => 'mojo_program_section',
-        'type'    => 'text',
-    ) );
-
-    $wp_customize->add_setting( 'mojo_titp_sektor', array(
-        'default'           => 'Manufaktur & Mesin, Teknik Pengelasan (Welding), Konstruksi Bangunan, Tekstil & Garmen',
-        'sanitize_callback' => 'sanitize_textarea_field',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( 'mojo_titp_sektor', array(
-        'label'       => __( 'Program 2: Sektor Tersedia (Pisahkan dengan koma)', 'mojo-bootstrap' ),
-        'section'     => 'mojo_program_section',
-        'type'        => 'textarea',
+    $wp_customize->add_control( 'mojo_footer_copyright', array(
+        'label'    => __( 'Teks Hak Cipta (Copyright)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_footer_section',
+        'type'     => 'text',
     ) );
 
     // ==========================================
