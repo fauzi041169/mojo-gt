@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.3.0' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.3.1' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -790,6 +790,123 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
     $wp_customize->add_control( 'mojo_stat3_num', array( 'label' => __( 'Angka 3', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
     $wp_customize->add_setting( 'mojo_stat3_label', array( 'default' => 'Prefektur Penempatan Kerja', 'sanitize_callback' => 'sanitize_text_field', 'transport' => 'refresh' ) );
     $wp_customize->add_control( 'mojo_stat3_label', array( 'label' => __( 'Keterangan 3', 'mojo-bootstrap' ), 'section' => 'mojo_stats_section', 'type' => 'text' ) );
+
+    // ==========================================
+    // 5. SECTION: KEMITRAAN & B2B (Banner Gelap)
+    // ==========================================
+    $wp_customize->add_section( 'mojo_b2b_section', array(
+        'title'       => __( 'Pengaturan Kemitraan (Banner Gelap)', 'mojo-bootstrap' ),
+        'priority'    => 29,
+        'description' => __( 'Edit teks dan keunggulan pada bagian banner gelap (Kemitraan & Penempatan).', 'mojo-bootstrap' ),
+    ) );
+
+    // 5.1 Judul B2B
+    $wp_customize->add_setting( 'mojo_b2b_title', array(
+        'default'           => 'Kemitraan Resmi & Penyaluran Tenaga Kerja Kompeten ke Jepang',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_title', array(
+        'label'    => __( 'Judul Utama Kemitraan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'text',
+    ) );
+
+    // 5.2 Deskripsi B2B
+    $wp_customize->add_setting( 'mojo_b2b_desc', array(
+        'default'           => 'Kami menyeleksi dan membina talenta terbaik Indonesia dengan etos kerja tinggi, kedisiplinan, serta penguasaan bahasa & budaya Jepang. Melalui program Tokutei Ginou (SSW) di sektor Kaigo, Pengolahan Makanan, Pertanian, Manufaktur, dan Perhotelan, kami memastikan proses penempatan yang transparan, aman, dan terpercaya dengan dukungan kantor kami di Indonesia dan Tokyo.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_desc', array(
+        'label'    => __( 'Deskripsi Kemitraan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 5.3 Tombol 1 Teks
+    $wp_customize->add_setting( 'mojo_b2b_btn1_text', array(
+        'default'           => 'Konsultasi Kemitraan & Penempatan →',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_btn1_text', array(
+        'label'    => __( 'Teks Tombol 1 (Merah)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'text',
+    ) );
+
+    // 5.4 Tombol 1 URL
+    $wp_customize->add_setting( 'mojo_b2b_btn1_url', array(
+        'default'           => '#konsultasi',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_btn1_url', array(
+        'label'    => __( 'Link Target Tombol 1', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'text',
+    ) );
+
+    // 5.5 Tombol 2 Teks
+    $wp_customize->add_setting( 'mojo_b2b_btn2_text', array(
+        'default'           => 'Profil Perusahaan (Tentang Kami)',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_btn2_text', array(
+        'label'    => __( 'Teks Tombol 2 (Outline)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'text',
+    ) );
+
+    // 5.6 Judul Kartu Keunggulan
+    $wp_customize->add_setting( 'mojo_b2b_card_title', array(
+        'default'           => 'Keunggulan Layanan Kami',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_card_title', array(
+        'label'    => __( 'Judul Kartu Keunggulan (Kanan)', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'text',
+    ) );
+
+    // 5.7 Poin 1
+    $wp_customize->add_setting( 'mojo_b2b_item1', array(
+        'default'           => '<strong>Seleksi Ketat & Transparan:</strong> Menilai kepribadian, kesehatan fisik, dan kesiapan mental kerja.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_item1', array(
+        'label'    => __( 'Poin Keunggulan 1', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 5.8 Poin 2
+    $wp_customize->add_setting( 'mojo_b2b_item2', array(
+        'default'           => '<strong>Pendidikan Bahasa Intensif:</strong> Pemantapan standar JLPT / JFT A2 dengan fokus percakapan kerja aktif.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_item2', array(
+        'label'    => __( 'Poin Keunggulan 2', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'textarea',
+    ) );
+
+    // 5.9 Poin 3
+    $wp_customize->add_setting( 'mojo_b2b_item3', array(
+        'default'           => '<strong>Pendampingan di Jepang:</strong> Kantor representatif di Tokyo siap memfasilitasi kebutuhan dan adaptasi pekerja.',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_b2b_item3', array(
+        'label'    => __( 'Poin Keunggulan 3', 'mojo-bootstrap' ),
+        'section'  => 'mojo_b2b_section',
+        'type'     => 'textarea',
+    ) );
 }
 add_action( 'customize_register', 'mojo_bootstrap_customize_register' );
 

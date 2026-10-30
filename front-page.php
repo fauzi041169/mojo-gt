@@ -30,6 +30,27 @@ $stat2_label = get_theme_mod( 'mojo_stat2_label', 'Kelulusan JLPT / JFT Basic' )
 $stat3_num   = get_theme_mod( 'mojo_stat3_num', '47' );
 $stat3_label = get_theme_mod( 'mojo_stat3_label', 'Prefektur Penempatan Kerja' );
 
+// B2B & Kemitraan Settings (Bahasa Indonesia Default)
+$b2b_title      = get_theme_mod( 'mojo_b2b_title', 'Kemitraan Resmi & Penyaluran Tenaga Kerja Kompeten ke Jepang' );
+$b2b_desc       = get_theme_mod( 'mojo_b2b_desc', 'Kami menyeleksi dan membina talenta terbaik Indonesia dengan etos kerja tinggi, kedisiplinan, serta penguasaan bahasa & budaya Jepang. Melalui program Tokutei Ginou (SSW) di sektor Kaigo, Pengolahan Makanan, Pertanian, Manufaktur, dan Perhotelan, kami memastikan proses penempatan yang transparan, aman, dan terpercaya dengan dukungan kantor kami di Indonesia dan Tokyo.' );
+$b2b_btn1_text  = get_theme_mod( 'mojo_b2b_btn1_text', 'Konsultasi Kemitraan & Penempatan →' );
+$b2b_btn1_url   = get_theme_mod( 'mojo_b2b_btn1_url', '#konsultasi' );
+$b2b_btn2_text  = get_theme_mod( 'mojo_b2b_btn2_text', 'Profil Perusahaan (Tentang Kami)' );
+$b2b_card_title = get_theme_mod( 'mojo_b2b_card_title', 'Keunggulan Layanan Kami' );
+$b2b_item1      = get_theme_mod( 'mojo_b2b_item1', '<strong>Seleksi Ketat & Transparan:</strong> Menilai kepribadian, kesehatan fisik, dan kesiapan mental kerja.' );
+$b2b_item2      = get_theme_mod( 'mojo_b2b_item2', '<strong>Pendidikan Bahasa Intensif:</strong> Pemantapan standar JLPT / JFT A2 dengan fokus percakapan aktif.' );
+$b2b_item3      = get_theme_mod( 'mojo_b2b_item3', '<strong>Dukungan di Jepang:</strong> Kantor representatif di Tokyo siap memfasilitasi kebutuhan dan adaptasi pekerja.' );
+
+// Dynamic resolution of about page
+$about_page = get_page_by_path( 'tentang-kami' );
+if ( ! $about_page ) {
+    $about_page = get_page_by_title( 'Tentang Kami', OBJECT, 'page' );
+}
+if ( ! $about_page ) {
+    $about_page = get_page_by_title( 'TENTANG KAMI', OBJECT, 'page' );
+}
+$about_url = $about_page ? get_permalink( $about_page->ID ) : home_url( '/tentang-kami/' );
+
 get_header();
 ?>
 
@@ -391,29 +412,29 @@ get_header();
 </section>
 
 <!-- =========================================================================
-     6. B2B SECTION UNTUK PERUSAHAAN / KUMIAI JEPANG
+     6. B2B SECTION UNTUK PERUSAHAAN & MITRA KERJA
      ========================================================================= -->
 <section class="py-5" style="background-color: #0f172a; color: #ffffff;">
     <div class="container py-4">
         <div class="row align-items-center g-4">
             <div class="col-lg-8 reveal reveal-left">
-                <h3 class="h2 fw-bold mb-3 text-white">インドネシアの優秀な人材と確かなパートナーシップ</h3>
+                <h3 class="h2 fw-bold mb-3 text-white"><?php echo esc_html( $b2b_title ); ?></h3>
                 <p class="text-light text-opacity-80 lead fs-6 mb-4">
-                    当社は、高い就労意欲と日本文化・礼儀作法を身につけた優秀なインドネシア人人材を厳選・育成しております。特定技能（介護、外食、食品製造、農業等）および技能実習生のスムーズな受入れと定着を現地と東京拠点で強力にサポートいたします。
+                    <?php echo wp_kses_post( $b2b_desc ); ?>
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="mailto:b2b-japan@mojoglobaltalent.com" class="btn btn-japan px-4 py-2">求人票・受入れのご相談 (Inquiry) &rarr;</a>
-                    <a href="#konsultasi" class="btn btn-outline-light px-4 py-2">会社案内 (Company Profile)</a>
+                    <a href="<?php echo esc_url( $b2b_btn1_url ); ?>" class="btn btn-japan px-4 py-2"><?php echo esc_html( $b2b_btn1_text ); ?></a>
+                    <a href="<?php echo esc_url( $about_url ); ?>" class="btn btn-outline-light px-4 py-2"><?php echo esc_html( $b2b_btn2_text ); ?></a>
                 </div>
             </div>
 
             <div class="col-lg-4 reveal reveal-right">
                 <div class="bg-white bg-opacity-10 border border-white border-opacity-20 rounded-4 p-4 text-start">
-                    <h6 class="fw-bold text-warning mb-3"><i class="bi bi-star-fill me-2"></i>当社の強み (Our Strengths)</h6>
+                    <h6 class="fw-bold text-warning mb-3"><i class="bi bi-star-fill me-2"></i><?php echo esc_html( $b2b_card_title ); ?></h6>
                     <ul class="list-unstyled small text-light text-opacity-90 mb-0">
-                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i><strong>厳格な面接選抜:</strong> 人柄と適性を重視</li>
-                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i><strong>日本語教育徹底:</strong> N4/N3会話力重視</li>
-                        <li><i class="bi bi-check-circle text-success me-2"></i><strong>日本拠点サポート:</strong> 渡航後も専任が伴走</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i><?php echo wp_kses_post( $b2b_item1 ); ?></li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i><?php echo wp_kses_post( $b2b_item2 ); ?></li>
+                        <li><i class="bi bi-check-circle text-success me-2"></i><?php echo wp_kses_post( $b2b_item3 ); ?></li>
                     </ul>
                 </div>
             </div>
