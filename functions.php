@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define theme constants
-define( 'MOJO_BOOTSTRAP_VERSION', '1.4.1' );
+define( 'MOJO_BOOTSTRAP_VERSION', '1.4.2' );
 define( 'MOJO_BOOTSTRAP_DIR', get_template_directory() );
 define( 'MOJO_BOOTSTRAP_URI', get_template_directory_uri() );
 
@@ -511,6 +511,39 @@ function mojo_get_whatsapp_url( $message = '', $custom_number = '' ) {
         $url .= '?text=' . rawurlencode( $message );
     }
     return $url;
+}
+
+/**
+ * Membersihkan dan mengekstrak URL Google Maps Embed dari URL biasa atau kode tag <iframe>
+ *
+ * @param string $input URL embed atau kode tag <iframe> dari Google Maps.
+ * @return string URL embed yang bersih untuk atribut src iframe.
+ */
+function mojo_get_clean_map_url( $input = '' ) {
+    if ( empty( $input ) ) {
+        return '';
+    }
+    // Jika admin paste seluruh tag iframe: <iframe ... src="https://..." ...>
+    if ( preg_match( '/src=["\']([^"\']+)["\']/i', $input, $match ) ) {
+        return esc_url( $match[1] );
+    }
+    return esc_url( $input );
+}
+
+/**
+ * Callback sanitize untuk input Google Maps di Customizer
+ *
+ * @param string $input Nilai yang diinputkan pengguna.
+ * @return string URL iframe raw yang sudah dibersihkan.
+ */
+function mojo_clean_map_embed_input( $input = '' ) {
+    if ( empty( $input ) ) {
+        return '';
+    }
+    if ( preg_match( '/src=["\']([^"\']+)["\']/i', $input, $match ) ) {
+        return esc_url_raw( $match[1] );
+    }
+    return esc_url_raw( trim( $input ) );
 }
 
 /**
@@ -1364,7 +1397,75 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'type'     => 'textarea',
     ) );
 
-    // 6.5 Informasi Perusahaan Tambahan
+    // 6.5 Informasi Korporat & Data Legalitas Perusahaan
+    $wp_customize->add_setting( 'mojo_about_corp_badge', array(
+        'default'           => 'Informasi Korporat',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_corp_badge', array(
+        'label'    => __( 'Badge Sub-Judul Tabel Legalitas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_corp_title', array(
+        'default'           => 'Data Perusahaan & Legalitas Resmi',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_corp_title', array(
+        'label'    => __( 'Judul Utama Tabel Legalitas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_corp_sub', array(
+        'default'           => 'Transparansi badan hukum resmi PT. MOJO Global Talent di Indonesia dan representasi di Jepang.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_corp_sub', array(
+        'label'    => __( 'Deskripsi Singkat Tabel Legalitas', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_company_name', array(
+        'default'           => 'PT. MOJO Global Talent',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_company_name', array(
+        'label'    => __( 'Nama Resmi Perusahaan', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_company_izin', array(
+        'default'           => 'KEP.000/MEN/2024',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_company_izin', array(
+        'label'       => __( 'Nomor Izin Kemnaker RI (Halaman Tentang Kami)', 'mojo-bootstrap' ),
+        'description' => __( 'Contoh: KEP.000/MEN/2024', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+        'type'        => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_accreditation', array(
+        'default'           => "• Terakreditasi Lembaga Pelatihan Kerja (LA-LPK)\n• Terdaftar Sending Organization (SO) OTIT & JITCO Jepang\n• Jaringan Kemitraan 180+ Kumiai / Kaisha di 47 Prefektur",
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_accreditation', array(
+        'label'       => __( 'Akreditasi & Afiliasi Resmi (1 baris per poin)', 'mojo-bootstrap' ),
+        'description' => __( 'Ketik setiap poin akreditasi pada baris baru (enter). Sistem otomatis memberi format titik rapi.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+        'type'        => 'textarea',
+    ) );
+
     $wp_customize->add_setting( 'mojo_about_est_date', array(
         'default'           => '17 Desember 2024',
         'sanitize_callback' => 'sanitize_text_field',
@@ -1385,6 +1486,120 @@ function mojo_bootstrap_customize_register( $wp_customize ) {
         'label'    => __( 'Bidang Usaha', 'mojo-bootstrap' ),
         'section'  => 'mojo_about_section',
         'type'     => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_alamat_jakarta', array(
+        'default'           => 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_alamat_jakarta', array(
+        'label'       => __( 'Alamat Kantor Jakarta (Indonesia)', 'mojo-bootstrap' ),
+        'description' => __( 'Alamat yang ditampilkan di tabel profil & kartu lokasi.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+        'type'        => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_alamat_tokyo', array(
+        'default'           => 'Chiyoda-ku, Tokyo 101-0021, Japan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_alamat_tokyo', array(
+        'label'   => __( 'Alamat Kantor Representatif Tokyo (Jepang)', 'mojo-bootstrap' ),
+        'section' => 'mojo_about_section',
+        'type'    => 'text',
+    ) );
+
+    // 6.6 Lokasi Kantor, Jam Operasional & Peta Google Maps
+    $wp_customize->add_setting( 'mojo_about_loc_badge', array(
+        'default'           => 'Akses & Lokasi',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_badge', array(
+        'label'    => __( 'Badge Sub-Judul Bagian Peta & Akses', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_loc_title', array(
+        'default'           => 'Kunjungi Kantor Operasional Kami',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_title', array(
+        'label'    => __( 'Judul Utama Bagian Peta & Akses', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_loc_sub', array(
+        'default'           => 'Terbuka untuk konsultasi langsung kandidat pekerja, keluarga, dan mitra kemitraan industri.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_sub', array(
+        'label'    => __( 'Deskripsi Singkat Bagian Peta & Akses', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_loc_box_title', array(
+        'default'           => 'Kantor Pusat Operasional',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_box_title', array(
+        'label'    => __( 'Judul Kotak Informasi Samping Peta', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_loc_hours_title', array(
+        'default'           => 'Jam Operasional',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_hours_title', array(
+        'label'    => __( 'Judul Jam Operasional', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_loc_hours_desc', array(
+        'default'           => "Senin – Jumat: 08.30 – 17.00 WIB\nSabtu & Minggu: Tutup (Konsultasi via WhatsApp tetap dilayani)",
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_hours_desc', array(
+        'label'       => __( 'Keterangan Hari & Jam Buka Kantor', 'mojo-bootstrap' ),
+        'description' => __( 'Gunakan tombol Enter untuk baris baru.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+        'type'        => 'textarea',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_loc_btn_text', array(
+        'default'           => 'Buat Janji Kunjungan',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_loc_btn_text', array(
+        'label'    => __( 'Teks Tombol Kunjungan Kantor', 'mojo-bootstrap' ),
+        'section'  => 'mojo_about_section',
+        'type'     => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'mojo_about_map_embed', array(
+        'default'           => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2319.1837098160804!2d106.80525011708332!3d-6.22776698075685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1501c266ded%3A0x64de2dde0e156f4!2zVFJFQVNVUlkgVE9XRVIsIFNlbmF5YW4sIEtlYy4gS2J5LiBCYXJ1LCBLb3RhIEpha2FydGEgU2VsYXRhbiwgRGFlcmFoIEtodXN1cyBJYnVrb3RhIEpha2FydGE!5e0!3m2!1sid!2sid!4v1765526002404!5m2!1sid!2sid',
+        'sanitize_callback' => 'mojo_clean_map_embed_input',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( 'mojo_about_map_embed', array(
+        'label'       => __( 'Link Peta Google Maps (Embed URL atau Tag Iframe)', 'mojo-bootstrap' ),
+        'description' => __( 'Buka Google Maps -> Bagikan (Share) -> Sematkan Peta (Embed a map). Anda dapat menyalin URL src atau seluruh kode tag &lt;iframe...&gt; ke sini.', 'mojo-bootstrap' ),
+        'section'     => 'mojo_about_section',
+        'type'        => 'textarea',
     ) );
 
     // 5.1 Judul B2B

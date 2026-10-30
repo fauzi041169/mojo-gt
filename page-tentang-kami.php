@@ -10,9 +10,6 @@ get_header();
 
 // Informasi Kontak & Legalitas Terintegrasi dari Customizer
 $wa_number      = get_theme_mod( 'mojo_whatsapp', '+62 812-3456-7890' );
-$izin_text      = get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' );
-$alamat_jakarta = get_theme_mod( 'mojo_alamat_jakarta', 'Treasury Tower Lt. 7, District 8, Jl. Jenderal Sudirman Kav. 52-53, Jakarta 12190' );
-$alamat_tokyo   = get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' );
 $wa_url         = function_exists( 'mojo_get_whatsapp_url' ) ? mojo_get_whatsapp_url( 'Halo Admin Mojo Global Talent, saya ingin konsultasi profil perusahaan dan kemitraan Tokutei Ginou (SSW).' ) : '#konsultasi';
 
 // Data Pengaturan Halaman Tentang Kami
@@ -38,8 +35,28 @@ $director_photo  = get_theme_mod( 'mojo_about_director_photo', '' );
 $director_title  = get_theme_mod( 'mojo_about_director_title', 'Mendampingi Langkah Nyata Talenta Indonesia Menuju Panggung Global' );
 $director_msg    = get_theme_mod( 'mojo_about_director_msg', "Pekerja lintas negara (migran internasional) berjumlah sekitar 169 juta orang berdasarkan data statistik dunia, setara dengan 5% dari total angkatan kerja global. Peningkatan populasi lanjut usia dan penurunan angka kelahiran di negara-negara maju seperti Jepang telah menciptakan urgensi kebutuhan tenaga kerja yang sangat nyata.\n\nDi Jepang sendiri, kebutuhan tenaga kerja terampil asing terus meningkat pesat dan diproyeksikan membutuhkan hingga 4,19 juta pekerja pada tahun 2030. Namun, proses bekerja ke luar negeri sering kali menghadapi tantangan berat seperti kendala transparansi, biaya yang tidak wajar, hingga adaptasi bahasa dan budaya.\n\nMOJO Global Talent hadir sebagai solusi konkret: berdiri bersama talenta Indonesia, membina kompetensi bahasa dan teknis, serta memberikan pendampingan langsung baik sebelum berangkat maupun saat telah menetap dan berkarier di Jepang." );
 
+// Informasi Korporat & Legalitas Resmi
+$corp_badge      = get_theme_mod( 'mojo_about_corp_badge', 'Informasi Korporat' );
+$corp_title      = get_theme_mod( 'mojo_about_corp_title', 'Data Perusahaan & Legalitas Resmi' );
+$corp_sub        = get_theme_mod( 'mojo_about_corp_sub', 'Transparansi badan hukum resmi PT. MOJO Global Talent di Indonesia dan representasi di Jepang.' );
+$company_name    = get_theme_mod( 'mojo_about_company_name', 'PT. MOJO Global Talent' );
+$company_izin    = get_theme_mod( 'mojo_about_company_izin', get_theme_mod( 'mojo_izin_kemnaker', 'KEP.000/MEN/2024' ) );
+$accreditation   = get_theme_mod( 'mojo_about_accreditation', "• Terakreditasi Lembaga Pelatihan Kerja (LA-LPK)\n• Terdaftar Sending Organization (SO) OTIT & JITCO Jepang\n• Jaringan Kemitraan 180+ Kumiai / Kaisha di 47 Prefektur" );
 $est_date        = get_theme_mod( 'mojo_about_est_date', '17 Desember 2024' );
 $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan Bahasa Intensif, dan Penempatan Resmi Tenaga Kerja ke Jepang (Khusus Program Tokutei Ginou / SSW).' );
+$alamat_jakarta  = get_theme_mod( 'mojo_about_alamat_jakarta', get_theme_mod( 'mojo_alamat_jakarta', 'Gedung Talent Center Lt. 3, Jl. Gatot Subroto Kav. 88, Jakarta Selatan' ) );
+$alamat_tokyo    = get_theme_mod( 'mojo_about_alamat_tokyo', get_theme_mod( 'mojo_alamat_tokyo', 'Chiyoda-ku, Tokyo 101-0021, Japan' ) );
+
+// Akses, Lokasi & Peta Interaktif
+$loc_badge       = get_theme_mod( 'mojo_about_loc_badge', 'Akses & Lokasi' );
+$loc_title       = get_theme_mod( 'mojo_about_loc_title', 'Kunjungi Kantor Operasional Kami' );
+$loc_sub         = get_theme_mod( 'mojo_about_loc_sub', 'Terbuka untuk konsultasi langsung kandidat pekerja, keluarga, dan mitra kemitraan industri.' );
+$loc_box_title   = get_theme_mod( 'mojo_about_loc_box_title', 'Kantor Pusat Operasional' );
+$loc_hours_title = get_theme_mod( 'mojo_about_loc_hours_title', 'Jam Operasional' );
+$loc_hours_desc  = get_theme_mod( 'mojo_about_loc_hours_desc', "Senin – Jumat: 08.30 – 17.00 WIB\nSabtu & Minggu: Tutup (Konsultasi via WhatsApp tetap dilayani)" );
+$loc_btn_text    = get_theme_mod( 'mojo_about_loc_btn_text', 'Buat Janji Kunjungan' );
+$loc_map_embed   = get_theme_mod( 'mojo_about_map_embed', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2319.1837098160804!2d106.80525011708332!3d-6.22776698075685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1501c266ded%3A0x64de2dde0e156f4!2zVFJFQVNVUlkgVE9XRVIsIFNlbmF5YW4sIEtlYy4gS2J5LiBCYXJ1LCBLb3RhIEpha2FydGEgU2VsYXRhbiwgRGFlcmFoIEtodXN1cyBJYnVrb3RhIEpha2FydGE!5e0!3m2!1sid!2sid!4v1765526002404!5m2!1sid!2sid' );
+$clean_map_url   = function_exists( 'mojo_get_clean_map_url' ) ? mojo_get_clean_map_url( $loc_map_embed ) : $loc_map_embed;
 ?>
 
 <!-- =========================================================================
@@ -198,9 +215,9 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
     <div class="container py-3">
         <div class="col-lg-9 mx-auto">
             <div class="text-center mb-4">
-                <span class="text-danger fw-bold text-uppercase small letter-spacing-1">Informasi Korporat</span>
-                <h2 class="h3 fw-bold text-dark mt-1">Data Perusahaan & Legalitas Resmi</h2>
-                <p class="text-muted small">Transparansi badan hukum resmi PT. MOJO Global Talent di Indonesia dan representasi di Jepang.</p>
+                <span class="text-danger fw-bold text-uppercase small letter-spacing-1"><?php echo esc_html( $corp_badge ); ?></span>
+                <h2 class="h3 fw-bold text-dark mt-1"><?php echo esc_html( $corp_title ); ?></h2>
+                <p class="text-muted small"><?php echo esc_html( $corp_sub ); ?></p>
             </div>
 
             <div class="card border rounded-4 shadow-sm bg-white overflow-hidden">
@@ -209,22 +226,29 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
                         <tbody>
                             <tr>
                                 <th scope="row" class="bg-light text-secondary small text-uppercase" style="width: 28%;">Nama Perusahaan</th>
-                                <td class="fw-bold text-dark">PT. MOJO Global Talent</td>
+                                <td class="fw-bold text-dark"><?php echo esc_html( $company_name ); ?></td>
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-light text-secondary small text-uppercase">Izin Resmi Kemnaker RI</th>
                                 <td>
                                     <span class="badge bg-success-subtle text-success fw-bold px-3 py-1.5 rounded-pill">
-                                        <i class="bi bi-patch-check-fill me-1"></i> No: <?php echo esc_html( $izin_text ); ?>
+                                        <i class="bi bi-patch-check-fill me-1"></i> No: <?php echo esc_html( $company_izin ); ?>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row" class="bg-light text-secondary small text-uppercase">Akreditasi & Afiliasi</th>
                                 <td class="small text-secondary">
-                                    <div class="mb-1">&bull; Terakreditasi Lembaga Pelatihan Kerja (LA-LPK)</div>
-                                    <div class="mb-1">&bull; Terdaftar Sending Organization (SO) OTIT & JITCO Jepang</div>
-                                    <div>&bull; Jaringan Kemitraan 180+ Kumiai / Kaisha di 47 Prefektur</div>
+                                    <?php
+                                    $lines = preg_split( '/\r\n|\r|\n/', trim( $accreditation ) );
+                                    foreach ( $lines as $line ) {
+                                        $line_trimmed = trim( $line );
+                                        if ( ! empty( $line_trimmed ) ) {
+                                            $clean_line = ltrim( $line_trimmed, "•-* \t" );
+                                            echo '<div class="mb-1 d-flex align-items-start gap-2"><span class="text-danger">&bull;</span><span>' . esc_html( $clean_line ) . '</span></div>';
+                                        }
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                             <tr>
@@ -269,34 +293,46 @@ $biz_field       = get_theme_mod( 'mojo_about_biz_field', 'Rekrutmen, Pelatihan 
 <section class="py-5 bg-white border-top" id="lokasi-akses">
     <div class="container py-3">
         <div class="text-center col-lg-8 mx-auto mb-4">
-            <span class="text-danger fw-bold text-uppercase small letter-spacing-1">Akses & Lokasi</span>
-            <h2 class="h3 fw-bold text-dark mt-1">Kunjungi Kantor Operasional Kami</h2>
-            <p class="text-muted small">Terbuka untuk konsultasi langsung kandidat pekerja, keluarga, dan mitra kemitraan industri.</p>
+            <span class="text-danger fw-bold text-uppercase small letter-spacing-1"><?php echo esc_html( $loc_badge ); ?></span>
+            <h2 class="h3 fw-bold text-dark mt-1"><?php echo esc_html( $loc_title ); ?></h2>
+            <p class="text-muted small"><?php echo esc_html( $loc_sub ); ?></p>
         </div>
 
         <div class="card border rounded-4 shadow-sm overflow-hidden bg-white">
             <div class="row g-0">
                 <div class="col-lg-4 p-4 p-md-5 d-flex flex-column justify-content-center bg-light border-end">
-                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i>Kantor Pusat Operasional</h5>
+                    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-geo-alt-fill text-danger me-2"></i><?php echo esc_html( $loc_box_title ); ?></h5>
                     <p class="text-secondary small lh-lg mb-4">
                         <?php echo esc_html( $alamat_jakarta ); ?>
                     </p>
 
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-fill text-danger me-2"></i>Jam Operasional</h6>
-                    <p class="text-muted small mb-4">
-                        Senin &ndash; Jumat: 08.30 &ndash; 17.00 WIB<br>
-                        Sabtu &amp; Minggu: Tutup (Konsultasi via WhatsApp tetap dilayani)
-                    </p>
+                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-fill text-danger me-2"></i><?php echo esc_html( $loc_hours_title ); ?></h6>
+                    <div class="text-muted small mb-4 lh-base">
+                        <?php
+                        $hour_lines = preg_split( '/\r\n|\r|\n/', trim( $loc_hours_desc ) );
+                        foreach ( $hour_lines as $h_line ) {
+                            if ( ! empty( trim( $h_line ) ) ) {
+                                echo '<div>' . esc_html( trim( $h_line ) ) . '</div>';
+                            }
+                        }
+                        ?>
+                    </div>
 
                     <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" class="btn btn-japan w-100 py-2.5 d-inline-flex align-items-center justify-content-center gap-2">
                         <i class="bi bi-whatsapp"></i>
-                        <span>Buat Janji Kunjungan</span>
+                        <span><?php echo esc_html( $loc_btn_text ); ?></span>
                     </a>
                 </div>
 
                 <div class="col-lg-8">
                     <div class="ratio ratio-16x9 h-100" style="min-height: 380px;">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2319.1837098160804!2d106.80525011708332!3d-6.22776698075685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1501c266ded%3A0x64de2dde0e156f4!2zVFJFQVNVUlkgVE9XRVIsIFNlbmF5YW4sIEtlYy4gS2J5LiBCYXJ1LCBLb3RhIEpha2FydGEgU2VsYXRhbiwgRGFlcmFoIEtodXN1cyBJYnVrb3RhIEpha2FydGE!5e0!3m2!1sid!2sid!4v1765526002404!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <?php if ( ! empty( $clean_map_url ) ) : ?>
+                            <iframe src="<?php echo esc_url( $clean_map_url ); ?>" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <?php else : ?>
+                            <div class="d-flex align-items-center justify-content-center h-100 bg-secondary bg-opacity-10 text-muted">
+                                <i class="bi bi-map me-2"></i> Peta lokasi belum diatur
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
